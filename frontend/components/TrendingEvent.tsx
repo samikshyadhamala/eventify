@@ -37,6 +37,9 @@ export default function Home() {
         console.log(error)
         setData([])
       }
+      finally {
+        setIsLoading(false)
+      }
     }
     fetchData()
   }, [axiosInstance])

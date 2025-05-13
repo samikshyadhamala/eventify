@@ -84,7 +84,7 @@ const Header = () => {
           <Link href="/" className='text-white'>Home</Link>
           <Link href="/allevent" className='text-white'>Events</Link>
           <Link href="#" className='text-white'>About</Link>
-          <Link href="#" className='text-white'>Contact</Link>
+          <Link href="/contact" className='text-white'>Contact</Link>
         </div>
 
         <div className="relative">
