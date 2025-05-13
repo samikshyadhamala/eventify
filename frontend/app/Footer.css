@@ -1,0 +1,264 @@
+/* Footer Styles */
+footer {
+    padding: 30px 20px;
+    color: #333;
+    background: linear-gradient(
+      to right,#C1121F,#6D4F85);
+    width: 100vw;
+    
+
+}
+
+.footer-content {
+    display: flex;
+    /* justify-content: space-evenly; */
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.footer-section {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.footer-nav {
+    flex: 0 0 33%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+}
+
+.footer-nav-section {
+    text-align: left;
+}
+
+.footer-nav-section h3 {
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+
+.footer-nav-section ul {
+    list-style: none;
+}
+
+.footer-nav-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-nav-section ul li a {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.footer-nav-section ul li a:hover {
+    opacity: 0.8;
+}
+
+
+.footer-contact {
+    flex: 0 0 33%;
+    text-align: left;
+}
+
+.footer-contact h3 {
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+
+.footer-contact p {
+    margin-bottom: 5px;
+}
+
+.footer-contact a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-section p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.footer1{
+    display: flex;
+    /* justify-content: space-evenly; */
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: left;
+}
+
+.social-icon, #instagram, #youtube {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.3s;
+}
+.social-icon:hover {
+    transform: scale(1.1);
+}
+#instagram:hover, #youtube:hover {
+    transform: scale(1.1);
+}
+
+.facebook { background-color: #1877F2; }
+.linkedin { background-color: #0A66C2; }
+.tiktok { background-color: #000000; }
+.instagram { background-color: #E4405F; }
+.youtube { background-color: #FF0000; }
+.twitter { background-color: #000000; }
+.gmail { background-color: #EA4335; }
+
+
+p {
+    font-size: 14px;
+    color: white;
+}
+.footer-bottom {
+    max-width: 1200px;
+    margin: 30px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid #bbb;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: #333;
+    text-decoration: none;
+}
+
+.footer2 {
+    text-align: center;
+    color: var(--text-dark);
+    background-color: var(--header-and-footer);
+    padding: 10px 0;
+}
+
+
+.footer-down ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 14px;
+    color: white;
+}
+.footer-nav-section h3{
+    color: white;
+}
+.footer-contact h3{
+    color: white;
+}
+
+/* Responsive Styles */
+
+  @media screen and (max-width: 600px) {
+    h1 {
+      font-size: 36px;
+    }
+  
+    h2 {
+      font-size: 28px;
+    }
+  
+    h3 {
+      font-size: 20px;
+    }
+  
+    .trending-title {
+      font-size: 1.8rem;
+    }
+  
+    .section-title {
+      font-size: 1.5rem;
+    }
+  
+    .footer-content {
+      flex-direction: column;
+  }
+  
+  /* .footer-nav,p  {
+    background-color: #ffffff; /* dark gray */
+    /* padding: 20px;
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: flex-start;
+    border-top: 2px solid #ccc;
+  } */ */ */
+/*   
+  .footer-nav-section {
+    color: white;
+    margin: 0 15px;
+  }
+  
+  .footer-nav-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #ffffff;
+  }
+  
+  .footer-nav-section,p {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  } */
+  
+  /* .footer-nav-section li {
+    
+  } */
+  
+  /* .footer-nav-section a {
+    color: #9ca3af; /* light gray text */
+    /* text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .footer-nav-section a:hover {
+    color: #ffffff;
+  } */ */
+  
+.footer-nav-section {
+    flex: 0 0 33%;
+    text-align: left;
+}
+
+.footer-nav-section h3 {
+    margin-bottom: 15px;
+    font-weight: normal;
+}
+
+.footer-nav-section p {
+    margin-bottom: 5px;
+}
+
+.footer-nav-section a {
+
+    color: white;
+    text-decoration: none;
+}
+
+}

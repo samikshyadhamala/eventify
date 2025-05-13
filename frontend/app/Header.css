@@ -1,0 +1,145 @@
+
+/* Header styling */
+header{
+    background: linear-gradient(
+        to right,#C1121F,#6D4F85);
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+  }
+  .logo {
+    font-family: 'Brush Script MT' ,'inspiration' , cursive;
+    font-size: 2rem;
+    color: white;
+    text-decoration: none;
+}
+  
+  .logo-container .logo {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    padding: 5px 15px;
+    max-width: 300px;
+    width: 100%;
+}
+
+.search-container input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    padding: 5px;
+}
+
+.search-container button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #888;
+}
+
+  
+  
+  .nav-links a {
+    padding: 16px;
+    font-size: 1rem;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .nav-links a:hover {
+    color: #007BFF;
+  }
+  
+  .profile button {
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #ccc;
+  }
+  
+  .profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Dropdown Styling */
+  .profile div {
+    position: absolute;
+    right: 0;
+    margin-top: 8px;
+    width: 200px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+  }
+  
+  .profile a {
+    display: block;
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .profile a:hover {
+    background-color: #f0f0f0;
+  }
+  
+  
+/* Responsive Styles */
+@media screen and (max-width: 1024px) {
+    .container,
+    .welcome-section,
+    .trending-section,
+    .upcoming-section,
+    .browse-section {
+      padding: 2rem 1rem;
+    }
+  
+    .events-grid,
+    .upcoming-events-container,
+    .reviews-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .event-card,
+    .upcoming-event-card,
+    .review-card {
+      width: 90%;
+      max-width: 500px;
+    }
+  
+    .navbar {
+      flex-direction: column;
+      gap: 10px;
+      height: auto;
+      padding: 1rem;
+    }
+  
+    .search-container {
+      max-width: 100%;
+    }
+  
+    .nav-links {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+
+
+  }
