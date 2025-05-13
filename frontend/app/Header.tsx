@@ -85,9 +85,6 @@ const Header = () => {
           <Link href="/allevent" className='text-white'>Events</Link>
           <Link href="#" className='text-white'>About</Link>
           <Link href="#" className='text-white'>Contact</Link>
-          {user && (
-            <Link href="/admin/create-event" className='text-white'>Create Event</Link>
-          )}
         </div>
 
         <div className="relative">
