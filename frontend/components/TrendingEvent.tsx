@@ -1,0 +1,158 @@
+'use client';
+
+import styles from '@/styles/Freeevent.module.css';
+import Link from 'next/link';
+import ImageComponent from './ImageComponent';
+import { useEffect, useState } from 'react';
+import { useAuth } from '@/context/auth/hooks';
+import { Search, Filter } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+
+export default function Home() {
+  interface Event {
+    event_id: number;
+    title: string;
+    event_date: string;
+    price: string;
+    location: string;
+    imageUrl: string;
+    is_paid: boolean;
+  }
+
+  const [data, setData] = useState<Event[]>([])
+  const { axiosInstance } = useAuth()
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true)
+        const response = await axiosInstance.get("/api/event/getEvents")
+        setData(response.data.events)
+      }
+      catch (error) {
+        console.log(error)
+        setData([])
+      }
+    }
+    fetchData()
+  }, [axiosInstance])
+
+  const renderEventCards = (events: Event[]) => {
+    const filteredEvents = events.filter(event =>
+      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.location.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+
+    return (
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {filteredEvents.map((item) => (
+          <div key={item.event_id} className="h-full rounded-lg border bg-card text-card-foreground shadow-sm">
+            <Link href={`/event/${item.event_id}`} className="block">
+              <div className='w-100 h-40'>
+                <ImageComponent imageFile={item.imageUrl} alt={item.title} />
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                <div className="text-sm text-muted-foreground mb-2">{item.location}</div>
+                <div className="text-sm mb-2">
+                  {new Date(item.event_date).toLocaleDateString()} — {new Date(item.event_date).toLocaleTimeString()}
+                </div>
+                {item.is_paid && (
+                  <div className="text-sm font-medium">${item.price}</div>
+                )}
+              </div>
+            </Link>
+            <div className="px-4 pb-4">
+              <Link href={`/events/${item.event_id}`}>
+                <Button className="w-full">View Details</Button>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  const getUpcomingEvents = () => {
+    const now = new Date()
+    return data.filter(event => new Date(event.event_date) > now)
+  }
+
+  const getFreeEvents = () => {
+    return data.filter(event => !event.is_paid)
+  }
+
+  const getPaidEvents = () => {
+    return data.filter(event => event.is_paid)
+  }
+
+  return (
+    <section className="w-full py-12 md:py-16 lg:py-20">
+      <div className="container px-4 md:px-6">
+        <div className="mx-auto flex w-full max-w-[800px] flex-col gap-4">
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <div className="relative flex-1">
+              <Input
+                type="search"
+                placeholder="Search events..."
+                className="w-full bg-background pl-8 shadow-none"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <Button variant="outline" size="icon" className="shrink-0">
+              <Filter className="h-4 w-4" />
+              <span className="sr-only">Filter</span>
+            </Button>
+          </div>
+
+          <Tabs defaultValue="all" className="w-full">
+            <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
+              <TabsTrigger
+                value="all"
+                className="rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-primary"
+              >
+                All Events
+              </TabsTrigger>
+              <TabsTrigger
+                value="upcoming"
+                className="rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-primary"
+              >
+                Upcoming
+              </TabsTrigger>
+              <TabsTrigger
+                value="free"
+                className="rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-primary"
+              >
+                Free
+              </TabsTrigger>
+              <TabsTrigger
+                value="paid"
+                className="rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-primary"
+              >
+                Paid
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="all" className="pt-6">
+              {renderEventCards(data)}
+            </TabsContent>
+            <TabsContent value="upcoming" className="pt-6">
+              {renderEventCards(getUpcomingEvents())}
+            </TabsContent>
+            <TabsContent value="free" className="pt-6">
+              {renderEventCards(getFreeEvents())}
+            </TabsContent>
+            <TabsContent value="paid" className="pt-6">
+              {renderEventCards(getPaidEvents())}
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+    </section>
+  );
+}

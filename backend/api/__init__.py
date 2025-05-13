@@ -1,10 +1,11 @@
-from flask import Flask
+from flask import Flask, send_from_directory, abort, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_restful import Api
 from api.config import Config
 from flask_migrate import Migrate
 from flask_cors import CORS
+import os
 
 db = SQLAlchemy()
 ma = Marshmallow()
@@ -29,7 +30,41 @@ def create_app():
             "supports_credentials": True
         }}
     )
+    # Configure upload folder for media files
+    MEDIA_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'media'))
+    app.config['MEDIA_FOLDER'] = MEDIA_FOLDER
 
+    # Ensure the media folder exists
+    if not os.path.exists(MEDIA_FOLDER):
+        os.makedirs(MEDIA_FOLDER)
+
+    @app.route('/api/image/<filename>', methods=['GET'])
+    def get_image(filename):
+        # Construct the file path using absolute path
+        file_path = os.path.join(app.config['MEDIA_FOLDER'], filename)
+        
+        # Check if the file exists
+        if not os.path.isfile(file_path):
+            abort(404, description="Image not found")
+        
+        # Get file extension to determine mimetype
+        file_ext = os.path.splitext(filename)[1].lower()
+        if file_ext in ['.jpg', '.jpeg']:
+            mimetype = 'image/jpeg'
+        elif file_ext == '.png':
+            mimetype = 'image/png'
+        else:
+            mimetype = 'image/jpeg'  # Default to jpeg
+            
+        # Serve the image
+        return send_file(file_path, mimetype=mimetype)
+
+    # Optional: Serve images from the media folder directly
+    @app.route('/media/<filename>')
+    def serve_media(filename):
+        return send_from_directory(app.config['MEDIA_FOLDER'], filename)
+
+    
     # Register blueprints
     # from api.routes.events import events_bp
     # from api.routes.users import users_bp
@@ -40,6 +75,11 @@ def create_app():
     from api.routes.test import test_bp
     from api.routes.auth import auth_bp
     from api.routes.user import user_bp
+    from api.routes.event import event_bp
+    from api.routes.branch import branch_bp
+    
+    app.register_blueprint(branch_bp, url_prefix="/api/branch/")
+    app.register_blueprint(event_bp, url_prefix='/api/event')
     app.register_blueprint(test_bp, url_prefix='/api/test')
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(user_bp, url_prefix='/api/user')
