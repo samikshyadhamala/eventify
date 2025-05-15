@@ -40,57 +40,48 @@ export function AdminSidebar() {
   return (
     <Sidebar className="">
       <SidebarHeader className="h-16 border-b border-sidebar-border flex justify-center items-center">
+        <Link href='/'>
           <span className="text-3xl font-bold">Eventify</span>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === "/admin/dashboard"}>
-                  <Link href="/admin">
-                    <LayoutDashboard />
-                    <span>Overview</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === "/admin/analytics"}>
-                  <Link href="/admin/analytics">
-                    <BarChart3 />
-                    <span>Analytics</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
+        <SidebarGroup className="mt-4">
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild isActive={pathname === "/admin/dashboard"}>
+                <Link href="/admin">
+                  <LayoutDashboard />
+                  <span>Overview</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild isActive={pathname === "/admin/analytics"}>
+                <Link href="/admin/analytics">
+                  <BarChart3 />
+                  <span>Analytics</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild isActive={pathname === "/admin/events"}>
+                <Link href="/admin/events">
+                  <Calendar />
+                  <span>All Events</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild isActive={pathname === "/admin/events/create"}>
+                <Link href="/admin/events/create">
+                  <Clock />
+                  <span>Create Event</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
         </SidebarGroup>
-        <SidebarSeparator />
-        <SidebarGroup>
-          <SidebarGroupLabel>Event Management</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === "/admin/events"}>
-                  <Link href="/admin/events">
-                    <Calendar />
-                    <span>All Events</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === "/admin/events/create"}>
-                  <Link href="/admin/events/create">
-                    <Clock />
-                    <span>Create Event</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
+      </SidebarContent >
       <SidebarFooter>
         <div className="px-3 py-2">
           <div className="flex items-center gap-3 rounded-md border p-2">
@@ -116,6 +107,6 @@ export function AdminSidebar() {
         </SidebarMenu>
       </SidebarFooter>
       <SidebarRail />
-    </Sidebar>
+    </Sidebar >
   )
 }

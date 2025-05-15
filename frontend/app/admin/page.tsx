@@ -30,9 +30,8 @@ import {
   Search,
 } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@radix-ui/themes"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -46,11 +45,11 @@ export default function AdminDashboard() {
 
   return (
     <>
-      <main className="flex flex-1 flex-col gap-16 p-16 md:gap-8 md:px20 md:py-10">
+      <main className="flex flex-1 flex-col gap-16 p-6 md:gap-8 md:px20 md:py-10">
         <div className="flex items-center justify-between">
           <h1 className="text-4xl font-bold tracking-tight">Dashboard</h1>
           <Link href="/admin/events/create">
-            <Button size="sm" className="gap-1" color='black'>
+            <Button size={{ initial: "2", md: "3" }} className="gap-1" variant="solid" color="gray" highContrast>
               <Plus className="h-4 w-4" />
               Create Event
             </Button>
@@ -68,8 +67,9 @@ export default function AdminDashboard() {
                 title="Total Events"
                 value="24"
                 trend="up"
-                description="+2 from last month"
+                description="+2 from last month" 
                 icon={<Calendar className="h-4 w-4 text-muted-foreground" />}
+                change="+8.3%"
               />
               <MetricCard
                 title="Upcoming Events"
@@ -157,7 +157,7 @@ export default function AdminDashboard() {
                               {Math.round((event.registrations / event.capacity) * 100)}%
                             </span>
                           </div>
-                          <Progress value={(event.registrations / event.capacity) * 100} className="h-1" />
+                          <Progress value={(event.registrations / event.capacity) * 100} className="h-1" color="gray"/>
                         </div>
                       </div>
                     ))}
@@ -214,224 +214,6 @@ export default function AdminDashboard() {
                 </CardFooter>
               </Card>
             </div>
-          </TabsContent>
-          <TabsContent value="events" className="space-y-4">
-            <Card>
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle>Events Management</CardTitle>
-                  <Link href="/admin/events/create">
-                    <Button size="sm" className="gap-1">
-                      <Plus className="h-4 w-4" />
-                      Add Event
-                    </Button>
-                  </Link>
-                </div>
-                <CardDescription>Manage all your events in one place</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col gap-4">
-                  <div className="flex flex-col sm:flex-row gap-4 justify-between">
-                    <div className="flex flex-1 items-center gap-2">
-                      <div className="relative flex-1">
-                        <Input
-                          type="search"
-                          placeholder="Search events..."
-                          className="w-full pl-8 bg-muted border-none"
-                        />
-                      </div>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="outline" size="sm" className="h-9 gap-1">
-                            <Filter className="h-3.5 w-3.5" />
-                            <span>Filter</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem>All Events</DropdownMenuItem>
-                          <DropdownMenuItem>Upcoming Events</DropdownMenuItem>
-                          <DropdownMenuItem>Past Events</DropdownMenuItem>
-                          <DropdownMenuItem>Draft Events</DropdownMenuItem>
-                          <DropdownMenuItem>Published Events</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                      <Button variant="outline" size="sm" className="h-9 gap-1">
-                        <Download className="h-3.5 w-3.5" />
-                        <span>Export</span>
-                      </Button>
-                    </div>
-                    <Select defaultValue="all">
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Statuses</SelectItem>
-                        <SelectItem value="upcoming">Upcoming</SelectItem>
-                        <SelectItem value="ongoing">Ongoing</SelectItem>
-                        <SelectItem value="completed">Completed</SelectItem>
-                        <SelectItem value="cancelled">Cancelled</SelectItem>
-                        <SelectItem value="draft">Draft</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="rounded-md border">
-                    <div className="relative w-full overflow-auto">
-                      <table className="w-full caption-bottom text-sm">
-                        <thead className="[&_tr]:border-b">
-                          <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                            <th className="h-12 px-4 text-left align-middle font-medium">Event Name</th>
-                            <th className="h-12 px-4 text-left align-middle font-medium">Date</th>
-                            <th className="h-12 px-4 text-left align-middle font-medium">Status</th>
-                            <th className="h-12 px-4 text-left align-middle font-medium">Registrations</th>
-                            <th className="h-12 px-4 text-left align-middle font-medium">Type</th>
-                            <th className="h-12 px-4 text-left align-middle font-medium">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody className="[&_tr:last-child]:border-0">
-                          {[
-                            {
-                              name: "Web Development Workshop",
-                              date: "Jun 15, 2025",
-                              status: "Upcoming",
-                              registrations: 45,
-                              capacity: 50,
-                              type: "Paid",
-                            },
-                            {
-                              name: "Tech Networking Night",
-                              date: "Jun 22, 2025",
-                              status: "Upcoming",
-                              registrations: 32,
-                              capacity: 100,
-                              type: "Free",
-                            },
-                            {
-                              name: "AI Conference",
-                              date: "Jul 05, 2025",
-                              status: "Upcoming",
-                              registrations: 78,
-                              capacity: 150,
-                              type: "Paid",
-                            },
-                            {
-                              name: "Hackathon 2025",
-                              date: "Jul 15, 2025",
-                              status: "Draft",
-                              registrations: 24,
-                              capacity: 50,
-                              type: "Free",
-                            },
-                            {
-                              name: "Mobile App Showcase",
-                              date: "Jul 28, 2025",
-                              status: "Upcoming",
-                              registrations: 18,
-                              capacity: 75,
-                              type: "Free",
-                            },
-                            {
-                              name: "Data Science Workshop",
-                              date: "May 10, 2025",
-                              status: "Completed",
-                              registrations: 56,
-                              capacity: 60,
-                              type: "Paid",
-                            },
-                            {
-                              name: "Blockchain Seminar",
-                              date: "May 22, 2025",
-                              status: "Completed",
-                              registrations: 42,
-                              capacity: 50,
-                              type: "Free",
-                            },
-                          ].map((event, i) => (
-                            <tr
-                              key={i}
-                              className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-                            >
-                              <td className="p-4 align-middle font-medium">{event.name}</td>
-                              <td className="p-4 align-middle">{event.date}</td>
-                              <td className="p-4 align-middle">
-                                <Badge
-                                  variant="outline"
-                                  className={`
-                                    ${event.status === "Upcoming"
-                                      ? "border-blue-200 bg-blue-50 text-blue-700"
-                                      : event.status === "Completed"
-                                        ? "border-green-200 bg-green-50 text-green-700"
-                                        : "border-yellow-200 bg-yellow-50 text-yellow-700"
-                                    }
-                                  `}
-                                >
-                                  {event.status}
-                                </Badge>
-                              </td>
-                              <td className="p-4 align-middle">
-                                <div className="flex flex-col gap-1">
-                                  <div className="flex items-center justify-between text-xs">
-                                    <span>
-                                      {event.registrations}/{event.capacity}
-                                    </span>
-                                    <span className="text-muted-foreground">
-                                      {Math.round((event.registrations / event.capacity) * 100)}%
-                                    </span>
-                                  </div>
-                                  <Progress value={(event.registrations / event.capacity) * 100} className="h-1" />
-                                </div>
-                              </td>
-                              <td className="p-4 align-middle">
-                                <Badge
-                                  variant="outline"
-                                  className={`
-                                    ${event.type === "Paid"
-                                      ? "border-purple-200 bg-purple-50 text-purple-700"
-                                      : "border-gray-200 bg-gray-50 text-gray-700"
-                                    }
-                                  `}
-                                >
-                                  {event.type}
-                                </Badge>
-                              </td>
-                              <td className="p-4 align-middle">
-                                <DropdownMenu>
-                                  <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" size="sm">
-                                      Actions
-                                      <ChevronDown className="ml-2 h-4 w-4" />
-                                    </Button>
-                                  </DropdownMenuTrigger>
-                                  <DropdownMenuContent align="end">
-                                    <DropdownMenuItem>View Details</DropdownMenuItem>
-                                    <DropdownMenuItem>Edit Event</DropdownMenuItem>
-                                    <DropdownMenuItem>View Registrations</DropdownMenuItem>
-                                    <DropdownMenuItem>Duplicate</DropdownMenuItem>
-                                    <DropdownMenuItem className="text-red-600">Delete</DropdownMenuItem>
-                                  </DropdownMenuContent>
-                                </DropdownMenu>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm text-muted-foreground">
-                      Showing <strong>1-7</strong> of <strong>24</strong> events
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Button variant="outline" size="sm" disabled>
-                        Previous
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        Next
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </TabsContent>
           <TabsContent value="settings" className="space-y-4">
             <Card>

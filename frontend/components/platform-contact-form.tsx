@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Loader2 } from 'lucide-react'
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@radix-ui/themes"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -95,7 +95,7 @@ export function PlatformContactForm() {
           <Textarea id="message" name="message" placeholder="How can we help you?" className="min-h-[150px]" required />
         </div>
 
-        <Button type="submit" disabled={isSubmitting || isSuccess} className="w-full">
+        <Button type="submit" disabled={isSubmitting || isSuccess} className="w-full" color='gray' variant='solid' highContrast>
           {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

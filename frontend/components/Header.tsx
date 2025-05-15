@@ -68,19 +68,10 @@ const Header = () => {
     <header className='w-100 px-5'>
       <nav className="navbar flex justify-between items-center py-3">
         <div className="logo-container">
-          <a href="#" className="logo text-2xl font-bold">Eventify</a>
+          <a href="#" className="logo text-2xl font-bold text-white">Eventify</a>
         </div>
 
-        <div className="search-container">
-          <input type="text" placeholder="Search in site" />
-          <button type="submit">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-            </svg>
-          </button>
-        </div>
-
-        <div className="nav-links flex space-x-8">
+        <div className="nav-links flex justify-evenly">
           <Link href="/" className='text-white'>Home</Link>
           <Link href="/allevent" className='text-white'>Events</Link>
           <Link href="#" className='text-white'>About</Link>
