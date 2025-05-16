@@ -1,9 +1,7 @@
 'use client';
 
-import styles from '@/styles/Freeevent.module.css';
-import Link from 'next/link';
-import ImageComponent from '@/components/ImageComponent';
-import { useEffect, useState } from 'react';
+
+import { useEffect, useState, useRef } from 'react';
 import { useAuth } from '@/context/auth/hooks';
 import { Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -11,17 +9,11 @@ import { Button } from '@radix-ui/themes';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import SkeletonEvents from '@/components/TrendingEvent/SkeletonEvents'
 import Header from '@/components/Header';
-export default function Home() {
-  interface Event {
-    event_id: number;
-    title: string;
-    event_date: string;
-    price: string;
-    location: string;
-    imageUrl: string;
-    is_paid: boolean;
-  }
+import { AnimatePresence, useAnimation } from "framer-motion";
+import EventCard from './components/EventCard';
+import { Event } from './types'
 
+export default function Home() {
   const [data, setData] = useState<Event[]>([])
   const { axiosInstance } = useAuth()
   const [searchQuery, setSearchQuery] = useState('')
@@ -53,30 +45,11 @@ export default function Home() {
 
     return (
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredEvents.map((item) => (
-          <div key={item.event_id} className="h-full rounded-lg border bg-card text-card-foreground shadow-sm">
-            <Link href={`/event/${item.event_id}`} className="block">
-              <div className='w-100 h-40'>
-                <ImageComponent imageFile={item.imageUrl} alt={item.title} />
-              </div>
-              <div className="p-4">
-                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                <div className="text-sm text-muted-foreground mb-2">{item.location}</div>
-                <div className="text-sm mb-2">
-                  {new Date(item.event_date).toLocaleDateString()} — {new Date(item.event_date).toLocaleTimeString()}
-                </div>
-                {item.is_paid && (
-                  <div className="text-sm font-medium">${item.price}</div>
-                )}
-              </div>
-            </Link>
-            <div className="px-4 pb-4">
-              <Link href={`/events/${item.event_id}`}>
-                <Button color='gray' variant='solid' highContrast style={{width: '100%'}}>View Details</Button>
-              </Link>
-            </div>
-          </div>
-        ))}
+        <AnimatePresence>
+          {filteredEvents.map((item) => (
+            <EventCard {...item} key={item.event_id} /> 
+          ))}
+        </AnimatePresence>
       </div>
     )
   }
@@ -96,7 +69,7 @@ export default function Home() {
 
   return (
     <>
-      <Header />
+      <Header placeholder={true} />
       <main className="w-full py-8 md:py-4 lg:py-4">
         <div className="container px-4 md:px-6 flex justify-center">
           <div className="flex w-full max-w-[60rem] flex-col gap-4">
@@ -110,7 +83,7 @@ export default function Home() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-              <Button variant="outline" size="icon" className="shrink-0">
+              <Button variant="outline" className="shrink-0">
                 <Filter className="h-4 w-4" />
                 <span className="sr-only">Filter</span>
               </Button>

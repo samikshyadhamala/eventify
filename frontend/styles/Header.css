@@ -1,9 +1,5 @@
 
-/* Header styling */
-header{
-    background: linear-gradient(
-        to right,#C1121F,#6D4F85);
-}
+/* Header styling */  
 .navbar {
     display: flex;
     justify-content: space-between;

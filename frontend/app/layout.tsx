@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 import AuthProvider from '@/context/auth';
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export const metadata: Metadata = {
   title: "Eventify", // Updated title
@@ -39,6 +41,18 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <Theme>
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
             {children}
           </Theme>
         </AuthProvider>

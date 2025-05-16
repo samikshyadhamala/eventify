@@ -1,8 +1,8 @@
 .carousel-item img {
-    height: 85vh;         /* Full screen height */
+    height: 100vh;         /* Full screen height */
     object-fit: cover;     /* Cover container fully */
     width: 100%; 
-    border-radius: 7.5%;      
-    padding: 20px 100px;  
+    border-radius: 0%;      
+    padding: 0px;  
     margin: auto;
   }

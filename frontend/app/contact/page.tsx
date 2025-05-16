@@ -12,7 +12,7 @@ import Header from "@/components/Header"
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Header></Header>
+      <Header placeholder={true}></Header>
       <main className="container py-10">
         <div className="mx-auto max-w-5xl">
           <div className="text-center mb-10">
