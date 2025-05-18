@@ -69,23 +69,26 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         const originalRequest = error.config;
 
         if (
-          error.response?.status === 401 &&
+          (error.response?.status === 401 || error.response?.status === 403) &&
           !originalRequest._retry &&
-          originalRequest.url !== '/api/auth/refresh' &&
-          refreshToken
+          originalRequest.url !== '/api/auth/refresh'
         ) {
           originalRequest._retry = true;
           try {
             const res = await axios.post(
               `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/refresh`,
-              { refreshToken },
+              {},
               { withCredentials: true }
             );
-            setAccessToken(res.data.accessToken);
-            setUser(res.data.user || null);
+            
+            const { idToken, refreshToken: newRefreshToken, user: userData } = res.data;
+            
+            setAccessToken(idToken);
+            setRefreshToken(newRefreshToken);
+            setUser(userData || null);
             setIsAuthenticated(true);
 
-            originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
+            originalRequest.headers.Authorization = `Bearer ${idToken}`;
             return instance(originalRequest);
           } catch (err) {
             await logout();
@@ -98,7 +101,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     );
 
     return instance;
-  }, [accessToken, refreshToken, logout]);
+  }, [accessToken, logout]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -128,12 +131,16 @@ export default function AuthProvider({ children }: AuthProviderProps) {
           {},
           { withCredentials: true }
         );
-        setAccessToken(res.data.accessToken);
-        setUser(res.data.user || null);
+        const { idToken, refreshToken: newRefreshToken, user: userData } = res.data;
+        
+        setAccessToken(idToken);
+        setRefreshToken(newRefreshToken);
+        setUser(userData || null);
         setIsAuthenticated(true);
       } catch {
         setUser(null);
         setAccessToken(null);
+        setRefreshToken(null);
         setIsAuthenticated(false);
       } finally {
         setLoading(false);

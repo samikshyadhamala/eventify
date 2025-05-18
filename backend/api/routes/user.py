@@ -15,7 +15,7 @@ def delete_user(id):
     return delete_user_controller(id)
 
 @user_bp.put("/updateRole")
-@verify_admin_token
+@verify_admin_token 
 def updateRole():
     data = request.get_json()
     user_id = data.get('user_id')
@@ -28,3 +28,11 @@ def updateRole():
 @verify_admin_token
 def getBranchAdmin(): 
     return GetBranchAdmin()
+
+@user_bp.post("/createBranchAdmin")
+@verify_admin_token
+def createBranchAdmin(): 
+    data = request.get_json()
+    branch_id = data.get('branch_id')
+    user_id = data.get('user_id')
+    return CreateBranchAdmin(branch_id, user_id)

@@ -1,6 +1,6 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from ..controllers.event import *
-from middleware.auth import verify_club_token
+from middleware.auth import verify_club_token, verify_club_admin_token
 
 event_bp = Blueprint("event", __name__)
 
@@ -18,7 +18,7 @@ def getEvent(event_id):
     return GetEvent(event_id)
 
 @event_bp.delete("/deleteEvent/<int:event_id>")
-@verify_club_token
+@verify_club_admin_token
 def delete_event(event_id): 
     return DeleteEventController(event_id)
 
@@ -29,3 +29,8 @@ def getTotalEvent():
 @event_bp.get("/getUpcomingEvent")
 def getUpcomingEvent(): 
     return GetUpcomingEvent()
+
+@event_bp.post("/createEvent")
+def createEvent(): 
+    data = request.get_json()
+    return CreateEvent(data); 

@@ -9,3 +9,4 @@ Flask-Migrate
 firebase_admin
 psycopg[binary]
 flask-cors
+resend

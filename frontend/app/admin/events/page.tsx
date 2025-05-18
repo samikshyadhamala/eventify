@@ -12,6 +12,21 @@ import { Progress } from "@/components/ui/progress"
 import { useAuth } from "@/context/auth/hooks"
 import { useEffect, useState } from "react"
 import { motion } from 'framer-motion'
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+} from "@/components/ui/dialog"
+import {
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
+} from "@/components/ui/tabs"
+import { Calendar, Clock, MapPin, User, Users, BarChart } from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default function Events() {
     const { axiosInstance } = useAuth();
@@ -21,6 +36,11 @@ export default function Events() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalEvents, setTotalEvents] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+    const [showEventDialog, setShowEventDialog] = useState(false);
+    const [registrations, setRegistrations] = useState<any[]>([]);
+    const [loadingRegistrations, setLoadingRegistrations] = useState(false);
+    const [eventRegistrations, setEventRegistrations] = useState<{[key: number]: number}>({});
     const rowsPerPage = 10;
 
     useEffect(() => {
@@ -32,6 +52,19 @@ export default function Events() {
                 setEvents(allEvents);
                 setFilteredEvents(allEvents);
                 setTotalEvents(allEvents.length);
+
+                // Fetch registration counts for all events
+                const registrationPromises = allEvents.map(event => 
+                    axiosInstance.get(`/api/registration/getEventRegistration/${event.event_id}`)
+                );
+                
+                const registrationResponses = await Promise.all(registrationPromises);
+                const registrationCounts = registrationResponses.reduce((acc, response, index) => {
+                    acc[allEvents[index].event_id] = response.data.registrations.length;
+                    return acc;
+                }, {});
+                
+                setEventRegistrations(registrationCounts);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching events:", error);
@@ -117,13 +150,27 @@ export default function Events() {
     // delete logic
     const handleDelete = (event_id: number) => {
         axiosInstance.delete(`/api/event/deleteEvent/${event_id}`)
-        .then(() => {
-            setEvents(events.filter(event => event.event_id !== event_id));
-        })
-        .catch(error => {
-            console.error('Error deleting event:', error);
-        });
+            .then(() => {
+                setEvents(events.filter(event => event.event_id !== event_id));
+            })
+            .catch(error => {
+                console.error('Error deleting event:', error);
+            });
     }
+
+    const handleEventDetails = async (event: Event) => {
+        setSelectedEvent(event);
+        setShowEventDialog(true);
+        setLoadingRegistrations(true);
+        try {
+            const response = await axiosInstance.get(`/api/registration/getEventRegistration/${event.event_id}`);
+            setRegistrations(response.data.registrations);
+        } catch (error) {
+            console.error("Error fetching registrations:", error);
+        }
+        setLoadingRegistrations(false);
+    };
+
     return (
         <div className="w-full">
             <div className="p-2 py-4">
@@ -131,7 +178,7 @@ export default function Events() {
                     <div className="flex items-center justify-between">
                         <h1 className="font-bold tracking-tight">Events Management</h1>
                         <Link href="/admin/create-event">
-                            <Button className="gap-1">
+                            <Button className="gap-1 bg-black">
                                 <Plus className="h-4 w-4" />
                                 Add Event
                             </Button>
@@ -152,38 +199,7 @@ export default function Events() {
                                         onChange={handleSearchChange}
                                     />
                                 </div>
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Button variant="outline" className="h-9 gap-1">
-                                            <Filter className="h-3.5 w-3.5" />
-                                            <span>Filter</span>
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end">
-                                        <DropdownMenuItem>All Events</DropdownMenuItem>
-                                        <DropdownMenuItem>Upcoming Events</DropdownMenuItem>
-                                        <DropdownMenuItem>Past Events</DropdownMenuItem>
-                                        <DropdownMenuItem>Draft Events</DropdownMenuItem>
-                                        <DropdownMenuItem>Published Events</DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                                <Button variant="outline" className="h-9 gap-1">
-                                    <Download className="h-3.5 w-3.5" />
-                                    <span>Export</span>
-                                </Button>
                             </div>
-                            <Select defaultValue="all">
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Status" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="all">All Statuses</SelectItem>
-                                    <SelectItem value="upcoming">Upcoming</SelectItem>
-                                    <SelectItem value="ongoing">Ongoing</SelectItem>
-                                    <SelectItem value="completed">Completed</SelectItem>
-                                    <SelectItem value="cancelled">Cancelled</SelectItem>
-                                </SelectContent>
-                            </Select>
                         </div>
                         <div className="rounded-md border">
                             <div className="relative w-full overflow-auto">
@@ -235,13 +251,13 @@ export default function Events() {
                                         ) : (
                                             currentEvents.map((event, i) => {
                                                 const status = getEventStatus(event.event_date);
-                                                const registrations = 0; // This would come from the API in a real scenario
+                                                const registrationCount = eventRegistrations[event.event_id] || 0;
 
                                                 return (
                                                     <motion.tr
                                                         key={event.event_id}
                                                         className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-                                                        initial={{ opacity: 0, y: 20}}
+                                                        initial={{ opacity: 0, y: 20 }}
                                                         animate={{ opacity: 1, y: 0 }}
                                                     >
                                                         <td className="p-4 align-middle font-medium">{event.title}</td>
@@ -265,13 +281,13 @@ export default function Events() {
                                                             <div className="flex flex-col gap-1">
                                                                 <div className="flex items-center justify-between text-xs">
                                                                     <span>
-                                                                        {registrations}/{event.max_capacity}
+                                                                        {registrationCount}/{event.max_capacity}
                                                                     </span>
                                                                     <span className="text-muted-foreground">
-                                                                        {Math.round((registrations / event.max_capacity) * 100)}%
+                                                                        {Math.round((registrationCount / event.max_capacity) * 100)}%
                                                                     </span>
                                                                 </div>
-                                                                <Progress value={(registrations / event.max_capacity) * 100} className="h-1" />
+                                                                <Progress value={(registrationCount / event.max_capacity) * 100} className="h-1" />
                                                             </div>
                                                         </td>
                                                         <td className="p-4 align-middle">
@@ -290,16 +306,18 @@ export default function Events() {
                                                         <td className="p-4 align-middle">
                                                             <DropdownMenu>
                                                                 <DropdownMenuTrigger asChild>
-                                                                    <Button variant="ghost" >
+                                                                    <Button variant="ghost">
                                                                         Actions
                                                                         <ChevronDown className="ml-2 h-4 w-4" />
                                                                     </Button>
                                                                 </DropdownMenuTrigger>
                                                                 <DropdownMenuContent align="end">
-                                                                    <DropdownMenuItem>View Details</DropdownMenuItem>
-                                                                    <DropdownMenuItem>Edit Event</DropdownMenuItem>
-                                                                    <DropdownMenuItem>View Registrations</DropdownMenuItem>
-                                                                    <DropdownMenuItem className="text-red-600" onClick={() => handleDelete(event.event_id)}>Delete</DropdownMenuItem>
+                                                                    <DropdownMenuItem onClick={() => handleEventDetails(event)}>
+                                                                        Event Details
+                                                                    </DropdownMenuItem>
+                                                                    <DropdownMenuItem className="text-red-600" onClick={() => handleDelete(event.event_id)}>
+                                                                        Delete
+                                                                    </DropdownMenuItem>
                                                                 </DropdownMenuContent>
                                                             </DropdownMenu>
                                                         </td>
@@ -327,6 +345,109 @@ export default function Events() {
                     </div>
                 </CardContent>
             </div>
+
+            {selectedEvent && (
+                <Dialog open={showEventDialog} onOpenChange={(open) => !open && setShowEventDialog(false)}>
+                    <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+                        <DialogHeader>
+                            <DialogTitle className="text-xl font-bold">{selectedEvent.title}</DialogTitle>
+                            <div className="text-sm text-muted-foreground">
+                                <Badge className={
+                                    getEventStatus(selectedEvent.event_date) === "Upcoming"
+                                        ? "bg-blue-100 text-blue-800"
+                                        : "bg-gray-100 text-gray-800"
+                                }>
+                                    {getEventStatus(selectedEvent.event_date)}
+                                </Badge>
+                            </div>
+                        </DialogHeader>
+
+                        <Tabs defaultValue="details" className="w-full">
+                            <TabsList className="grid grid-cols-2 mb-4">
+                                <TabsTrigger value="details">
+                                    <div className="flex items-center gap-2">
+                                        <Calendar className="h-4 w-4" />
+                                        <span>Details</span>
+                                    </div>
+                                </TabsTrigger>
+                                <TabsTrigger value="attendees">
+                                    <div className="flex items-center gap-2">
+                                        <Users className="h-4 w-4" />
+                                        <span>Attendees</span>
+                                    </div>
+                                </TabsTrigger>
+                            </TabsList>
+
+                            <TabsContent value="details" className="space-y-4">
+                                <Card>
+                                    <CardContent className="pt-6 space-y-4">
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <h4 className="text-sm font-medium text-gray-500">Date & Time</h4>
+                                                <div className="flex items-center mt-1">
+                                                    <Calendar className="h-4 w-4 mr-2 text-brand-purple" />
+                                                    <span>{new Date(selectedEvent.event_date).toLocaleDateString()}</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h4 className="text-sm font-medium text-gray-500">Location</h4>
+                                                <div className="flex items-center mt-1">
+                                                    <MapPin className="h-4 w-4 mr-2 text-brand-purple" />
+                                                    <span>{selectedEvent.location}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <h4 className="text-sm font-medium text-gray-500">Capacity</h4>
+                                            <div className="flex items-center mt-1">
+                                                <User className="h-4 w-4 mr-2 text-brand-purple" />
+                                                <span>{registrations.length} / {selectedEvent.max_capacity} attendees</span>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <h4 className="text-sm font-medium text-gray-500">Description</h4>
+                                            <p className="mt-1">{selectedEvent.description}</p>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </TabsContent>
+
+                            <TabsContent value="attendees">
+                                <Card>
+                                    <CardContent className="pt-6">
+                                        {loadingRegistrations ? (
+                                            <div className="text-center">Loading attendees...</div>
+                                        ) : registrations.length === 0 ? (
+                                            <p className="text-center text-gray-500">No attendees registered yet</p>
+                                        ) : (
+                                            <div className="space-y-4">
+                                                {registrations.map((registration) => (
+                                                    <div key={registration.registration_id} className="flex items-center gap-4 p-3 rounded-lg border">
+                                                        <Avatar>
+                                                            <AvatarImage src={registration.user.imageUrl} />
+                                                            <AvatarFallback>
+                                                                {registration.user.email.charAt(0).toUpperCase()}
+                                                            </AvatarFallback>
+                                                        </Avatar>
+                                                        <div className="flex-1">
+                                                            <p className="text-sm font-medium">{registration.user.email}</p>
+                                                            <p className="text-xs text-gray-500">
+                                                                Registered on {new Date(registration.registered_at).toLocaleDateString()}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </CardContent>
+                                </Card>
+                            </TabsContent>
+                        </Tabs>
+                    </DialogContent>
+                </Dialog>
+            )}
         </div>
     )
 }

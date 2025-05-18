@@ -219,7 +219,7 @@ export default function ManageUsers() {
                                 </SelectContent>
                             </Select>
                         </div>
-                        <Button onClick={handleBranchSubmit} disabled={changingRole === selectedUserId}>
+                        <Button onClick={handleBranchSubmit} className="bg-black" disabled={changingRole === selectedUserId}>
                             {changingRole === selectedUserId ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

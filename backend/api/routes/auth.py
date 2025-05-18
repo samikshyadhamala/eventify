@@ -30,9 +30,11 @@ def logout_user():
 
 @auth_bp.post("/refresh")
 def refresh():
-    return refresh_token(request)
+    token = request.cookies.get('refreshToken')
+    return refresh_token(token)
 
 @auth_bp.get("/getUserInfo")
 def getUserInfo(): 
     return GetUserInfo()
-
+    
+    

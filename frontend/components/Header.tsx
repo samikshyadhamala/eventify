@@ -7,10 +7,13 @@ import { useAuth } from '../context/auth/hooks';
 import { auth, provider, signInWithPopup } from "../app/firebase";
 import Image from 'next/image'
 import { toast } from 'react-toastify';
+import { Button } from '@/components/ui/button'
+import {Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 
 const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
   const { user, setIsAuthenticated, setUser, axiosInstance } = useAuth();
   const router = useRouter();
 
@@ -18,10 +21,14 @@ const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
+        setIsUserLoading(true)
         const response = await axiosInstance.get("/api/auth/getUserInfo")
         setUser(response.data)
       } catch (error) {
         console.log(error)
+      }
+      finally { 
+        setIsUserLoading(false)
       }
     }
     getCurrentUser()
@@ -40,37 +47,6 @@ const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
     };
   }, []);
 
-  const handleLoginOrSignup = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const firebaseUser = result.user;
-      const idToken = await firebaseUser.getIdToken();
-      const refreshToken = firebaseUser.refreshToken;
-
-      try {
-        const response = await axiosInstance.post(
-          '/api/auth/signin-with-google',
-          { authToken: idToken, refreshToken }
-        );
-        setIsAuthenticated(true);
-        setUser(response.data?.user);
-        if (response.data?.user?.role === 'admin') {
-          return router.push('/admin');
-        } else if (response.data?.user?.role === 'club') {
-          return router.push('/club');
-        } else {
-          return router.push('/');
-        }
-      } catch (error) {
-        toast.error("Error during login")
-        console.error('Login error:', error);
-      }
-    } catch (err) {
-      toast.error("Google login error")
-      console.error('Google login error:', err);
-    }
-  };
-
   const handleLogout = async () => {
     try {
       await axiosInstance.post('/api/auth/logout');
@@ -79,6 +55,15 @@ const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
       router.push('/');
     } catch (err) {
       console.error('Logout error:', err);
+    }
+  };
+
+  const handleDashboardClick = () => {
+    if (!user) return;
+    if (user.role === 'club') {
+      router.push('/club');
+    } else if (user.role === 'admin') {
+      router.push('/admin');
     }
   };
 
@@ -103,38 +88,41 @@ const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
                 <div>
                   <button
                     onClick={() => setOpen(!open)}
-                    className="w-30 h-30 rounded-full overflow-hidden border-2 border-gray-300 focus:outline-none"
+                    className="focus:outline-none"
                   >
-                    <Image
-                      src={user?.imageUrl || "/api/placeholder/40/40"}
-                      alt="Profile Picture"
-                      className="object-cover"
-                      height={32}
-                      width={32}
-                    />
+                    <Avatar>
+                      <AvatarImage src={user?.imageUrl || "/api/placeholder/40/40"} alt="Profile Picture" />
+                      <AvatarFallback>
+                        {user?.name?.charAt(0) || 'U'}
+                      </AvatarFallback>
+                    </Avatar>
                   </button>
                 </div>
               </>
             ) : (
               <div className='fc gap-3'>
-                <button
-                  onClick={handleLoginOrSignup}
+                <Link
                   className='px-3 py-2 button-sec font-extrabold text-white'
+                  href='/login'
                 >
-                  Login
-                </button>
-                <button
-                  onClick={handleLoginOrSignup}
-                  className='px-3 py-2 button-pri text-white'
-                >
-                  Sign Up
-                </button>
+                  <Button 
+                    variant={'outline'} 
+                    className='bg-black hover:text-white rounded-full px-8'
+                    disabled={isUserLoading}
+                  >
+                    Login
+                  </Button>
+                </Link>
               </div>
             )}
 
             {open && (
               <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                {user && (user.role === 'admin' || user.role === 'club') && (
+                  <div className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={handleDashboardClick}>
+                    Dashboard
+                  </div>
+                )}
                 <button
                   onClick={handleLogout}
                   className="block px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100"

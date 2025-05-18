@@ -38,7 +38,6 @@ async function getEvent(id: string) {
 function EventSkeleton() {
   return (
     <div className="lg:col-span-2 space-y-6">
-      {/* Event Header Skeleton */}
       <div>
         <Skeleton className="h-10 w-3/4 mb-2" />
         <Skeleton className="h-6 w-20 mt-2" />
@@ -47,11 +46,7 @@ function EventSkeleton() {
           <Skeleton className="h-5 w-60" />
         </div>
       </div>
-
-      {/* Event Image Skeleton */}
       <Skeleton className="aspect-video w-full rounded-lg" />
-
-      {/* Event Tabs Skeleton */}
       <div className="w-full">
         <div className="grid w-full grid-cols-2 gap-2 mb-4">
           <Skeleton className="h-10" />
@@ -87,12 +82,10 @@ async function EventContent({ eventId }: { eventId: string }) {
 
   return (
     <>
-      {/* Main Content */}
       <div className="lg:col-span-2 space-y-6">
-        {/* Event Header */}
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{event.title}</h1>
-          <div className="mt-2 flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2">
             {event.is_paid ? <Badge variant="default">Paid</Badge> : <Badge variant="outline">Free</Badge>}
           </div>
           <div className="mt-4 flex flex-col gap-2 text-muted-foreground">
@@ -106,8 +99,6 @@ async function EventContent({ eventId }: { eventId: string }) {
             </div>
           </div>
         </div>
-
-        {/* Event Image */}
         <div className="relative aspect-video w-full overflow-hidden rounded-lg">
           <Image
             src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/media/${event.imageUrl}` || "/placeholder.svg?height=500&width=800"}
@@ -117,18 +108,13 @@ async function EventContent({ eventId }: { eventId: string }) {
             priority
           />
         </div>
-
-        {/* Event Tabs */}
         <Tabs defaultValue="about" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="about">About</TabsTrigger>
             <TabsTrigger value="location">Location</TabsTrigger>
           </TabsList>
-
-          {/* About Tab */}
           <TabsContent value="about" className="mt-4 space-y-4">
             <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: event.description }} />
-
             <div className="flex flex-wrap gap-4 mt-6">
               <Button variant="outline" className="gap-2">
                 <Share2 className="h-4 w-4" />
@@ -140,8 +126,6 @@ async function EventContent({ eventId }: { eventId: string }) {
               </Button>
             </div>
           </TabsContent>
-
-          {/* Location Tab */}
           <TabsContent value="location" className="mt-4">
             <Card>
               <CardContent className="p-6">
@@ -150,14 +134,11 @@ async function EventContent({ eventId }: { eventId: string }) {
                     <h3 className="font-semibold">Location</h3>
                     <p className="text-muted-foreground">{event.location}</p>
                   </div>
-
                   <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-muted">
-                    {/* This would be a map in a real application */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <p className="text-muted-foreground">Map would be displayed here</p>
                     </div>
                   </div>
-
                   <Button variant="outline" className="gap-2">
                     <ExternalLink className="h-4 w-4" />
                     Get Directions
@@ -168,10 +149,7 @@ async function EventContent({ eventId }: { eventId: string }) {
           </TabsContent>
         </Tabs>
       </div>
-
-      {/* Sidebar */}
       <div className="space-y-6">
-        {/* Registration Card */}
         <Card className="sticky top-20">
           <CardHeader>
             <CardTitle>Registration</CardTitle>
@@ -181,22 +159,24 @@ async function EventContent({ eventId }: { eventId: string }) {
             {event.is_paid ? (
               <div className="flex items-center text-2xl font-bold">
                 <DollarSign className="h-5 w-5" />
-                <span>{event.price.toFixed(2)}</span>
+                <span>{(event.price || 0).toFixed(2)}</span>
               </div>
             ) : (
               <Badge variant="outline" className="text-lg py-1 px-2">
                 Free
               </Badge>
             )}
-
             <div className="flex items-center text-sm text-muted-foreground">
               <Users className="mr-2 h-4 w-4" />
               <span>
-                Capacity: {event.max_capacity} spots
+                Capacity: {event.max_capacity || 'N/A'} spots
               </span>
             </div>
-
-            <RegistrationForm eventId={event.event_id} isPaid={event.is_paid} price={event.price} />
+            <RegistrationForm 
+              eventId={event.id || ''} 
+              isPaid={event.is_paid || false} 
+              price={event.price || 0} 
+            />
           </CardContent>
         </Card>
       </div>
@@ -204,12 +184,12 @@ async function EventContent({ eventId }: { eventId: string }) {
   )
 }
 
-export default function EventDetailsPage({
+export default async function EventDetailsPage({
   params,
 }: {
   params: { eventId: string }
 }) {
-  const eventId = params.eventId
+  const eventId = await params.eventId
 
   return (
     <div className="min-h-screen bg-background">
@@ -220,7 +200,6 @@ export default function EventDetailsPage({
             Back to Events
           </Link>
         </div>
-
         <div className="grid gap-6 lg:grid-cols-3">
           <Suspense fallback={
             <>

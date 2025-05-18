@@ -4,3 +4,4 @@ from .insertEventController import InsertEventController
 from .deleteEvent import DeleteEventController
 from .getTotalEvent import GetTotalEvent
 from .getUpcomingEvent import GetUpcomingEvent
+from .createEvent import CreateEvent

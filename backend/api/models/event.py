@@ -1,11 +1,11 @@
 from api import db 
-from datetime import datetime
+from datetime import datetime, UTC
 
 
 class Event(db.Model):
     __tablename__ = 'events'
 
-    event_id = db.Column(db.Integer, primary_key=True)
+    event_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     branch_id = db.Column(db.Integer, db.ForeignKey('branches.branch_id', ondelete='CASCADE'), nullable=False)
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text)
@@ -15,8 +15,8 @@ class Event(db.Model):
     price = db.Column(db.Numeric(10, 2))
     max_capacity = db.Column(db.Integer)
     imageUrl = db.Column(db.String(255))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=datetime.now(UTC), onupdate=datetime.now(UTC))
 
     # Relationships
     # branch = db.relationship('Branch', back_populates='events')

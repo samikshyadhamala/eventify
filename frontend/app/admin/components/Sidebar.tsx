@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BarChart3, Building2, Globe, LayoutDashboard, LogOut, Settings, Shield, Users } from "lucide-react";
+import { BarChart3, Building2, Globe, LayoutDashboard, LogOut, Settings, Clock, Users } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -16,7 +16,7 @@ import {
   SidebarRail,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
-import { useRouter, usePathname } from "next/navigation"; // Use next/navigation instead of next/router
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/context/auth/hooks";
 import { useState, useEffect } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -33,7 +33,6 @@ export default function SuperAdminSidebar() {
   const router = useRouter();
   const pathname = usePathname()
 
-  // fetching user info 
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -57,86 +56,66 @@ export default function SuperAdminSidebar() {
           </h4>
         </Link>
       </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === "/admin"}>
-                  <Link href="/admin">
-                    <LayoutDashboard />
-                    <span>Overview</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup className="m-0">
-          <SidebarGroupLabel>Branch Management</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === "/admin/branches"}>
-                  <Link href="/admin/branches">
-                    <Building2 />
-                    <span>All Branches</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              {/* <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === "/admin/branches/create"}>
-                  <Link href="/admin/branches/create">
-                    <Building2 />
-                    <span>Create Branch</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem> */}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarSeparator />
-        <SidebarGroup>
-          <SidebarGroupLabel>Event Management</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === "/admin/events"}>
-                  <Link href="/admin/events">
-                    <Globe />
-                    <span>All Events</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarSeparator />
-        <SidebarGroup>
-          <SidebarGroupLabel>User Management</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === "/admin/users"}>
-                  <Link href="/admin/users">
-                    <Users />
-                    <span>All Users</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === "/admin/users/branchAdmin"}>
-                  <Link href="/admin/users/branchAdmin">
-                    <Users />
-                    <span>Branch Admins</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+      <SidebarContent className="mt-12">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={pathname === "/admin"}>
+              <Link href="/admin">
+                <LayoutDashboard />
+                <span>Overview</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={pathname === "/admin/branches"}>
+              <Link href="/admin/branches">
+                <Building2 />
+                <span>All Branches</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={pathname === "/admin/events"}>
+              <Link href="/admin/events">
+                <Globe />
+                <span>All Events</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={pathname === "/admin/create-event"}>
+              <Link href="/admin/create-event">
+                <Clock />
+                <span>Create Event</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={pathname === "/admin/users"}>
+              <Link href="/admin/users">
+                <Users />
+                <span>All Users</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={pathname === "/admin/users/branchAdmin"}>
+              <Link href="/admin/users/branchAdmin">
+                <Users />
+                <span>Branch Admins</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarContent>
+
       <SidebarFooter>
         <SidebarMenu className="pl-2">
           <SidebarMenuItem>

@@ -4,8 +4,7 @@ from flask import jsonify, make_response
 import requests
 from api.models.user import User
 
-def refresh_token(request):
-    refresh_token = request.cookies.get('refreshToken')
+def refresh_token(refresh_token):
     if not refresh_token:
         return jsonify({"error": "No refresh token found in cookies"}), 401
 
@@ -32,7 +31,7 @@ def refresh_token(request):
         # Verify token and get user
         decoded_token = auth.verify_id_token(new_id_token)
         try:
-            database_user = User.query.filter_by(firebase_uid=decoded_token['user_id']).first()
+            database_user = User.query.filter_by(fid=decoded_token['user_id']).first()
             user_data = database_user.to_dict() if database_user else None
         except Exception as error:
             print('Error finding user:', error)

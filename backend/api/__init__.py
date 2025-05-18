@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, abort, send_file
+from flask import Flask, send_from_directory, abort, send_file, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_restful import Api
@@ -38,26 +38,47 @@ def create_app():
     if not os.path.exists(MEDIA_FOLDER):
         os.makedirs(MEDIA_FOLDER)
 
-    @app.route('/api/image/<filename>', methods=['GET'])
+    @app.route('/api/image/<filename>', methods=['GET', 'POST'])
     def get_image(filename):
-        # Construct the file path using absolute path
-        file_path = os.path.join(app.config['MEDIA_FOLDER'], filename)
-        
-        # Check if the file exists
-        if not os.path.isfile(file_path):
-            abort(404, description="Image not found")
-        
-        # Get file extension to determine mimetype
-        file_ext = os.path.splitext(filename)[1].lower()
-        if file_ext in ['.jpg', '.jpeg']:
-            mimetype = 'image/jpeg'
-        elif file_ext == '.png':
-            mimetype = 'image/png'
-        else:
-            mimetype = 'image/jpeg'  # Default to jpeg
+        if request.method == 'POST':
+            # Handle image upload
+            if 'image' not in request.files:
+                return {'message': 'No image file provided'}, 400
+                
+            file = request.files['image']
+            if file.filename == '':
+                return {'message': 'No selected file'}, 400
+                
+            # Check if the file extension is allowed
+            file_ext = os.path.splitext(file.filename)[1].lower()
+            if file_ext not in ['.jpg', '.jpeg', '.png']:
+                return {'message': 'File type not allowed'}, 400
+                
+            # Save the file
+            file_path = os.path.join(app.config['MEDIA_FOLDER'], filename)
+            file.save(file_path)
+            return {'filename': filename}, 200
             
-        # Serve the image
-        return send_file(file_path, mimetype=mimetype)
+        else:
+            # Handle GET request
+            # Construct the file path using absolute path
+            file_path = os.path.join(app.config['MEDIA_FOLDER'], filename)
+            
+            # Check if the file exists
+            if not os.path.isfile(file_path):
+                abort(404, description="Image not found")
+            
+            # Get file extension to determine mimetype
+            file_ext = os.path.splitext(filename)[1].lower()
+            if file_ext in ['.jpg', '.jpeg']:
+                mimetype = 'image/jpeg'
+            elif file_ext == '.png':
+                mimetype = 'image/png'
+            else:
+                mimetype = 'image/jpeg'  # Default to jpeg
+                
+            # Serve the image
+            return send_file(file_path, mimetype=mimetype)
 
     # Optional: Serve images from the media folder directly
     @app.route('/media/<filename>')
