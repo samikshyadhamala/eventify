@@ -43,8 +43,7 @@ def SigninWithGoogleController(request):
         resp = make_response(
             jsonify({
                 'authenticated': True,
-                'uid': decoded_token['uid'],
-                'user': user.to_dict() if hasattr(user, 'to_dict') else str(user)
+                'user': {**user.to_dict(), 'fid': decoded_token['uid']} if hasattr(user, 'to_dict') else str(user)
             })
         )
 

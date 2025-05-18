@@ -31,7 +31,7 @@ def is_authenticated():
         return jsonify({
             "authenticated": True,
             "uid": decoded_token['uid'],
-            "user": user.to_dict()
+            "user": {**user.to_dict(), 'fid': decoded_token['uid']}
         }), 200
 
     except Exception as error:

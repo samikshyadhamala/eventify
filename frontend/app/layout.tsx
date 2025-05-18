@@ -1,6 +1,5 @@
 // Remove 'use client' since layout.tsx should be a Server Component
 import type { Metadata } from "next";
-import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AuthProvider from '@/context/auth';
@@ -8,6 +7,7 @@ import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Eventify", // Updated title

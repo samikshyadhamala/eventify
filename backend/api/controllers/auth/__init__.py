@@ -4,3 +4,4 @@ from .signinWithGoogle import SigninWithGoogleController
 from .is_authenticated import is_authenticated
 from .refresh import refresh_token
 from .logout import logout
+from .getUserInfo import GetUserInfo

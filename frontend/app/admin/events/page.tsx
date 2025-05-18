@@ -125,12 +125,12 @@ export default function Events() {
         });
     }
     return (
-        <>
+        <div className="w-full">
             <div className="p-2 py-4">
                 <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
                         <h1 className="font-bold tracking-tight">Events Management</h1>
-                        <Link href="/admin/events/create">
+                        <Link href="/admin/create-event">
                             <Button className="gap-1">
                                 <Plus className="h-4 w-4" />
                                 Add Event
@@ -187,7 +187,7 @@ export default function Events() {
                         </div>
                         <div className="rounded-md border">
                             <div className="relative w-full overflow-auto">
-                                <table className="w-full caption-bottom text-sm">
+                                <table className="w-full caption-bottom text-sm ">
                                     <thead className="[&_tr]:border-b">
                                         <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                                             <th className="h-12 px-4 text-left align-middle font-medium">Event Name</th>
@@ -222,7 +222,7 @@ export default function Events() {
                                                         <div className="h-5 w-16 bg-gray-200 rounded animate-pulse"></div>
                                                     </td>
                                                     <td className="p-4 align-middle">
-                                                        <div className="h-5 w-24 bg-gray-200 rounded animate-pulse"></div>
+                                                        <div className="h-5 w-22 bg-gray-200 rounded animate-pulse"></div>
                                                     </td>
                                                 </motion.tr>
                                             ))
@@ -327,6 +327,6 @@ export default function Events() {
                     </div>
                 </CardContent>
             </div>
-        </>
+        </div>
     )
 }

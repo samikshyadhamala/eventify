@@ -77,12 +77,15 @@ def create_app():
     from api.routes.user import user_bp
     from api.routes.event import event_bp
     from api.routes.branch import branch_bp
+    from api.routes.registration import registration_bp
     
     app.register_blueprint(branch_bp, url_prefix="/api/branch/")
     app.register_blueprint(event_bp, url_prefix='/api/event')
     app.register_blueprint(test_bp, url_prefix='/api/test')
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(user_bp, url_prefix='/api/user')
+    app.register_blueprint(registration_bp, url_prefix='/api/registration')
+    
     with app.app_context():
         db.create_all()  # Create database tables
 

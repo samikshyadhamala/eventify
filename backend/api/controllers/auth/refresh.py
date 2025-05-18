@@ -44,7 +44,7 @@ def refresh_token(request):
             "idToken": new_id_token,
             "refreshToken": new_refresh_token,
             "expiresIn": expires_in,
-            "user": user_data
+            "user": {**user_data, 'fid': decoded_token['uid']}
         }))
 
         # Set cookies

@@ -3,13 +3,12 @@ import React, { createContext, useState, useEffect, useMemo, useCallback } from 
 import axios, { AxiosInstance } from 'axios';
 import Cookies from 'js-cookie';
 import { AuthProviderProps, User } from './types';
-import { createAxiosInstance } from './utils';
 import { useAuth, useRole } from './hooks';
 
 interface AuthContextType {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  accessToken: string | null; 
+  accessToken: string | null;
   isAuthenticated: boolean;
   authCookie: string | undefined;
   login: (email: string, password: string) => Promise<void>;
@@ -31,7 +30,11 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = useCallback(async () => {
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/logout`, {}, { withCredentials: true });
+      const tempAxios = axios.create({
+        baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || '',
+        withCredentials: true
+      });
+      await tempAxios.post(`/api/auth/logout`, {}, { withCredentials: true });
     } catch (e) {
       console.error('Logout error:', e);
     } finally {
@@ -43,19 +46,64 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const axiosInstance = useMemo(() => {
-    return createAxiosInstance(
-      process.env.NEXT_PUBLIC_BACKEND_URL || '',
-      accessToken,
-      refreshToken,
-      (newToken) => setAccessToken(newToken),
-      logout
+    const instance = axios.create({
+      baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || '',
+      withCredentials: true,
+    });
+
+    // Add access token to requests
+    instance.interceptors.request.use(
+      config => {
+        if (accessToken) {
+          config.headers.Authorization = `Bearer ${accessToken}`;
+        }
+        return config;
+      },
+      error => Promise.reject(error)
     );
+
+    // Handle 401s and token refresh
+    instance.interceptors.response.use(
+      response => response,
+      async error => {
+        const originalRequest = error.config;
+
+        if (
+          error.response?.status === 401 &&
+          !originalRequest._retry &&
+          originalRequest.url !== '/api/auth/refresh' &&
+          refreshToken
+        ) {
+          originalRequest._retry = true;
+          try {
+            const res = await axios.post(
+              `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/refresh`,
+              { refreshToken },
+              { withCredentials: true }
+            );
+            setAccessToken(res.data.accessToken);
+            setUser(res.data.user || null);
+            setIsAuthenticated(true);
+
+            originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
+            return instance(originalRequest);
+          } catch (err) {
+            await logout();
+            return Promise.reject(err);
+          }
+        }
+
+        return Promise.reject(error);
+      }
+    );
+
+    return instance;
   }, [accessToken, refreshToken, logout]);
 
   useEffect(() => {
     const fetchUser = async () => {
       const response = await axiosInstance.get("/api/auth/is-authenticated");
-      setUser(response.data?.user || null);
+      setUser(response.data.user || null);
     }
     if (isAuthenticated) {
       fetchUser();
@@ -75,8 +123,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/refresh`,
+        const res = await axiosInstance.post(
+          `/api/auth/refresh`,
           {},
           { withCredentials: true }
         );

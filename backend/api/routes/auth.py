@@ -10,7 +10,7 @@ def test():
 
 @auth_bp.post("/signin")
 def signin():
-    return signin_controller(request)
+    return signin_controller()
 
 @auth_bp.post("/register")
 def register(): 
@@ -31,3 +31,8 @@ def logout_user():
 @auth_bp.post("/refresh")
 def refresh():
     return refresh_token(request)
+
+@auth_bp.get("/getUserInfo")
+def getUserInfo(): 
+    return GetUserInfo()
+

@@ -14,6 +14,19 @@ const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
   const { user, setIsAuthenticated, setUser, axiosInstance } = useAuth();
   const router = useRouter();
 
+  // fetching user info 
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      try {
+        const response = await axiosInstance.get("/api/auth/getUserInfo")
+        setUser(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getCurrentUser()
+  }, [])
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -41,10 +54,12 @@ const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
         );
         setIsAuthenticated(true);
         setUser(response.data?.user);
-        if (response.data?.user?.role === 'club') {
-          router.push('/club');
+        if (response.data?.user?.role === 'admin') {
+          return router.push('/admin');
+        } else if (response.data?.user?.role === 'club') {
+          return router.push('/club');
         } else {
-          router.push('/');
+          return router.push('/');
         }
       } catch (error) {
         toast.error("Error during login")
@@ -85,30 +100,32 @@ const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
           <div className="relative">
             {user ? (
               <>
-                <button
-                  onClick={() => setOpen(!open)}
-                  className="w-30 h-30 rounded-full overflow-hidden border-2 border-gray-300 focus:outline-none"
-                >
-                  <Image
-                    src={user?.imageUrl || "/api/placeholder/40/40"}
-                    alt="Profile Picture"
-                    className="object-cover"
-                    height={32}
-                    width={32}
-                  />
-                </button>
+                <div>
+                  <button
+                    onClick={() => setOpen(!open)}
+                    className="w-30 h-30 rounded-full overflow-hidden border-2 border-gray-300 focus:outline-none"
+                  >
+                    <Image
+                      src={user?.imageUrl || "/api/placeholder/40/40"}
+                      alt="Profile Picture"
+                      className="object-cover"
+                      height={32}
+                      width={32}
+                    />
+                  </button>
+                </div>
               </>
             ) : (
               <div className='fc gap-3'>
                 <button
                   onClick={handleLoginOrSignup}
-                  className='px-3 py-2 button-sec font-extrabold'
+                  className='px-3 py-2 button-sec font-extrabold text-white'
                 >
                   Login
                 </button>
                 <button
                   onClick={handleLoginOrSignup}
-                  className='px-3 py-2 button-pri'
+                  className='px-3 py-2 button-pri text-white'
                 >
                   Sign Up
                 </button>
