@@ -71,8 +71,10 @@ const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
     <>
       <header className='px-5 bg-transparent absolute left-0 top-0 right-0 z-20'>
         <nav className="navbar flex justify-between items-center py-3">
-          <div className="logo-container">
-            <a href="#" className="logo text-2xl font-bold text-white">Eventify</a>
+          <div 
+            className="logo-container"
+          >
+            <Link href="/" className="logo text-2xl font-bold text-white">Eventify</Link>
           </div>
 
           <div className="nav-links flex justify-evenly">
@@ -107,7 +109,7 @@ const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
                 >
                   <Button 
                     variant={'outline'} 
-                    className='bg-black hover:text-white rounded-full px-8'
+                    className={`${placeholder ? 'bg-black' : 'bg-transparent'} hover:text-white rounded-full px-8`}
                     disabled={isUserLoading}
                   >
                     Login

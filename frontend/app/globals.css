@@ -11,7 +11,18 @@ body {
     text-wrap: balance;
   }
 }
-
+@font-face {
+  font-family: 'Muthiara';
+  src: url('/fonts/Muthiara.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Yummy';
+  src: url('/fonts/Yummy.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;

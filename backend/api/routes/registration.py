@@ -34,3 +34,8 @@ def isAlreadyRegistered(event_id):
 @verify_club_admin_token
 def getEventRegistration(event_id): 
     return GetEventRegistration(event_id)
+
+@registration_bp.get("/getAllRegistrationCount")
+# @verify_club_admin_token
+def getAllRegistrationCount(): 
+    return GetAllRegistrationCount()

@@ -1,10 +1,17 @@
 from flask import Blueprint, request, jsonify
 from api.models.test import Test
 from api import db
+from flask_mail import Message
+from api import mail
 test_bp = Blueprint('test', __name__)
 
 @test_bp.get('/')
 def test(): 
-    # db.drop_all()
-    # db.create_all()
-    return jsonify({'message': 'hello world'})
+    msg = Message(
+        subject='Hello from Flask',
+        sender='otakugod0000@gmail.com',
+        recipients=['birajbuddhacharya@gmail.com'],
+        body='This is a test email from Flask!'
+    )
+    mail.send(msg)
+    return 'Email sent successfully!'

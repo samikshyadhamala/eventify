@@ -1,7 +1,8 @@
 flask==2.3.2
 flask-restful==0.3.10
 flask-sqlalchemy==3.0.5
-flask-marshmallow==0.15.0
+flask-marshmallow==0.14.0
+marshmallow==3.19.0
 marshmallow-sqlalchemy==0.29.0
 python-dotenv==1.0.0
 rich
@@ -10,3 +11,4 @@ firebase_admin
 psycopg[binary]
 flask-cors
 resend
+flask-mail

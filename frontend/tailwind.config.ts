@@ -10,6 +10,12 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+		fontFamily: {
+			logo: ["'Brush Script MT'", "'inspiration'", "cursive"],
+			display:  ['Muthiara'],
+			Yummy: ['Yummy']
+
+		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

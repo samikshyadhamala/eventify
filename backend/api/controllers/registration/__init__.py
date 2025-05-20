@@ -3,3 +3,4 @@ from .registerEvent import RegisterEvent
 from .getAllRegistration import GetAllRegistration
 from .isAlreadyRegistered import IsAlreadyRegistered
 from .getEventRegistration import GetEventRegistration
+from .getAllRegistrationCount import GetAllRegistrationCount

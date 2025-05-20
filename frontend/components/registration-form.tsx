@@ -26,7 +26,7 @@ export function RegistrationForm({ eventId, isPaid, price }: RegistrationFormPro
         setIsAlreadyRegistered(response.data.isRegistered)
       } catch (error) {
         console.error("Error checking registration status:", error)
-        toast.error("Failed to check registration status")
+        // toast.error("Failed to check registration status")
       }
     }
     fetchData()

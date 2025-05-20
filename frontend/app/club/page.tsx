@@ -77,6 +77,21 @@ function LoadingSkeleton() {
 }
 
 function UpcomingEventCard({ event }: { event: Event }) {
+  const [registrationCount, setRegistrationCount] = useState(0);
+  const { axiosInstance } = useAuth();
+
+  useEffect(() => {
+    const fetchRegistrations = async () => {
+      try {
+        const response = await axiosInstance.get(`/api/registration/getEventRegistration/${event.id}`);
+        setRegistrationCount(response.data.registrations.length);
+      } catch (error) {
+        console.error("Error fetching registrations:", error);
+      }
+    };
+    fetchRegistrations();
+  }, [event.id, axiosInstance]);
+
   return (
     <div className="flex items-center gap-4">
       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md">
@@ -99,10 +114,10 @@ function UpcomingEventCard({ event }: { event: Event }) {
             {event.isPaid ? `$${event.price}` : 'Free'}
           </span>
           <span className="text-muted-foreground">
-            Capacity: {event.maxCapacity}
+            {registrationCount}/{event.maxCapacity}
           </span>
         </div>
-        <Progress value={0} className="h-1" color="gray" />
+        <Progress value={(registrationCount / event.maxCapacity) * 100} className="h-1" />
       </div>
     </div>
   )

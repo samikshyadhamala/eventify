@@ -5,6 +5,7 @@ from flask_restful import Api
 from api.config import Config
 from flask_migrate import Migrate
 from flask_cors import CORS
+from flask_mail import Mail
 import os
 
 db = SQLAlchemy()
@@ -12,7 +13,7 @@ ma = Marshmallow()
 migrate = Migrate()
 api = Api()
 cors = CORS()
-
+mail = Mail()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
@@ -30,6 +31,8 @@ def create_app():
             "supports_credentials": True
         }}
     )
+    mail.init_app(app)
+    
     # Configure upload folder for media files
     MEDIA_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'media'))
     app.config['MEDIA_FOLDER'] = MEDIA_FOLDER

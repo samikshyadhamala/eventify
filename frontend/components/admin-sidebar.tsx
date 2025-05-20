@@ -62,7 +62,7 @@ export function AdminSidebar() {
     <Sidebar className="">
       <SidebarHeader className="h-16 border-b border-sidebar-border flex justify-center items-center">
         <Link href='/'>
-          <span className="text-3xl font-bold">Eventify</span>
+          <span className="text-4xl font-logo">Eventify</span>
         </Link>
       </SidebarHeader>
       <SidebarContent>

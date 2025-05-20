@@ -44,35 +44,32 @@ export default function Events() {
     const rowsPerPage = 10;
 
     useEffect(() => {
-        const fetchEvents = async () => {
+        const fetchEventsAndRegistrations = async () => {
             try {
                 setLoading(true);
-                const response = await axiosInstance.get('/api/event/getEvents');
-                const allEvents = response.data.events;
-                setEvents(allEvents);
-                setFilteredEvents(allEvents);
-                setTotalEvents(allEvents.length);
+                
+                // Fetch events and registrations in parallel
+                const [eventsResponse, registrationsResponse] = await Promise.all([
+                    axiosInstance.get('/api/event/getEvents'),
+                    axiosInstance.get('/api/registration/getAllRegistrationCount')
+                ]);
 
-                // Fetch registrations count for each event
-                const registrationCounts: {[key: number]: number} = {};
-                await Promise.all(allEvents.map(async (event) => {
-                    try {
-                        const regResponse = await axiosInstance.get(`/api/registration/getEventRegistration/${event.event_id}`);
-                        registrationCounts[event.event_id] = regResponse.data.registrations.length;
-                    } catch (error) {
-                        console.error(`Error fetching registrations for event ${event.event_id}:`, error);
-                        registrationCounts[event.event_id] = 0;
-                    }
-                }));
+                const allEvents = eventsResponse.data.events;
+                const registrationCounts = registrationsResponse.data.counts;
+
+                setEvents(allEvents);
+                setFilteredEvents(allEvents); 
+                setTotalEvents(allEvents.length);
                 setEventRegistrations(registrationCounts);
-                setLoading(false);
+
             } catch (error) {
-                console.error("Error fetching events:", error);
+                console.error("Error fetching events and registrations:", error);
+            } finally {
                 setLoading(false);
             }
         };
 
-        fetchEvents();
+        fetchEventsAndRegistrations();
     }, [axiosInstance]);
 
     // Filter events based on search query
@@ -251,8 +248,7 @@ export default function Events() {
                                         ) : (
                                             currentEvents.map((event, i) => {
                                                 const status = getEventStatus(event.event_date);
-                                                const registrationCount = eventRegistrations[event.event_id] || 0;
-
+                                                const registrationCount = eventRegistrations?.[event.event_id] || 0
                                                 return (
                                                     <motion.tr
                                                         key={event.event_id}

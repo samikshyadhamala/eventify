@@ -4,8 +4,9 @@ from api.models.registration import Registration
 from api import db
 from api.models.event import Event
 import os
-import resend
 import dotenv
+from flask_mail import Message
+from api import mail
 dotenv.load_dotenv()
 
 
@@ -42,16 +43,14 @@ def RegisterEvent(user, event_id, data):
             db.session.commit()
             
 
-            resend.api_key = os.environ["RESEND_API_KEY"]
-            params = {
-                "from": "Eventify@resend.dev",
-                "to": f"{user['email']}",
-                "subject": f"You have registered for {event.title}",
-                "html": "<strong>Hurray!</strong>"
-            }
+            msg = Message(
+                subject=f"You have registered for {event.title}",
+                sender=os.getenv("MAIL_USERNAME"),
+                recipients=[user['email']],
+                html="<strong>Hurray!</strong>"  # use `html` for HTML content
+            )
 
-            email = resend.Emails.send(params)
-            print(email)
+            mail.send(msg)
             
             return jsonify({"message": "registered successfully"})
         except Exception as e: 

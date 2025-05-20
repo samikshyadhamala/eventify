@@ -51,7 +51,7 @@ export default function SuperAdminSidebar() {
     <Sidebar>
       <SidebarHeader className="h-16 border-b border-sidebar-border">
         <Link href='/'>
-          <h4 className="text-center my-2">
+          <h4 className="text-center my-2 font-logo">
             <span className="font-semibold text-black">Eventify Admin</span>
           </h4>
         </Link>
@@ -59,17 +59,8 @@ export default function SuperAdminSidebar() {
       <SidebarContent className="mt-12">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={pathname === "/admin"}>
-              <Link href="/admin">
-                <LayoutDashboard />
-                <span>Overview</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-
-          <SidebarMenuItem>
             <SidebarMenuButton asChild isActive={pathname === "/admin/branches"}>
-              <Link href="/admin/branches">
+              <Link href="/admin/">
                 <Building2 />
                 <span>All Branches</span>
               </Link>

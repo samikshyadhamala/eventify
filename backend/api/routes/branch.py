@@ -1,6 +1,6 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from api.controllers.branch import *
-from middleware.auth import verify_admin_token
+from middleware.auth import verify_admin_token, verify_club_admin_token
 
 branch_bp = Blueprint("branch", __name__)
 
@@ -17,8 +17,10 @@ def get_all():
     return get_branches()
 
 @branch_bp.get("/getUniqueBranches")
+@verify_club_admin_token
 def getUniqueBranches(): 
-    return GetUniqueBranches()
+    user = request.user
+    return GetUniqueBranches(user)
 
 @branch_bp.get("/getDetailedBranch")
 @verify_admin_token
