@@ -21,7 +21,6 @@ export default function ContactPage() {
               Have questions or feedback? We'd love to hear from you.
             </p>
           </div>
-
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
               <div className="space-y-6">
@@ -39,7 +38,7 @@ export default function ContactPage() {
             <div className="space-y-8">
               <div className="relative h-[300px] overflow-hidden rounded-lg">
                 <Image
-                  src="/placeholder.svg?height=300&width=600"
+                  src="/images/contactOrganizer.png"
                   alt="EventHub Office"
                   fill
                   className="object-cover"

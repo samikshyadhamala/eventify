@@ -74,13 +74,13 @@ const Carousel = () => {
     },
     exit: (direction) => ({
       x: direction > 0 ? '-100%' : '100%',
-      opacity: 0
+      // opacity: 0
     })
   }
 
   // Dynamic overlay colors for each slide
   const overlayColors = [
-    "from-sky-800/60 to-slate-900/70", // Subtle sky color for first slide
+    "from-sky-300/50 to-indigo-500/40",
     "from-amber-800/60 to-stone-900/70", // Warm indoor environment with yellow lights for second slide
     "from-orange-900/70 to-black/60", // Outdoor with open sky for third slide
   ]
@@ -185,7 +185,7 @@ const Carousel = () => {
           />
 
           {/* Dynamic Overlay System */}
-          <AnimatePresence mode="sync">
+          <AnimatePresence mode="wait">
             {/* Primary Gradient Overlay with Vertical Motion */}
             <motion.div
               key={`primary-overlay-${currentSlide}`}
@@ -230,7 +230,7 @@ const Carousel = () => {
           {/* Content */}
           <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
                 z-20 text-white flex justify-center flex-col items-center w-full px-4'>
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={`title-${currentSlide}`}
                 className='text-8xl font-display font-light mb-2 text-center'
@@ -244,7 +244,7 @@ const Carousel = () => {
               </motion.div>
             </AnimatePresence>
 
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <motion.p
                 key={`subtitle-${currentSlide}`}
                 className='text-gray-300 mb-6 text-center'
@@ -258,7 +258,7 @@ const Carousel = () => {
               </motion.p>
             </AnimatePresence>
 
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <motion.div
                 key={`cta-${currentSlide}`}
                 custom={3}

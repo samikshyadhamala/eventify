@@ -32,7 +32,6 @@ const CreateEvent = () => {
     date: "",
     time: "10:00",
     location: "",
-    address: "",
     branch: "",
     maxAttendees: 100,
     price: 0,
@@ -193,17 +192,6 @@ const CreateEvent = () => {
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Address</label>
-                    <Input
-                      name="address"
-                      value={formData.address}
-                      onChange={handleChange}
-                      placeholder="Full address"
-                      disabled={isSubmitting}
-                    />
-                  </div>
-
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium mb-2">Max Capacity</label>
@@ -308,7 +296,6 @@ const CreateEvent = () => {
                       date: "",
                       time: "10:00",
                       location: "",
-                      address: "",
                       branch: "",
                       maxAttendees: 100,
                       price: 0,

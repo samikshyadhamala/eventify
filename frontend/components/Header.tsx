@@ -4,9 +4,6 @@ import '@/styles/Header.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../context/auth/hooks';
-import { auth, provider, signInWithPopup } from "../app/firebase";
-import Image from 'next/image'
-import { toast } from 'react-toastify';
 import { Button } from '@/components/ui/button'
 import {Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 
@@ -121,9 +118,9 @@ const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
             {open && (
               <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
                 {user && (user.role === 'admin' || user.role === 'club') && (
-                  <div className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={handleDashboardClick}>
+                  <button className="block px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100" onClick={handleDashboardClick}>
                     Dashboard
-                  </div>
+                  </button>
                 )}
                 <button
                   onClick={handleLogout}

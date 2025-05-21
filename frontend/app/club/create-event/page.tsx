@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -32,12 +32,21 @@ const CreateEvent = () => {
     date: "",
     time: "10:00",
     location: "",
-    address: "",
     branch: "",
     maxAttendees: 100,
     price: 0,
     isFeatured: false
   });
+
+  // Initialize branch when branches are loaded
+  useEffect(() => {
+    if (branches && branches.length > 0 && !formData.branch) {
+      setFormData(prev => ({
+        ...prev,
+        branch: branches[0]?.branch_id.toString()
+      }));
+    }
+  }, [branches]);
 
   const { 
     imagePreview, 
@@ -69,7 +78,7 @@ const CreateEvent = () => {
     try {
       const [year, month, day] = formData.date.split('-');
       const formattedDate = `${year}/${month}/${day}`;
-      debugger
+      
       const requestBody = {
         branch_id: formData.branch,
         title: formData.title,
@@ -141,7 +150,7 @@ const CreateEvent = () => {
                     <Select
                       value={formData.branch}
                       onValueChange={handleBranchChange}
-                      disabled={isSubmitting}
+                      disabled={branches.length <= 1}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select a branch" />
@@ -189,17 +198,6 @@ const CreateEvent = () => {
                       value={formData.location}
                       onChange={handleChange}
                       placeholder="Event location"
-                      disabled={isSubmitting}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Address</label>
-                    <Input
-                      name="address"
-                      value={formData.address}
-                      onChange={handleChange}
-                      placeholder="Full address"
                       disabled={isSubmitting}
                     />
                   </div>
@@ -308,8 +306,7 @@ const CreateEvent = () => {
                       date: "",
                       time: "10:00",
                       location: "",
-                      address: "",
-                      branch: "",
+                      branch: branches[0]?.branch_id.toString() || "",
                       maxAttendees: 100,
                       price: 0,
                       isFeatured: false

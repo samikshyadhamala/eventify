@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from ..controllers.registration import *
-from middleware.auth import verify_firebase_token, verify_club_admin_token
+from middleware.auth import verify_club_token, verify_firebase_token, verify_club_admin_token, verify_admin_token
+from api.utils.getRelatedBranch import GetRelatedBranch
 
 registration_bp = Blueprint('registration', __name__)
 
@@ -36,6 +37,13 @@ def getEventRegistration(event_id):
     return GetEventRegistration(event_id)
 
 @registration_bp.get("/getAllRegistrationCount")
-# @verify_club_admin_token
+@verify_admin_token  
 def getAllRegistrationCount(): 
     return GetAllRegistrationCount()
+
+@registration_bp.get("/getBranchRegistrationCount")
+@verify_club_token
+def getBranchRegistrationCount(): 
+    user_id = request.user['uid']
+    branch_id =GetRelatedBranch(user_id)
+    return GetBranchRegistrationCount(branch_id)

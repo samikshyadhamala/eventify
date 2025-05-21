@@ -5,3 +5,6 @@ from .deleteEvent import DeleteEventController
 from .getTotalEvent import GetTotalEvent
 from .getUpcomingEvent import GetUpcomingEvent
 from .createEvent import CreateEvent
+from .getBranchEvents import GetBranchEvents
+from .getUpcomingBranchEvent import GetUpcomingBranchEvent
+from .updateEvent import UpdateEvent

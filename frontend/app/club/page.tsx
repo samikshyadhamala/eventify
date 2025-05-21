@@ -5,37 +5,24 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import {
-  BarChart3,
   Calendar,
-  ChevronDown,
   Clock,
-  Download,
-  Filter,
   Plus,
-  Settings,
   Users,
-  TrendingUp,
-  TrendingDown,
-  DollarSign,
   Eye,
-  CheckCircle2,
   CalendarDays,
-  Search,
 } from "lucide-react"
 import { Button } from "@radix-ui/themes"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
 import { useAuth } from "@/context/auth/hooks"
 
 interface Event {
-  id: number
+  event_id: number
   title: string
   date: string
   description: string
-  maxCapacity: number
+  max_capacity: number
   imageUrl: string
   isPaid: boolean
   price: number | null
@@ -76,22 +63,7 @@ function LoadingSkeleton() {
   )
 }
 
-function UpcomingEventCard({ event }: { event: Event }) {
-  const [registrationCount, setRegistrationCount] = useState(0);
-  const { axiosInstance } = useAuth();
-
-  useEffect(() => {
-    const fetchRegistrations = async () => {
-      try {
-        const response = await axiosInstance.get(`/api/registration/getEventRegistration/${event.id}`);
-        setRegistrationCount(response.data.registrations.length);
-      } catch (error) {
-        console.error("Error fetching registrations:", error);
-      }
-    };
-    fetchRegistrations();
-  }, [event.id, axiosInstance]);
-
+function UpcomingEventCard({ event, registrationCount }: { event: Event, registrationCount: number }) {
   return (
     <div className="flex items-center gap-4">
       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md">
@@ -114,10 +86,10 @@ function UpcomingEventCard({ event }: { event: Event }) {
             {event.isPaid ? `$${event.price}` : 'Free'}
           </span>
           <span className="text-muted-foreground">
-            {registrationCount}/{event.maxCapacity}
+            {registrationCount}/{event.max_capacity}
           </span>
         </div>
-        <Progress value={(registrationCount / event.maxCapacity) * 100} className="h-1" />
+        <Progress value={(registrationCount / event.max_capacity) * 100} className="h-1" />
       </div>
     </div>
   )
@@ -130,17 +102,17 @@ function PopularEventCard({ event }: { event: Event }) {
         <p className="text-sm font-medium leading-none">{event.title}</p>
         <div className="flex items-center gap-1 text-xs">
           <Users className="h-3 w-3 text-muted-foreground" />
-          <span>{event.maxCapacity}</span>
+          <span>{event.max_capacity}</span>
         </div>
       </div>
       <div className="flex items-center justify-between text-xs text-muted-foreground">
         <div className="flex items-center gap-1">
           <Eye className="h-3 w-3" />
-          <span>{event.maxCapacity * 10} views</span>
+          <span>{event.max_capacity * 10} views</span>
         </div>
-        <span>{((event.maxCapacity / 300) * 100).toFixed(1)}% conversion</span>
+        <span>{((event.max_capacity / 300) * 100).toFixed(1)}% conversion</span>
       </div>
-      <Progress value={(event.maxCapacity / 300) * 100} className="h-1" />
+      <Progress value={(event.max_capacity / 300) * 100} className="h-1" />
     </div>
   )
 }
@@ -173,121 +145,170 @@ function MetricCard({
   )
 }
 
+function MetricsSection({ 
+  loading, 
+  totalEvent, 
+  upcomingEvents, 
+  totalRegistration 
+}: { 
+  loading: boolean; 
+  totalEvent: number; 
+  upcomingEvents: Event[]; 
+  totalRegistration: number; 
+}) {
+  return (
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <MetricCard
+        title="Total Events"
+        value={loading ? 0 : totalEvent}
+        trend="up"
+        description="+2 from last month"
+        icon={<Calendar className="h-4 w-4 text-muted-foreground" />}
+        change="+8.3%"
+      />
+      <MetricCard
+        title="Upcoming Events"
+        value={loading ? 0 : upcomingEvents.length}
+        change="+12.5%"
+        trend="up"
+        description="Next event in 3 days"
+        icon={<Clock className="h-4 w-4 text-muted-foreground" />}
+      />
+      <MetricCard
+        title="Total Registrations"
+        value={loading ? 0 : totalRegistration}
+        change="+19.3%"
+        trend="up"
+        description="+248 from last month"
+        icon={<Users className="h-4 w-4 text-muted-foreground" />}
+      />
+    </div>
+  )
+}
+
+function UpcomingEventsCard({ 
+  loading, 
+  upcomingEvents, 
+  registrationCounts 
+}: { 
+  loading: boolean; 
+  upcomingEvents: Event[]; 
+  registrationCounts: {[key: number]: number}; 
+}) {
+  return (
+    <Card className="col-span-3">
+      <CardHeader>
+        <CardTitle>Upcoming Events</CardTitle>
+        <CardDescription>Your next 5 scheduled events</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {loading ? (
+          <LoadingSkeleton />
+        ) : (
+          <div className="space-y-4">
+            {upcomingEvents.slice(0, 5).map((event, i) => (
+              <UpcomingEventCard 
+                key={i} 
+                event={event} 
+                registrationCount={registrationCounts[event.event_id] || 0} 
+              />
+            ))}
+          </div>
+        )}
+      </CardContent>
+      <CardFooter>
+        <Button variant="outline" className="w-full">
+          <Link href="/admin/events" className="w-full flex items-center justify-center">
+            View All Events
+          </Link>
+        </Button>
+      </CardFooter>
+    </Card>
+  )
+}
+
+function PopularEventsCard({ loading }: {loading: boolean}) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Popular Events</CardTitle>
+        <CardDescription>Your most popular events by registration</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {loading ? (
+          <LoadingSkeleton />
+        ) : (
+          <div className="space-y-4">
+            <h2 className="text-center">Coming Soon</h2>
+          </div>
+        )}
+      </CardContent>
+      <CardFooter>
+        <Button variant="outline" className="w-full">
+          <Link href="/admin/analytics" className="w-full flex items-center justify-center">
+            View Analytics
+          </Link>
+        </Button>
+      </CardFooter>
+    </Card>
+  )
+}
+
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState("overview")
   const [totalEvent, setTotalEvent] = useState<number>(0)
   const [totalRegistration, setTotalRegistration] = useState<number>(0)
   const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([])
+  const [registrationCounts, setRegistrationCounts] = useState<{[key: number]: number}>({})
   const [loading, setLoading] = useState(true)
   const { axiosInstance } = useAuth()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axiosInstance.get<{ total: number }>('/api/event/getTotalEvent');
-        setTotalEvent(res.data.total)
-
-        const registration_res = await axiosInstance.get<{ total: number }>("/api/registration/getTotalRegistration")
-        setTotalRegistration(registration_res.data.total)
-
-        const upcoming_res = await axiosInstance.get<{ upcomingEvents: Event[] }>("/api/event/getUpcomingEvent")
-        setUpcomingEvents(upcoming_res.data.upcomingEvents)
+        const [eventRes, regRes, upcomingRes] = await Promise.all([
+          axiosInstance.get<{ total: number }>('/api/event/getTotalEvent'),
+          axiosInstance.get<{ total: number, counts: {[key: string]: number} }>("/api/registration/getBranchRegistrationCount"),
+          axiosInstance.get<{ upcomingEvents: Event[] }>("/api/event/getUpcomingBranchEvent")
+        ]);
+        
+        setTotalEvent(eventRes.data.total);
+        setTotalRegistration(regRes.data.total);
+        setRegistrationCounts(regRes.data.counts)
+        setUpcomingEvents(upcomingRes.data.upcomingEvents);
+        
       } catch (error) {
-        console.error("Error fetching data:", error)
+        console.error("Error fetching data:", error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchData()
-  }, [])
+    };
+    fetchData();
+  }, [axiosInstance]);
 
   return (
     <>
       <main className="flex flex-1 flex-col gap-16 p-6 md:gap-8 md:px20 md:py-10">
         <DashboardHeader />
-
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <MetricCard
-            title="Total Events"
-            value={loading ? 0 : totalEvent}
-            trend="up"
-            description="+2 from last month"
-            icon={<Calendar className="h-4 w-4 text-muted-foreground" />}
-            change="+8.3%"
-          />
-          <MetricCard
-            title="Upcoming Events"
-            value={loading ? 0 : upcomingEvents.length}
-            change="+12.5%"
-            trend="up"
-            description="Next event in 3 days"
-            icon={<Clock className="h-4 w-4 text-muted-foreground" />}
-          />
-          <MetricCard
-            title="Total Registrations"
-            value={loading ? 0 : totalRegistration}
-            change="+19.3%"
-            trend="up"
-            description="+248 from last month"
-            icon={<Users className="h-4 w-4 text-muted-foreground" />}
-          />
-        </div>
+        
+        <MetricsSection 
+          loading={loading} 
+          totalEvent={totalEvent} 
+          upcomingEvents={upcomingEvents} 
+          totalRegistration={totalRegistration} 
+        />
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
-          <Card className="col-span-3">
-            <CardHeader>
-              <CardTitle>Upcoming Events</CardTitle>
-              <CardDescription>Your next 5 scheduled events</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {loading ? (
-                <LoadingSkeleton />
-              ) : (
-                <div className="space-y-4">
-                  {upcomingEvents.slice(0, 5).map((event, i) => (
-                    <UpcomingEventCard key={i} event={event} />
-                  ))}
-                </div>
-              )}
-            </CardContent>
-            <CardFooter>
-              <Button variant="outline" className="w-full">
-                <Link href="/admin/events" className="w-full flex items-center justify-center">
-                  View All Events
-                </Link>
-              </Button>
-            </CardFooter>
-          </Card>
+          <UpcomingEventsCard 
+            loading={loading} 
+            upcomingEvents={upcomingEvents} 
+            registrationCounts={registrationCounts} 
+          />
 
           <div className="col-span-3">
-            <Card>
-              <CardHeader>
-                <CardTitle>Popular Events</CardTitle>
-                <CardDescription>Your most popular events by registration</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {loading ? (
-                  <LoadingSkeleton />
-                ) : (
-                  <div className="space-y-4">
-                    {/* {upcomingEvents.slice(0, 5).map((event, i) => (
-                    <PopularEventCard key={i} event={event} />
-                    ))} */}
-                    <h2 className="text-center">Coming Soon</h2>
-                  </div>
-                )}
-              </CardContent>
-              <CardFooter>
-                <Button variant="outline" className="w-full">
-                  <Link href="/admin/analytics" className="w-full flex items-center justify-center">
-                    View Analytics
-                  </Link>
-                </Button>
-              </CardFooter>
-            </Card>
+            <PopularEventsCard loading={loading} />
           </div>
         </div>
-      </main >
+      </main>
     </>
   )
 }

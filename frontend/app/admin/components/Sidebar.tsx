@@ -1,20 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { BarChart3, Building2, Globe, LayoutDashboard, LogOut, Settings, Clock, Users } from "lucide-react";
+import { Building2, Globe, LogOut, Clock, Users } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-  SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/context/auth/hooks";
@@ -52,7 +48,7 @@ export default function SuperAdminSidebar() {
       <SidebarHeader className="h-16 border-b border-sidebar-border">
         <Link href='/'>
           <h4 className="text-center my-2 font-logo">
-            <span className="font-semibold text-black">Eventify Admin</span>
+            <span className="text-black text-3xl">Eventify Admin</span>
           </h4>
         </Link>
       </SidebarHeader>

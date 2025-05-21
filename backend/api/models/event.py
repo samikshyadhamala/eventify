@@ -12,7 +12,7 @@ class Event(db.Model):
     event_date = db.Column(db.DateTime, nullable=False)
     location = db.Column(db.String(255))
     is_paid = db.Column(db.Boolean, default=False, nullable=False)
-    price = db.Column(db.Numeric(10, 2))
+    price = db.Column(db.Numeric(10, 2))    
     max_capacity = db.Column(db.Integer)
     imageUrl = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.now(UTC))

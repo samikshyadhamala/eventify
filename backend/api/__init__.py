@@ -60,7 +60,7 @@ def create_app():
             # Save the file
             file_path = os.path.join(app.config['MEDIA_FOLDER'], filename)
             file.save(file_path)
-            return {'filename': filename}, 200
+            return {'filename': filename, 'message': 'success'}, 200
             
         else:
             # Handle GET request

@@ -3,22 +3,17 @@ import Image from "next/image"
 import {
   ArrowLeft,
   Calendar,
-  Clock,
   MapPin,
   Users,
   DollarSign,
   Share2,
   CalendarPlus,
-  Building,
   ExternalLink,
-  MessageCircle,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Separator } from "@/components/ui/separator"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { RegistrationForm } from "@/components/registration-form"
 import axios from "axios"

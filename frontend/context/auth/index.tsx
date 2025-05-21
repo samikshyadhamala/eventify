@@ -80,9 +80,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
               {},
               { withCredentials: true }
             );
-            
+
             const { idToken, refreshToken: newRefreshToken, user: userData } = res.data;
-            
+
             setAccessToken(idToken);
             setRefreshToken(newRefreshToken);
             setUser(userData || null);
@@ -91,11 +91,16 @@ export default function AuthProvider({ children }: AuthProviderProps) {
             originalRequest.headers.Authorization = `Bearer ${idToken}`;
             return instance(originalRequest);
           } catch (err) {
+            if (err?.response?.status === 401) {
+              // User just isn't logged in — no action needed
+              console.warn("Not logged in — skipping refresh and logout.");
+              return Promise.reject(err);
+            }
             await logout();
             return Promise.reject(err);
           }
         }
-
+        
         return Promise.reject(error);
       }
     );
@@ -132,7 +137,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
           { withCredentials: true }
         );
         const { idToken, refreshToken: newRefreshToken, user: userData } = res.data;
-        
+
         setAccessToken(idToken);
         setRefreshToken(newRefreshToken);
         setUser(userData || null);
