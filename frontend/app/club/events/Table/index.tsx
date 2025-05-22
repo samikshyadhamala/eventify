@@ -146,7 +146,7 @@ export default function EventsTable({
           <Button variant="outline" disabled={currentPage === 1 || loading} onClick={prevPage}>
             Previous
           </Button>
-          <Button variant="outline" disabled={currentPage >= Math.ceil(totalEvents / rowsPerPage) || loading} onClick={nextPage}>
+          <Button variant="outline" color ='gray' className='text-black' disabled={currentPage >= Math.ceil(totalEvents / rowsPerPage) || loading} onClick={nextPage}>
             Next
           </Button>
         </div>

@@ -14,8 +14,8 @@ def getTotalRegistration():
 def registerEvent():
     data = request.get_json()
     user = request.user
-    event_id = data.get('event_id'  )
-    return RegisterEvent(user, event_id, data)
+    event_id = data.get('event_id')
+    return RegisterEvent(user, event_id)
 
 @registration_bp.get("/getAllRegistrations")
 def getAllRegistrations(): 

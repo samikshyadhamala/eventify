@@ -46,7 +46,7 @@ export default function SuperAdminSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="h-16 border-b border-sidebar-border">
-        <Link href='/'>
+        <Link href='/' className="text-black">
           <h4 className="text-center my-2 font-logo">
             <span className="text-black text-3xl">Eventify Admin</span>
           </h4>
@@ -56,7 +56,7 @@ export default function SuperAdminSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild isActive={pathname === "/admin/branches"}>
-              <Link href="/admin/">
+              <Link href="/admin/" className="text-black">
                 <Building2 />
                 <span>All Branches</span>
               </Link>
@@ -66,7 +66,7 @@ export default function SuperAdminSidebar() {
 
           <SidebarMenuItem>
             <SidebarMenuButton asChild isActive={pathname === "/admin/events"}>
-              <Link href="/admin/events">
+              <Link href="/admin/events" className="text-black">
                 <Globe />
                 <span>All Events</span>
               </Link>
@@ -75,7 +75,7 @@ export default function SuperAdminSidebar() {
 
           <SidebarMenuItem>
             <SidebarMenuButton asChild isActive={pathname === "/admin/create-event"}>
-              <Link href="/admin/create-event">
+              <Link href="/admin/create-event" className="text-black">
                 <Clock />
                 <span>Create Event</span>
               </Link>
@@ -85,7 +85,7 @@ export default function SuperAdminSidebar() {
 
           <SidebarMenuItem>
             <SidebarMenuButton asChild isActive={pathname === "/admin/users"}>
-              <Link href="/admin/users">
+              <Link href="/admin/users" className="text-black">
                 <Users />
                 <span>All Users</span>
               </Link>
@@ -94,7 +94,7 @@ export default function SuperAdminSidebar() {
 
           <SidebarMenuItem>
             <SidebarMenuButton asChild isActive={pathname === "/admin/users/branchAdmin"}>
-              <Link href="/admin/users/branchAdmin">
+              <Link href="/admin/users/branchAdmin" className="text-black">
                 <Users />
                 <span>Branch Admins</span>
               </Link>

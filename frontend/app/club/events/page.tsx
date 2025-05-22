@@ -116,7 +116,7 @@ export default function Events() {
         <div className="flex items-center justify-between">
           <h1 className="font-bold tracking-tight">Events Management</h1>
           <Link href="/club/create-event">
-            <Button className="gap-1 bg-black">
+            <Button className="gap-1 bg-black" color='gray'>
               <Plus className="h-4 w-4" />
               Add Event
             </Button>

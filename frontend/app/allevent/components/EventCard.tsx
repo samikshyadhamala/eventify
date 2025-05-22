@@ -18,7 +18,7 @@ export default function EventCard(item: Event) {
             onHoverEnd={() => controls.start({ scale: 1 })}
             layout
         >
-            <Link href={`/event/${item.event_id}`} className="block">
+            <Link href={`/event/${item.event_id}`} className="block text-black">
                 <div className='w-100 h-40 overflow-hidden'>
                     <motion.div animate={controls} className=''>
                         <ImageComponent imageFile={item.imageUrl} alt={item.title} />

@@ -8,10 +8,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PlatformContactForm } from "@/components/platform-contact-form"
 import Header from "@/components/Header"
-
+import Footer from "@/components/Footer"
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background p-0 m-0">
       <Header placeholder={true}></Header>
       <main className="container py-10">
         <div className="mx-auto max-w-5xl">
@@ -50,26 +50,27 @@ export default function ContactPage() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Card>
-                    <CardContent className="p-6 flex items-start space-x-4">
-                      <Mail className="h-6 w-6 text-primary mt-1" color='black' />
+                    <CardContent className="py-6 px-3 flex items-start space-x-4">
                       <div>
                         <h3 className="font-medium">Email Us</h3>
                         <p className="text-sm text-muted-foreground mt-1">For general inquiries</p>
-                        <a href="mailto:info@eventhub.com" className="text-primary text-black hover:underline mt-2 block">
-                          info@eventhub.com
-                        </a>
+                        <div className="truncate w-full">
+                          <a href="mailto:info@eventhub.com" className="text-primary truncate w-full text-black hover:underline mt-2 block">
+                            eventify.services@gmail.com
+                          </a>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
 
                   <Card>
                     <CardContent className="p-6 flex items-start space-x-4">
-                      <Phone className="h-6 w-6 text-primary mt-1" color='black'/>
+                      <Phone className="h-6 w-6 text-primary mt-1" color='black' />
                       <div>
                         <h3 className="font-medium">Call Us</h3>
                         <p className="text-sm text-muted-foreground mt-1">Mon-Fri, 9am-5pm</p>
                         <a href="tel:+11234567890" className="text-primary text-black hover:underline mt-2 block">
-                          +1 (123) 456-7890
+                          9842525351
                         </a>
                       </div>
                     </CardContent>
@@ -78,18 +79,16 @@ export default function ContactPage() {
 
                 <Card>
                   <CardContent className="p-6 flex items-start space-x-4">
-                    <MapPin className="h-6 w-6 text-primary mt-1" color='black'/>
+                    <MapPin className="h-6 w-6 text-primary mt-1" color='black' />
                     <div>
                       <h3 className="font-medium">Visit Us</h3>
                       <p className="text-sm text-muted-foreground mt-1">Our headquarters</p>
                       <address className="not-italic mt-2 text-sm">
-                        123 Event Street
+                        Bagbajar
                         <br />
-                        Tech District
+                        Kathmandu
                         <br />
-                        City, State 12345
-                        <br />
-                        United States
+                        Nepal
                       </address>
                     </div>
                   </CardContent>
@@ -152,6 +151,9 @@ export default function ContactPage() {
           </div>
         </div>
       </main>
-    </div>
-  )
+      <div className="h-full">
+        <Footer />
+      </div>
+    </div>
+  )
 }

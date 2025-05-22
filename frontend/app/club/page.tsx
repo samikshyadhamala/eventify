@@ -16,7 +16,6 @@ import { Button } from "@radix-ui/themes"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { useAuth } from "@/context/auth/hooks"
-
 interface Event {
   event_id: number
   title: string
@@ -33,7 +32,7 @@ function DashboardHeader() {
   return (
     <div className="flex items-center justify-between">
       <h1 className="text-4xl font-bold tracking-tight">Dashboard</h1>
-      <Link href="/club/create-event">
+      <Link href="/club/create-event" className="text-black">
         <Button size={{ initial: "2", md: "3" }} className="gap-1" variant="solid" color="gray" highContrast>
           <Plus className="h-4 w-4" />
           Create Event
@@ -217,8 +216,8 @@ function UpcomingEventsCard({
         )}
       </CardContent>
       <CardFooter>
-        <Button variant="outline" className="w-full">
-          <Link href="/admin/events" className="w-full flex items-center justify-center">
+        <Button variant="outline" className="w-full border-black" color="gray">
+          <Link href="/admin/events" className="w-full flex items-center justify-center text-black">
             View All Events
           </Link>
         </Button>
@@ -244,8 +243,8 @@ function PopularEventsCard({ loading }: {loading: boolean}) {
         )}
       </CardContent>
       <CardFooter>
-        <Button variant="outline" className="w-full">
-          <Link href="/admin/analytics" className="w-full flex items-center justify-center">
+        <Button variant="outline" className="w-full border-black" color="gray">
+          <Link href="/admin/analytics" className="w-full flex items-center justify-center text-black border-black">
             View Analytics
           </Link>
         </Button>

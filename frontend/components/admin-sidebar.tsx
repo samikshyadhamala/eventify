@@ -61,7 +61,7 @@ export function AdminSidebar() {
   return (
     <Sidebar className="">
       <SidebarHeader className="h-16 border-b border-sidebar-border flex justify-center items-center">
-        <Link href='/'>
+        <Link href='/' className="text-black">
           <span className="text-4xl font-logo">Eventify</span>
         </Link>
       </SidebarHeader>
@@ -70,7 +70,7 @@ export function AdminSidebar() {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild isActive={pathname === "/club/dashboard"}>
-                <Link href="/club">
+                <Link href="/club" className="text-black">
                   <LayoutDashboard />
                   <span>Overview</span>
                 </Link>
@@ -78,7 +78,7 @@ export function AdminSidebar() {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild isActive={pathname === "/club/events"}>
-                <Link href="/club/events">
+                <Link href="/club/events" className="text-black">
                   <Calendar />
                   <span>All Events</span>
                 </Link>
@@ -86,7 +86,7 @@ export function AdminSidebar() {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild isActive={pathname === "/club/create-event"}>
-                <Link href="/club/create-event">
+                <Link href="/club/create-event" className="text-black">
                   <Clock />
                   <span>Create Event</span>
                 </Link>
@@ -111,14 +111,14 @@ export function AdminSidebar() {
           )}
         </div>
         <SidebarMenu>
-          <SidebarMenuItem>
+          {/* <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Link href="/club/settings">
+              <Link href="/club/settings" className="text-black">
                 <Settings />
                 <span>Settings</span>
               </Link>
             </SidebarMenuButton>
-          </SidebarMenuItem>
+          </SidebarMenuItem> */}
           <SidebarMenuItem>
             <SidebarMenuButton
               onClick={() => {

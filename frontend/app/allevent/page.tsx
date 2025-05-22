@@ -12,6 +12,7 @@ import Header from '@/components/Header';
 import { AnimatePresence, useAnimation } from "framer-motion";
 import EventCard from './components/EventCard';
 import { Event } from './types'
+import Footer from '@/components/Footer';
 
 export default function Home() {
   const [data, setData] = useState<Event[]>([])
@@ -70,7 +71,7 @@ export default function Home() {
   return (
     <>
       <Header placeholder={true} />
-      <main className="w-full py-8 md:py-4 lg:py-4">
+      <main className="w-full py-8 md:py-4 lg:py-4 text-black">
         <div className="container px-4 md:px-6 flex justify-center">
           <div className="flex w-full max-w-[60rem] flex-col gap-4">
             <div className="flex flex-col gap-2 sm:flex-row">
@@ -135,6 +136,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

@@ -29,11 +29,8 @@ const AdminActions = ({ userId }: { userId: string }) => (
             </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-            <DropdownMenuItem>View Profile</DropdownMenuItem>
-            <DropdownMenuItem>Edit User</DropdownMenuItem>
-            <DropdownMenuItem>Reset Password</DropdownMenuItem>
-            <DropdownMenuItem>Change Role</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">Deactivate User</DropdownMenuItem>
+            <DropdownMenuItem>Change Branch</DropdownMenuItem>
+            <DropdownMenuItem className="text-red-600">Delete User</DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>
 )

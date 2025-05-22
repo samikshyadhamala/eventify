@@ -254,7 +254,7 @@ export default function ManageUsers() {
                                         <td className="p-4 align-middle">
                                             <div className="h-5 w-40 bg-gray-200 rounded animate-pulse"></div>
                                         </td>
-                                        <td className="p-4 align-middle">
+                                        <td className="p-4 align-middle w-full flex justify-center">
                                             <div className="h-5 w-24 bg-gray-200 rounded animate-pulse"></div>
                                         </td>
                                         <td className="p-4 align-middle">
@@ -324,8 +324,6 @@ export default function ManageUsers() {
                                                 </Button>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
-                                                <DropdownMenuItem>View Profile</DropdownMenuItem>
-                                                <DropdownMenuItem>Edit User</DropdownMenuItem>
                                                 <DropdownMenuItem className="text-red-600">Delete User</DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>

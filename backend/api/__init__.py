@@ -102,7 +102,9 @@ def create_app():
     from api.routes.event import event_bp
     from api.routes.branch import branch_bp
     from api.routes.registration import registration_bp
+    from api.routes.contact import contact_bp
     
+    app.register_blueprint(contact_bp, url_prefix="/api/contact/")
     app.register_blueprint(branch_bp, url_prefix="/api/branch/")
     app.register_blueprint(event_bp, url_prefix='/api/event')
     app.register_blueprint(test_bp, url_prefix='/api/test')
