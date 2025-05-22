@@ -1,5 +1,5 @@
-import Link from "next/link"
-import Image from "next/image"
+import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowLeft,
   Calendar,
@@ -9,18 +9,23 @@ import {
   Share2,
   CalendarPlus,
   ExternalLink,
-} from "lucide-react"
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { RegistrationForm } from "@/components/registration-form"
-import axios from "axios"
-import { Suspense } from "react"
-import { Skeleton } from "@/components/ui/skeleton"
-import EventContent from './Components/EventContent'
-
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { RegistrationForm } from "@/components/registration-form";
+import axios from "axios";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import EventContent from "./Components/EventContent";
 
 function EventSkeleton() {
   return (
@@ -42,7 +47,7 @@ function EventSkeleton() {
         <Skeleton className="h-40 w-full" />
       </div>
     </div>
-  )
+  );
 }
 
 function SidebarSkeleton() {
@@ -61,37 +66,41 @@ function SidebarSkeleton() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
-
 
 export default async function EventDetailsPage({
   params,
 }: {
-  params: { eventId: string }
+  params: { eventId: string };
 }) {
-  const eventId = await params.eventId
+  const eventId = await params.eventId;
 
   return (
     <div className="min-h-screen bg-background">
       <main className="container py-6 md:py-10">
         <div className="mb-6">
-          <Link href="/allevent" className="flex items-center text-sm text-muted-foreground hover:text-foreground">
+          <Link
+            href="/allevent"
+            className="flex items-center text-sm text-muted-foreground hover:text-foreground"
+          >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Events
           </Link>
         </div>
         <div className="grid gap-6 lg:grid-cols-3">
-            <Suspense fallback={
+          <Suspense
+            fallback={
               <>
-              <EventSkeleton />
-              <SidebarSkeleton />
-            </>
-          }>
+                <EventSkeleton />
+                <SidebarSkeleton />
+              </>
+            }
+          >
             <EventContent eventId={eventId} />
           </Suspense>
         </div>
       </main>
     </div>
-  )
+  );
 }
