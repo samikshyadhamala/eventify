@@ -3,3 +3,5 @@ from .delete_user import delete_user_controller
 from .updateRole import UpdateRole
 from .getBranchAdmin import GetBranchAdmin
 from .createBranchAdmin import CreateBranchAdmin
+from .updateBranchAdmin import UpdateBranchAdmin
+from .deleteBranchAdmin import DeleteBranchAdmin

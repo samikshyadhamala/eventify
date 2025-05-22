@@ -36,3 +36,16 @@ def createBranchAdmin():
     branch_id = data.get('branch_id')
     user_id = data.get('user_id')
     return CreateBranchAdmin(branch_id, user_id)
+
+@user_bp.put("/updateBranchAdmin")
+@verify_admin_token
+def updateBranchAdmin():
+    data = request.get_json()
+    branch_id = data.get('branch_id')
+    user_id = data.get('user_id')
+    return UpdateBranchAdmin(branch_id, user_id)
+
+@user_bp.delete("/deleteBranchAdmin/<user_id>")
+@verify_admin_token
+def deleteBranchAdmin(user_id):
+    return DeleteBranchAdmin(user_id)

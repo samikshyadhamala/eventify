@@ -243,7 +243,7 @@ function PopularEventsCard({ loading }: {loading: boolean}) {
         )}
       </CardContent>
       <CardFooter>
-        <Button variant="outline" className="w-full border-black" color="gray">
+        <Button variant="outline" className="w-full border-black" color="gray" disabled={true}>
           <Link href="/admin/analytics" className="w-full flex items-center justify-center text-black border-black">
             View Analytics
           </Link>

@@ -7,6 +7,9 @@ import { User, Branch, BranchAdmin } from './types'
 import BranchAdminTable from './components/BranchAdminTable'
 import CreateAdminDialog from "./components/CreateAdminDialog"
 import HeaderActions from "./components/HeaderActions"
+import ChangeBranchDialog from './components/ChangeBranchDialog'
+import {BranchAdminProvider} from './context'
+import { useBranchAdmin } from "./context"
 
 export default function ManageUsers() {
     const { axiosInstance } = useAuth()
@@ -18,6 +21,7 @@ export default function ManageUsers() {
     const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null)
     const [selectedUser, setSelectedUser] = useState<User | null>(null)
     const [isCreating, setIsCreating] = useState(false)
+    const [isChangeBranchOpen, setIsChangeBranchOpen] = useState(false)
 
     useEffect(() => {
         const fetchBranchAdmins = async () => {
@@ -60,7 +64,6 @@ export default function ManageUsers() {
         setIsCreating(true)
 
         try {
-            debugger
             await axiosInstance.post("/api/user/createBranchAdmin", {
                 branch_id: selectedBranch.branch_id,
                 user_id: selectedUser.fid
@@ -82,6 +85,7 @@ export default function ManageUsers() {
 
 
     return (
+        <BranchAdminProvider>
         <div className="py-4 px-6">
             <h1>Manage Users</h1>
 
@@ -89,7 +93,8 @@ export default function ManageUsers() {
             <BranchAdminTable
                 isLoading={isLoading}
                 branchAdmins={branchAdmins}
-            />
+                onChangeBranch={setIsChangeBranchOpen}
+                />
 
             <CreateAdminDialog
                 isOpen={showCreateDialog}
@@ -103,7 +108,13 @@ export default function ManageUsers() {
                 onBranchSelect={setSelectedBranch}
                 onUserSelect={setSelectedUser}
                 onCreateAdmin={handleCreateClubAdmin}
-            />
+                />
+            <ChangeBranchDialog 
+                isChangeBranchOpen={isChangeBranchOpen} 
+                setIsChangeBranchOpen={setIsChangeBranchOpen}
+                branches={branches}
+                />
         </div>
+    </BranchAdminProvider>
     )
 }
