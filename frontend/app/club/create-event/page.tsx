@@ -96,7 +96,7 @@ const CreateEvent = () => {
         description: "Event created successfully!",
       });
       
-      router.push("/club");
+      router.push("/admin");
     } catch (error) {
       console.error(error);
       toast({
@@ -119,7 +119,7 @@ const CreateEvent = () => {
           </div>
           <Button
             variant="outline"
-            onClick={() => router.push("/branch-dashboard")}
+            onClick={() => router.push("/club")}
             disabled={isSubmitting}
           >
             Cancel
@@ -215,7 +215,7 @@ const CreateEvent = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Price ($)</label>
+                      <label className="block text-sm font-medium mb-2">Price (NPR)</label>
                       <Input
                         type="number"
                         name="price"

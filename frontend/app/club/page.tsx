@@ -19,7 +19,7 @@ import { useAuth } from "@/context/auth/hooks"
 interface Event {
   event_id: number
   title: string
-  date: string
+ event_date: string
   description: string
   max_capacity: number
   imageUrl: string
@@ -63,6 +63,7 @@ function LoadingSkeleton() {
 }
 
 function UpcomingEventCard({ event, registrationCount }: { event: Event, registrationCount: number }) {
+  debugger
   return (
     <div className="flex items-center gap-4">
       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md">
@@ -78,7 +79,7 @@ function UpcomingEventCard({ event, registrationCount }: { event: Event, registr
         <p className="text-sm font-medium leading-none">{event.title}</p>
         <div className="flex items-center text-xs text-muted-foreground">
           <CalendarDays className="mr-1 h-3 w-3" />
-          <span>{new Date(event.date).toLocaleDateString()}</span>
+          <span>{new Date(event.event_date).toLocaleDateString()}</span>
         </div>
         <div className="flex items-center justify-between text-xs">
           <span>
@@ -217,7 +218,7 @@ function UpcomingEventsCard({
       </CardContent>
       <CardFooter>
         <Button variant="outline" className="w-full border-black" color="gray">
-          <Link href="/admin/events" className="w-full flex items-center justify-center text-black">
+          <Link href="/club/events" className="w-full flex items-center justify-center text-black">
             View All Events
           </Link>
         </Button>
@@ -244,9 +245,9 @@ function PopularEventsCard({ loading }: {loading: boolean}) {
       </CardContent>
       <CardFooter>
         <Button variant="outline" className="w-full border-black" color="gray" disabled={true}>
-          <Link href="/admin/analytics" className="w-full flex items-center justify-center text-black border-black">
+          {/* <Link href="/admin/analytics" className="w-full flex items-center justify-center text-black border-black" > */}
             View Analytics
-          </Link>
+          {/* </Link> */}
         </Button>
       </CardFooter>
     </Card>

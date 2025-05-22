@@ -68,7 +68,6 @@ export default function EventContent({ eventId }: { eventId: string }) {
       try {
         const data = await getEvent(eventId);
         setEvent(data);
-        debugger
       } catch (error) {
         console.error(error);
       }
@@ -175,14 +174,21 @@ export default function EventContent({ eventId }: { eventId: string }) {
               <p>No description available</p>
             )}
             <div className="flex flex-wrap gap-4 mt-6">
-              <Button variant="outline" className="gap-2">
+              <Button 
+                variant="outline" 
+                className="gap-2"
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  toast.success("Event URL copied to clipboard!");
+                }}
+              >
                 <Share2 className="h-4 w-4" />
                 Share Event
               </Button>
-              <Button variant="outline" className="gap-2">
+              {/* <Button variant="outline" className="gap-2">
                 <CalendarPlus className="h-4 w-4" />
                 Add to Calendar
-              </Button>
+              </Button> */}
             </div>
           </TabsContent>
           <TabsContent value="location" className="mt-4">
@@ -252,8 +258,7 @@ export default function EventContent({ eventId }: { eventId: string }) {
           <CardContent className="space-y-4">
             {event?.isPaid ? (
               <div className="flex items-center text-2xl font-bold">
-                <DollarSign className="h-5 w-5" />
-                <span>{(event?.price || 0).toFixed(2)}</span>
+                <span>NPR {(event?.price || 0).toFixed(2)}</span>
               </div>
             ) : (
               <Badge variant="outline" className="text-lg py-1 px-2">

@@ -322,6 +322,7 @@ export default function EditEventDialog({ editEvent, setEditEvent, axiosInstance
                   value={formData.location}
                   onChange={handleInputChange}
                   className="mt-1"
+                  required
                 />
               </div>
             </div>

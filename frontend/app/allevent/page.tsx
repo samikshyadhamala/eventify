@@ -39,10 +39,13 @@ export default function Home() {
   }, [axiosInstance])
 
   const renderEventCards = (events: Event[]) => {
-    const filteredEvents = events.filter(event =>
-      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.location.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+    const now = new Date()
+    const filteredEvents = events
+      .filter(event => new Date(event.event_date) >= now)
+      .filter(event =>
+        event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        event.location.toLowerCase().includes(searchQuery.toLowerCase())
+      )
 
     return (
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -71,7 +74,7 @@ export default function Home() {
   return (
     <>
       <Header placeholder={true} />
-      <main className="w-full py-8 md:py-4 lg:py-4 text-black">
+      <main className="w-full py-8 md:py-4 lg:py-4 text-black min-h-80">
         <div className="container px-4 md:px-6 flex justify-center">
           <div className="flex w-full max-w-[60rem] flex-col gap-4">
             <div className="flex flex-col gap-2 sm:flex-row">
@@ -84,10 +87,10 @@ export default function Home() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-              <Button variant="outline" className="shrink-0">
+              {/* <Button variant="outline" className="shrink-0">
                 <Filter className="h-4 w-4" />
                 <span className="sr-only">Filter</span>
-              </Button>
+              </Button> */}
             </div>
 
             {isLoading ? <SkeletonEvents /> : (

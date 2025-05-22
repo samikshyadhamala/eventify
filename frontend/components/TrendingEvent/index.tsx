@@ -54,10 +54,13 @@ export default function Home() {
   }
 
   const renderEventCards = (events: Event[]) => {
-    const filteredEvents = events.filter(event =>
-      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.location.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+    const now = new Date()
+    const filteredEvents = events
+      .filter(event => new Date(event.event_date) >= now)
+      .filter(event =>
+        event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        event.location.toLowerCase().includes(searchQuery.toLowerCase())
+      )
 
     const visibleEvents = filteredEvents.slice(0, visibleCount)
     const hasMore = filteredEvents.length > visibleCount
@@ -105,10 +108,10 @@ export default function Home() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <Button variant="outline" size="icon" className="shrink-0">
+            {/* <Button variant="outline" size="icon" className="shrink-0">
               <Filter className="h-4 w-4" />
               <span className="sr-only">Filter</span>
-            </Button>
+            </Button> */}
           </div>
 
           {isLoading ? <SkeletonEvents /> : (

@@ -77,12 +77,12 @@ const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
           <div className="nav-links flex justify-evenly">
             <Link href="/" className='text-white'>Home</Link>
             <Link href="/allevent" className='text-white'>Events</Link>
-            <Link href="#" className='text-white'>About</Link>
+            {/* <Link href="#" className='text-white'>About</Link> */}
             <Link href="/contact" className='text-white'>Contact</Link>
           </div>
 
           <div className="relative">
-            {user ? (
+            {user ? ( 
               <>
                 <div>
                   <button

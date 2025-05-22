@@ -91,11 +91,11 @@ interface SignInFormProps {
 }
 
 const SignInForm = ({ email, setEmail, password, setPassword, errors, handleSubmit, handleGoogleLogin, isLoading, isGoogleLoading }: SignInFormProps) => (
-  <div className="container shadow border bg-light rounded-2 p-4 my-12" style={{ maxWidth: '30rem', minHeight: '400px' }}>
+  <div className="container shadow border bg-light rounded-2 p-4 my-12" style={{ maxWidth: '30rem', minHeight: '' }}>
     <form onSubmit={handleSubmit} noValidate>
       <h1 className="h3 mb-4 text-center"><b>Please sign in</b></h1>
 
-      <InputField
+      {/* <InputField
         id="floatingInput"
         label="Email address"
         type="email"
@@ -127,7 +127,7 @@ const SignInForm = ({ email, setEmail, password, setPassword, errors, handleSubm
         </button>
       </div>
 
-      <OrDivider />
+      <OrDivider /> */}
 
       <div className="text-center">
         <GoogleButton onClick={handleGoogleLogin} disabled={isLoading} isLoading={isGoogleLoading} />
@@ -168,8 +168,10 @@ export default function Login() {
     if (!validate()) return
     setIsLoading(true)
     try {
+      const response = await axiosInstance.post("/api/auth/signin", {email, password})
+      console.log(response.data)
       // Add your login logic here
-      router.push('/events')
+      router.push('/allevent')
     } catch (err) {
       const error = err as Error
       toast.error(error.message || 'Sign-in failed')

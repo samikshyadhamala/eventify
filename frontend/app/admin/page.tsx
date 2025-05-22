@@ -126,14 +126,14 @@ export default function Branches() {
                             onChange={handleSearchChange}
                         />
                     </div>
-                    <Button variant="outline" size="sm" className="h-8 gap-1">
+                    {/* <Button variant="outline" size="sm" className="h-8 gap-1">
                         <Filter className="h-3.5 w-3.5" />
                         <span>Filter</span>
                     </Button>
                     <Button variant="outline" size="sm" className="h-8 gap-1">
                         <Download className="h-3.5 w-3.5" />
                         <span>Export</span>
-                    </Button>
+                    </Button> */}
                 </div>
                 <Button size="sm" className="gap-1 bg-black" onClick={() => setShowCreateDialog(true)}>
                     <div className="flex gap-2 text-white items-center">
