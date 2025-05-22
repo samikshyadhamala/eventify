@@ -27,13 +27,13 @@ import { toast } from "react-toastify";
 interface Event {
   id?: string;
   title?: string;
-  is_paid?: boolean;
-  event_date?: string;
+  isPaid?: boolean;
+  date?: string;
   location?: string;
   imageUrl?: string;
   description?: string;
   price?: number;
-  max_capacity?: number | string;
+  maxCapacity?: number | string;
 }
 
 interface Coordinates {
@@ -63,12 +63,12 @@ export default function EventContent({ eventId }: { eventId: string }) {
   });
   const [loadingMap, setLoadingMap] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getEvent(eventId);
         setEvent(data);
+        debugger
       } catch (error) {
         console.error(error);
       }
@@ -125,8 +125,8 @@ export default function EventContent({ eventId }: { eventId: string }) {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{event?.title}</h1>
           <div className="flex flex-wrap gap-2">
-            {event?.is_paid ? (
-              <Badge variant="default">Paid</Badge>
+            {event?.isPaid ? (
+              <Badge variant="default" className="bg-black">Paid</Badge>
             ) : (
               <Badge variant="outline">Free</Badge>
             )}
@@ -135,8 +135,8 @@ export default function EventContent({ eventId }: { eventId: string }) {
             <div className="flex items-center">
               <Calendar className="mr-2 h-4 w-4" />
               <span>
-                {event?.event_date
-                  ? new Date(event.event_date).toLocaleDateString()
+                {event?.date
+                  ? new Date(event.date).toLocaleDateString()
                   : "Date not specified"}
               </span>
             </div>
@@ -250,7 +250,7 @@ export default function EventContent({ eventId }: { eventId: string }) {
             <CardDescription>Secure your spot for this event</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {event?.is_paid ? (
+            {event?.isPaid ? (
               <div className="flex items-center text-2xl font-bold">
                 <DollarSign className="h-5 w-5" />
                 <span>{(event?.price || 0).toFixed(2)}</span>
@@ -262,11 +262,11 @@ export default function EventContent({ eventId }: { eventId: string }) {
             )}
             <div className="flex items-center text-sm text-muted-foreground">
               <Users className="mr-2 h-4 w-4" />
-              <span>Capacity: {event?.max_capacity || "N/A"} spots</span>
+              <span>Capacity: {event?.maxCapacity || "N/A"} spots</span>
             </div>
             <RegistrationForm
               eventId={event?.id || ""}
-              isPaid={event?.is_paid || false}
+              isPaid={event?.isPaid || false}
               price={event?.price || 0}
             />
           </CardContent>

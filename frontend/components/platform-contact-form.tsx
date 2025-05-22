@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-
+import {useAuth} from "@/context/auth/hooks"
 export function PlatformContactForm() {
   // State for form submission status
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -25,6 +25,7 @@ export function PlatformContactForm() {
   const [subject, setSubject] = useState("")
   const [message, setMessage] = useState("")
 
+  const {axiosInstance} = useAuth()
   // Handle form submission with Axios
   async function handleSubmit(e:  React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -43,7 +44,7 @@ export function PlatformContactForm() {
       }
 
       // Send POST request to backend (placeholder URL)
-      await Axios.post("/api/contact", formData)
+      await axiosInstance.post("/api/contact/sendMessage", formData)
 
       // On success, update state and reset form
       setIsSuccess(true)
