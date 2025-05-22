@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Registration Confirmation</title>
+  <style type="text/css">
+    /* Reset styles for email clients */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      color: #333333;
+    }
+    
+    /* Responsive container */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    /* Ensure tables behave in most email clients */
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+    
+    img {
+      -ms-interpolation-mode: bicubic;
+      display: block;
+      border: 0;
+    }
+    
+    /* Media query for mobile */
+    @media screen and (max-width: 600px) {
+      .container {
+        width: 100% !important;
+      }
+      .mobile-padding {
+        padding: 10px !important;
+      }
+      .ticket-container {
+        padding: 15px !important;
+      }
+      .event-details td {
+        display: block;
+        width: 100% !important;
+      }
+    }
+  </style>
+</head>
+<body style="background-color: #f5f5f5; margin: 0; padding: 0;">
+  <!-- Preheader text (hidden in most clients, visible in inbox preview) -->
+  <div style="display: none; max-height: 0; overflow: hidden;">
+    Your registration for {{eventName}} is confirmed! Here's your ticket.
+  </div>
+  
+  <!-- Main container -->
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#f5f5f5" style="padding: 20px 0;">
+    <tr>
+      <td align="center" valign="top">
+        <table class="container" width="600" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+          <!-- Header with logo -->
+          <tr>
+            <td align="center" valign="top" bgcolor="#000000" style="padding: 30px 20px; text-align: center;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700;">EVENT CONFIRMATION</h1>
+              <p style="color: #ffffff; margin: 10px 0 0 0; font-size: 16px;">Thank you for registering!</p>
+            </td>
+          </tr>
+          
+          <!-- Intro text -->
+          <tr>
+            <td class="mobile-padding" align="left" valign="top" style="padding: 30px 40px 20px 40px;">
+              <p style="margin: 0; font-size: 16px; color: #333333;">
+                Dear <strong>{{userName}}</strong>,
+              </p>
+              <p style="margin: 15px 0 0 0; font-size: 16px; color: #333333;">
+                Your registration for <strong>{{eventName}}</strong> has been confirmed. Below is your electronic ticket with all the details you'll need for the event.
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Ticket container -->
+          <tr>
+            <td class="mobile-padding" align="center" valign="top" style="padding: 0 40px 30px 40px;">
+              <table width="100%" border="0" cellpadding="0" cellspacing="0" style="border: 2px dashed #000000; border-radius: 8px; overflow: hidden;">
+                <tr>
+                  <td class="ticket-container" align="center" valign="top" bgcolor="#ffffff" style="padding: 25px;">
+                    <!-- Ticket header -->
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td align="left" valign="top">
+                          <h2 style="margin: 0; color: #000000; font-size: 22px; font-weight: 700;">{{eventName}}</h2>
+                          <p style="margin: 5px 0 0 0; color: #666666; font-size: 14px;">Ticket #{{RegistrationNumber}}</p>
+                        </td>
+                        <td align="right" valign="top">
+                          <!-- QR Code placeholder - replace with actual QR code image -->
+                          <img src="{{qrCode}}" width="120" height="120" alt="QR Code" style="border: 1px solid #eeeeee; padding: 5px; background-color: #ffffff;">
+                        </td>
+                      </tr>
+                    </table>
+                    
+                    <!-- Divider -->
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin: 20px 0;">
+                      <tr>
+                        <td height="1" bgcolor="#eeeeee"></td>
+                      </tr>
+                    </table>
+                    
+                    <!-- Event details -->
+                    <table class="event-details" width="100%" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="50%" align="left" valign="top" style="padding-right: 10px;">
+                          <p style="margin: 0; font-size: 14px; color: #666666;">DATE & TIME</p>
+                          <p style="margin: 5px 0 15px 0; font-size: 16px; color: #333333; font-weight: 500;">
+                           {{Date}}<br>
+                            {{Time}}
+                          </p>
+                          
+                          <p style="margin: 0; font-size: 14px; color: #666666;">LOCATION</p>
+                          <p style="margin: 5px 0 0 0; font-size: 16px; color: #333333; font-weight: 500;">
+                            {{location}}
+                          </p>
+                        </td>
+                        <td width="50%" align="left" valign="top" style="padding-left: 10px;">
+                          <p style="margin: 0; font-size: 14px; color: #666666;">ATTENDEE</p>
+                          <p style="margin: 5px 0 15px 0; font-size: 16px; color: #333333; font-weight: 500;">
+                            {{userEmail}}<br>
+                            {{userName}}
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- Event description -->
+          <tr>
+            <td class="mobile-padding" align="left" valign="top" style="padding: 0 40px 30px 40px;">
+              <h3 style="margin: 0 0 15px 0; color: #333333; font-size: 18px; font-weight: 700;">Event Description</h3>
+              <p style="margin: 0; font-size: 16px; color: #333333; line-height: 1.6;">
+               {{description}}
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Additional information -->
+          <tr>
+            <td class="mobile-padding" align="left" valign="top" bgcolor="#f9f9f9" style="padding: 25px 40px; border-top: 1px solid #eeeeee;">
+              <h3 style="margin: 0 0 15px 0; color: #333333; font-size: 18px; font-weight: 700;">Important Information</h3>
+              
+              <p style="margin: 0 0 10px 0; font-size: 16px; color: #333333;">
+                <strong>What to Bring:</strong>
+              </p>
+              <ul style="margin: 0 0 15px 0; padding-left: 20px; color: #333333;">
+                <li style="margin-bottom: 5px;">This ticket (printed or on your mobile device)</li>
+                <li style="margin-bottom: 5px;">Valid photo ID matching the name on this ticket</li>
+              </ul>
+              
+              <p style="margin: 0 0 10px 0; font-size: 16px; color: #333333;">
+                <strong>Event Policies:</strong>
+              </p>
+              <ul style="margin: 0 0 15px 0; padding-left: 20px; color: #333333;">
+                <li style="margin-bottom: 5px;">This ticket is non-refundable</li>
+                <li style="margin-bottom: 5px;">Contact the organizer for further questions</li>
+              </ul>
+              
+              <p style="margin: 15px 0 0 0; font-size: 16px; color: #333333;">
+                <strong>Questions?</strong> Contact us at <a href="mailto:[SUPPORT_EMAIL]" style="color: #000000; text-decoration: none;">eventify.services@gmail.com</a> or call 9842525351.
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td align="center" valign="top" bgcolor="#000000" style="padding: 30px 40px;">
+              <p style="margin: 0 0 10px 0; font-size: 14px; color: #ffffff; text-align: center;">
+                &copy; Eventify. All rights reserved.
+              </p>
+              <p style="margin: 0; font-size: 12px; color: #aaaaaa; text-align: center;">
+                Kathmandu, Nepal
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
