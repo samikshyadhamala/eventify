@@ -31,7 +31,7 @@ export default function EventCard(item: Event) {
                         {new Date(item.event_date).toLocaleDateString()} — {new Date(item.event_date).toLocaleTimeString()}
                     </div>
                     {item.is_paid && (
-                        <div className="text-sm font-medium">${item.price}</div>
+                        <div className="text-sm font-medium">Rs. {item.price}</div>
                     )}
                 </div>
             </Link>

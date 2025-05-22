@@ -5,10 +5,12 @@ import AdminRow from './AdminRow'
 
 const BranchAdminTable = ({
     isLoading,
-    branchAdmins
+    branchAdmins,
+    onChangeBranch,
 }: {
     isLoading: boolean
     branchAdmins: BranchAdmin[]
+    onChangeBranch: (value: boolean) => void
 }) => {
     return (
         <div className="rounded-md border">
@@ -27,7 +29,7 @@ const BranchAdminTable = ({
                                 </td>
                             </tr>
                         ) : branchAdmins.map((admin) => (
-                            <AdminRow key={admin.user_id} admin={admin} />
+                            <AdminRow key={admin.user_id} admin={admin} onChangeBranch={onChangeBranch}/>
                         ))}
                     </tbody>
                 </table>

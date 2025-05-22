@@ -11,9 +11,10 @@ interface RegistrationFormProps {
   eventId: string
   isPaid: boolean
   price: number
+  maxCapacity: number
 }
 
-export function RegistrationForm({ eventId, isPaid, price }: RegistrationFormProps) {
+export function RegistrationForm({ eventId, isPaid, price, maxCapacity }: RegistrationFormProps) {
   const router = useRouter()
   const [isRegistering, setIsRegistering] = useState(false)
   const { axiosInstance, user } = useAuth()
@@ -73,7 +74,7 @@ export function RegistrationForm({ eventId, isPaid, price }: RegistrationFormPro
   const buttonText = isRegistering 
     ? "Processing..." 
     : isPaid 
-      ? `Pay $${displayPrice}` 
+      ? `Rs ${displayPrice}` 
       : "Register Now"
 
   return (

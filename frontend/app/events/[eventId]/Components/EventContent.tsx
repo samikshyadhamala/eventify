@@ -43,19 +43,18 @@ export default function EventContent({ eventId }: { eventId: string }) {
         }
         fetchData()
     }, [])
-
     return (
         <>
             <div className="lg:col-span-2 space-y-6">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">{event?.title}</h1>
                     <div className="flex flex-wrap gap-2">
-                        {event?.is_paid ? <Badge variant="default">Paid</Badge> : <Badge variant="outline">Free</Badge>}
+                        {event?.isPaid ? <Badge variant="default" className="bg-black">Paid</Badge> : <Badge variant="outline">Free</Badge>}
                     </div>
                     <div className="mt-4 flex flex-col gap-2 text-muted-foreground">
                         <div className="flex items-center">
                             <Calendar className="mr-2 h-4 w-4" />
-                            <span>{new Date(event?.event_date).toLocaleDateString()}</span>
+                            <span>{new Date(event?.date).toLocaleDateString()}</span>
                         </div>
                         <div className="flex items-center">
                             <MapPin className="mr-2 h-4 w-4" />
@@ -120,9 +119,8 @@ export default function EventContent({ eventId }: { eventId: string }) {
                         <CardDescription>Secure your spot for this event</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        {event?.is_paid ? (
+                        {event?.isPaid ? (
                             <div className="flex items-center text-2xl font-bold">
-                                <DollarSign className="h-5 w-5" />
                                 <span>{(event?.price || 0).toFixed(2)}</span>
                             </div>
                         ) : (
@@ -133,13 +131,14 @@ export default function EventContent({ eventId }: { eventId: string }) {
                         <div className="flex items-center text-sm text-muted-foreground">
                             <Users className="mr-2 h-4 w-4" />
                             <span>
-                                Capacity: {event.max_capacity || 'N/A'} spots
+                                Capacity: {event.maxCapacity || 'N/A'} spots
                             </span>
                         </div>
                         <RegistrationForm
                             eventId={event?.id || ''}
-                            isPaid={event?.is_paid || false}
+                            isPaid={event?.isPaid || false}
                             price={event?.price || 0}
+                            maxCapacity={event?.maxCapacity || 0}
                         />
                     </CardContent>
                 </Card>

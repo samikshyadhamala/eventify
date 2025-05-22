@@ -70,7 +70,6 @@ export function TrendingEventCard({ event }: TrendingEventCardProps) {
                                 </div>
                                 {event.is_paid && (
                                     <div className="flex items-center">
-                                        <DollarSign className="mr-2 h-4 w-4" />
                                         <span>{typeof event.price === 'number' ? event.price.toFixed(2) : event.price}</span>
                                     </div>
                                 )}

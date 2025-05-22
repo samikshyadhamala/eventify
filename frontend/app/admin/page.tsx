@@ -257,10 +257,8 @@ export default function Branches() {
                                                     </Button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
-                                                    <DropdownMenuItem>View Details</DropdownMenuItem>
-                                                    <DropdownMenuItem>Edit Branch</DropdownMenuItem>
-                                                    <DropdownMenuItem>Manage Admins</DropdownMenuItem>
-                                                    <DropdownMenuItem>View Events</DropdownMenuItem>
+                                                    <DropdownMenuItem><Link href={`/admin/users/branchAdmin`} className='text-black'>Manage Admins</Link></DropdownMenuItem>
+                                                    <DropdownMenuItem><Link href={`/admin/events`} className='text-black'>View Events</Link></DropdownMenuItem>
                                                     <DropdownMenuItem 
                                                         className="text-red-600" 
                                                         onClick={() => handleDeleteBranch(branch.branch_id)}
