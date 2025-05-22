@@ -71,7 +71,6 @@ export default function EditEventDialog({ editEvent, setEditEvent, axiosInstance
         imageUrl: editEvent.imageUrl || "",
         branch_id: editEvent.branch_id,
       })
-      setPreviewUrl(editEvent.imageUrl || null)
       setImageFile(null)
     }
   }, [editEvent])
@@ -432,9 +431,9 @@ export default function EditEventDialog({ editEvent, setEditEvent, axiosInstance
                     ) : previewUrl ? (
                       <div className="relative w-full aspect-video">
                         <img
-                          src={previewUrl ? previewUrl : editEvent?.imageUrl ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/media/${editEvent.imageUrl}` : "/placeholder.svg"}
+                          src={previewUrl || "/placeholder.svg"}
                           alt="Event preview"
-                          className="w-full h-full object-cover rounded-md"
+                          className="w-full h-44 object-cover rounded-md"
                           onError={(e) => {
                             ; (e.target as HTMLImageElement).src = "/placeholder.svg?height=200&width=400"
                               ; (e.target as HTMLImageElement).alt = "Image failed to load"
@@ -443,7 +442,7 @@ export default function EditEventDialog({ editEvent, setEditEvent, axiosInstance
                       </div>
                     ) : (
                       <div className="w-full aspect-video flex flex-col items-center justify-center bg-muted rounded-md">
-                        <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/media/${editEvent?.imageUrl}` || "/placeholder.svg"} height='12' width='12' alt="placeholder" className="h-12 w-12 text-muted-foreground opacity-50 mb-2" />
+                        <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/media/${editEvent?.imageUrl}` || "/placeholder.svg"} alt="placeholder" className="h-40 w-full object-cover text-muted-foreground opacity-50 mb-2" />
                         <p className="text-sm text-muted-foreground">Drag and drop an image here or click to browse</p>
                       </div>
                     )}
@@ -461,7 +460,7 @@ export default function EditEventDialog({ editEvent, setEditEvent, axiosInstance
             <Button
               variant="outline"
               type="button"
-              onClick={() => setEditEvent(null)}
+              onClick={() => {setEditEvent(null); setPreviewUrl(null)}}
               disabled={isSubmitting || isUploading}
             >
               Cancel

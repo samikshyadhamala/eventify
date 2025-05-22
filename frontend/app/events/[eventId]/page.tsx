@@ -74,7 +74,7 @@ function SidebarSkeleton() {
 
 async function EventContent({ eventId }: { eventId: string }) {
   const event = await getEvent(eventId)
-
+  
   return (
     <>
       <div className="lg:col-span-2 space-y-6">
@@ -196,8 +196,8 @@ export default async function EventDetailsPage({
           </Link>
         </div>
         <div className="grid gap-6 lg:grid-cols-3">
-          <Suspense fallback={
-            <>
+            <Suspense fallback={
+              <>
               <EventSkeleton />
               <SidebarSkeleton />
             </>

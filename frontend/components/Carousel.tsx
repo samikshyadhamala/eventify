@@ -24,14 +24,14 @@ const Carousel = () => {
       title: "Capture Moments",
       subtitle: "Professional event photography",
       cta: "Learn More",
-      link: "/services"
+      link: "/allevent"
     },
     {
       image: "/images/coursel/crowdRegister.png",
       title: "Join The Community",
       subtitle: "Register for upcoming events",
       cta: "Register Now",
-      link: "/register"
+      link: "/allevent"
     }
   ]
 
