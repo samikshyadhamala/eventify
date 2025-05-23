@@ -7,6 +7,7 @@ import { ChevronDown } from 'lucide-react'
 import { useBranchAdmin } from "../../context"
 import { useAuth } from '@/context/auth/hooks'
 import {toast} from 'react-toastify'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const AdminRow = (
     {
@@ -24,7 +25,15 @@ const AdminRow = (
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
     >
-        <td className="p-4 align-middle font-medium">{admin.email}</td>
+        <td className="p-4 align-middle font-medium flex gap-3 items-center">
+            <Avatar className="h-8 w-8">
+                <AvatarImage src={admin.imageUrl} />
+                <AvatarFallback>
+                    {admin.email[0].toUpperCase()}
+                </AvatarFallback>
+            </Avatar>
+            {admin.email}
+        </td>
         <td className="p-4 align-middle">{admin.branch_name}</td>
         <td className="p-4 align-middle">{admin.location}</td>
         <td className="p-4 align-middle w-full flex justify-center">

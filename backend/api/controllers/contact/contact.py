@@ -2,6 +2,7 @@ from flask_mail import Message
 import os 
 from api import mail
 import dotenv
+from flask import jsonify
 
 dotenv.load_dotenv()
 def Contact(formData):

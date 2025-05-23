@@ -4,6 +4,7 @@ export type BranchAdmin = {
     location: string
     user_id: string
     branch_id: string
+    imageUrl: string
 }
 
 export type Branch = {

@@ -26,7 +26,8 @@ def GetBranchAdmin():
             "branch_name": admin_record.Branch.branch_name,
             "location": admin_record.Branch.location,
             "user_id": admin_record.User.fid,
-            "branch_id": admin_record.Branch.branch_id
+            "branch_id": admin_record.Branch.branch_id,
+            "imageUrl": firebase_user.photo_url
         })
     
     return formated_data

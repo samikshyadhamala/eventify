@@ -23,6 +23,7 @@ import {
 
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 
 type User = {
     email: string
@@ -60,6 +61,23 @@ export default function ManageUsers() {
     const [branchId, setBranchId] = useState('')
     const [changingRole, setChangingRole] = useState<string>('')
     const [branches, setBranches] = useState<Branch[]>([])
+    const roleColorMap: Record<"normal" | "club" | "admin", string> = {
+        normal: `
+          bg-neutral-200 text-neutral-800
+          hover:bg-neutral-300
+          focus:ring-2 focus:ring-neutral-400
+        `,
+        club: `
+          bg-teal-500 text-white
+          hover:bg-teal-600
+          focus:ring-2 focus:ring-teal-400
+        `,
+        admin: `
+          bg-emerald-600 text-white
+          hover:bg-emerald-700
+          focus:ring-2 focus:ring-emerald-500
+        `,
+      };
 
     const [currentUser, setCurrentUsers] = useState<CurrentUser[]>([])
     // fetching current user
@@ -278,7 +296,17 @@ export default function ManageUsers() {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                 >
-                                    <td className="p-4 align-middle font-medium">{user.email}</td>
+                                     <td className="p-4 align-middle font-medium">
+                                        <div className="flex gap-3 items-center">
+                                            <Avatar className="h-8 w-8">
+                                                <AvatarImage src={user.imageUrl} />
+                                                <AvatarFallback>
+                                                    {user.email[0].toUpperCase()}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                        {user.email}
+                                        </div>
+                                    </td>
                                     <td className="p-4 align-middle justify-center flex w-full">
                                         {changingRole === user.fid ? (
                                             <div className="flex items-center">
@@ -288,13 +316,14 @@ export default function ManageUsers() {
                                         ) : (
                                             <div className="w-24">
                                                 <Select
-                                                    className="gap-2"
                                                     value={user.role}
                                                     onValueChange={(newRole) => handleRoleChange(user.fid, newRole)}
                                                     disabled={user.fid === currentUser?.fid}
                                                 >
-                                                    <SelectTrigger>
-                                                        <SelectValue>{user.role}</SelectValue>
+                                                    <SelectTrigger className={`h-8 w-24 ${roleColorMap[user.role as keyof typeof roleColorMap]}`}>
+                                                        <SelectValue>
+                                                            {user.role}
+                                                        </SelectValue>
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         <SelectGroup>
@@ -318,9 +347,9 @@ export default function ManageUsers() {
                                     <td className="p-4 align-middle h-full w-full flex justify-center ">
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
-                                                <Button variant="ghost" size="sm">
+                                                <Button variant="ghost" size="sm" className="">
                                                     Actions
-                                                    <ChevronDown className="ml-2 h-4 w-4" />
+                                                    <ChevronDown className="h-3 w-3" />
                                                 </Button>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
