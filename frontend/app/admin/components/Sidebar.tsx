@@ -93,8 +93,8 @@ export default function SuperAdminSidebar() {
           </SidebarMenuItem>
 
           <SidebarMenuItem>
-            <SidebarMenuButton asChild isActive={pathname === "/admin/users/branchAdmin"}>
-              <Link href="/admin/users/branchAdmin" className="text-black">
+            <SidebarMenuButton asChild isActive={pathname === "/admin/branchAdmin"}>
+              <Link href="/admin/branchAdmin" className="text-black">
                 <Users />
                 <span>Branch Admins</span>
               </Link>

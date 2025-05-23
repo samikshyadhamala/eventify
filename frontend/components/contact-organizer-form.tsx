@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { sendMessageToOrganizer } from "@/app/actions/contact-actions"
+import { contactPlatform } from "@/app/actions/contactAction"
 
 interface ContactOrganizerFormProps {
   eventId: string
@@ -29,7 +29,7 @@ export function ContactOrganizerForm({ eventId, organizerName }: ContactOrganize
 
     try {
       // Call the server action to send the email
-      await sendMessageToOrganizer(formData)
+      await contactPlatform(formData)
       setIsSuccess(true)
 
       // Reset form after success

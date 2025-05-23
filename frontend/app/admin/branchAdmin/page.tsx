@@ -9,7 +9,6 @@ import CreateAdminDialog from "./components/CreateAdminDialog"
 import HeaderActions from "./components/HeaderActions"
 import ChangeBranchDialog from './components/ChangeBranchDialog'
 import {BranchAdminProvider} from './context'
-import { useBranchAdmin } from "./context"
 
 export default function ManageUsers() {
     const { axiosInstance } = useAuth()
@@ -82,8 +81,6 @@ export default function ManageUsers() {
         }
     }
 
-
-
     return (
         <BranchAdminProvider>
         <div className="py-4 px-6">
@@ -113,7 +110,7 @@ export default function ManageUsers() {
                 isChangeBranchOpen={isChangeBranchOpen} 
                 setIsChangeBranchOpen={setIsChangeBranchOpen}
                 branches={branches}
-                />
+            />
         </div>
     </BranchAdminProvider>
     )
