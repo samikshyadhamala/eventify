@@ -11,10 +11,9 @@ interface RegistrationFormProps {
   eventId: string
   isPaid: boolean
   price: number
-  maxCapacity: number
 }
 
-export function RegistrationForm({ eventId, isPaid, price, maxCapacity }: RegistrationFormProps) {
+export function RegistrationForm({ eventId, isPaid, price }: RegistrationFormProps) {
   const router = useRouter()
   const [isRegistering, setIsRegistering] = useState(false)
   const { axiosInstance, user } = useAuth()
@@ -26,12 +25,14 @@ export function RegistrationForm({ eventId, isPaid, price, maxCapacity }: Regist
         const response = await axiosInstance.get(`/api/registration/isAlreadyRegistered/${eventId}`)
         setIsAlreadyRegistered(response.data.isRegistered)
       } catch (error) {
-        console.error("Error checking registration status:", error)
+        console.warn("Error checking registration status:", error)
+        return null
         // toast.error("Failed to check registration status")
       }
     }
     fetchData()
-  }, [])
+  }, [eventId])
+
   // Validate eventId to prevent invalid registrations
   if (!eventId) {
     return (
