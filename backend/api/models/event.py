@@ -1,5 +1,5 @@
 from api import db 
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 
 class Event(db.Model):
@@ -15,8 +15,8 @@ class Event(db.Model):
     price = db.Column(db.Numeric(10, 2))    
     max_capacity = db.Column(db.Integer)
     imageUrl = db.Column(db.String(255))
-    created_at = db.Column(db.DateTime, default=datetime.now(UTC))
-    updated_at = db.Column(db.DateTime, default=datetime.now(UTC), onupdate=datetime.now(UTC))
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
 
     # Relationships
     # branch = db.relationship('Branch', back_populates='events')

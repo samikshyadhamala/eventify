@@ -1,5 +1,5 @@
 from api import db
-from datetime import datetime, UTC
+from datetime import datetime, timezone
 
 class Registration(db.Model):
     __tablename__ = 'registrations'
@@ -7,7 +7,7 @@ class Registration(db.Model):
     registration_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.String(30), db.ForeignKey('users.fid', ondelete='CASCADE'), nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey('events.event_id', ondelete='CASCADE'), nullable=False)
-    registered_at = db.Column(db.DateTime(timezone=True), default=datetime.now(UTC))
+    registered_at = db.Column(db.DateTime(timezone=True), default=datetime.now(timezone.utc))
     payment_status = db.Column(db.String(20), default='pending')
 
     __table_args__ = (

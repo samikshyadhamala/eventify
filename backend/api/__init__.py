@@ -26,7 +26,7 @@ def create_app():
     api.init_app(app)
     cors.init_app(app, 
         resources={r"/api/*": {
-            "origins": ["http://localhost:3000"],
+            "origins": ["http://localhost:3000", "http://192.168.1.83:3000"],
             "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             "allow_headers": ["Content-Type", "Authorization"],
             "supports_credentials": True
@@ -104,6 +104,7 @@ def create_app():
     from api.routes.branch import branch_bp
     from api.routes.registration import registration_bp
     from api.routes.contact import contact_bp
+    from api.routes.callback import callback_bp
     
     app.register_blueprint(contact_bp, url_prefix="/api/contact/")
     app.register_blueprint(branch_bp, url_prefix="/api/branch/")
@@ -112,6 +113,7 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(user_bp, url_prefix='/api/user')
     app.register_blueprint(registration_bp, url_prefix='/api/registration')
+    app.register_blueprint(callback_bp, url_prefix='/api/callback')
     
     with app.app_context():
         db.create_all()  # Create database tables
