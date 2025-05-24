@@ -5,7 +5,7 @@ import { Badge, Button } from '@radix-ui/themes';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion, useAnimation } from 'framer-motion';
 import ImageComponent from '@/components/ImageComponent';
-import { Event } from '../types';
+import { Event } from './types/EventCardTypes';
 
 export default function EventCard(item: Event) {
     const controls = useAnimation();
@@ -17,13 +17,14 @@ export default function EventCard(item: Event) {
             initial={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 0.3 } }}
             exit={{ opacity: 0, scale: 0.95, filter: 'blur(10px)', transition: { duration: 0.2 } }}
-            onHoverStart={() => controls.start({ scale: 1.08 })}
-            onHoverEnd={() => controls.start({ scale: 1 })}
+            // onHoverStart={() => controls.start({ scale: 1.1 })}
+            // onHoverEnd={() => controls.start({ scale: 1 })}
+            whileHover={{y:-10}}
             layout
         >
             <Link href={`/event/${item.event_id}`}>
                 <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                    <div className="relative aspect-video w-full overflow-hidden">
+                    <div className="relative h-52 w-full overflow-hidden">
                         <motion.div animate={controls} className="h-full w-full">
                             <ImageComponent
                                 imageFile={item.imageUrl}
@@ -36,7 +37,7 @@ export default function EventCard(item: Event) {
                             <h5 className="font-semibold line-clamp-1 m-0">{item.title}</h5>
                             {item.is_paid ? (
                                 <Badge color="gray" highContrast variant="solid">
-                                    Rs. {typeof item.price === 'number' ? item.price.toFixed(2) : item.price}
+                                    Rs. {item.price}
                                 </Badge>
                             ) : (
                                 <Badge variant="outline" color="gray">Free</Badge>

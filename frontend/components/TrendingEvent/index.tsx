@@ -11,19 +11,10 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import SkeletonEvents from './SkeletonEvents'
 import { AnimatePresence, motion, useAnimation } from 'framer-motion'
-import { TrendingEventCard } from './TrendingEventCard';
+import EventCard from '@/components/EventCard';
+import { Event } from "@/components/types/EventCardTypes"
 
 export default function Home() {
-  interface Event {
-    event_id: string;
-    title: string;
-    event_date: string;
-    price: number;
-    location: string;
-    imageUrl: string;
-    is_paid: boolean;
-  }
-
   const [data, setData] = useState<Event[]>([])
   const { axiosInstance } = useAuth()
   const [searchQuery, setSearchQuery] = useState('')
@@ -69,7 +60,8 @@ export default function Home() {
       <>
         <motion.div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {visibleEvents.map((item) => (
-            <TrendingEventCard key={item.event_id} event={item} />
+            // <TrendingEventCard key={item.event_id} event={item} />
+            <EventCard {...item} key={item.event_id} /> 
           ))}
         </motion.div>
         {hasMore && (
@@ -97,7 +89,7 @@ export default function Home() {
   return (
     <section className="w-full py-8 md:py-16 lg:py-20">
       <div className="container px-4 md:px-6 flex justify-center">
-        <div className="flex w-full max-w-[60rem] flex-col gap-4">
+        <div className="flex w-full max-w-[64rem] flex-col gap-4">
           <div className="flex flex-col gap-2 sm:flex-row">
             <div className="relative flex-1">
               <Input

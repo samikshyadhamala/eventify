@@ -10,8 +10,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import SkeletonEvents from '@/components/TrendingEvent/SkeletonEvents'
 import Header from '@/components/Header';
 import { AnimatePresence, useAnimation } from "framer-motion";
-import EventCard from './components/EventCard';
-import { Event } from './types'
+import EventCard from '../../../components/EventCard';
+import { Event } from '../../../components/types/EventCardTypes'
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -76,7 +76,7 @@ export default function Home() {
       <Header placeholder={true} />
       <main className="w-full py-8 md:py-4 lg:py-4 text-black min-h-80">
         <div className="container px-4 md:px-6 flex justify-center">
-          <div className="flex w-full max-w-[60rem] flex-col gap-4">
+          <div className="flex w-full max-w-[63rem] flex-col gap-4">
             <div className="flex flex-col gap-2 sm:flex-row">
               <div className="relative flex-1">
                 <Input
