@@ -1,23 +1,23 @@
 'use client';
 import React, { createContext, useState, useEffect, useMemo, useCallback } from 'react';
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosError } from 'axios';
 import Cookies from 'js-cookie';
 import { AuthProviderProps, User } from './types';
 import { useAuth, useRole } from './hooks';
-
-interface AuthContextType {
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  accessToken: string | null;
-  isAuthenticated: boolean;
-  authCookie: string | undefined;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
-  useAuth: () => AuthContextType;
-  axiosInstance: AxiosInstance;
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-  useRole: () => 'normal' | 'club' | 'super_admin' | null;
-}
+import { AuthContextType } from './types';
+// interface AuthContextType {
+//   user: User | null;
+//   setUser: React.Dispatch<React.SetStateAction<User | null>>;
+//   accessToken: string | null;
+//   isAuthenticated: boolean;
+//   authCookie: string | undefined;
+//   login: (email: string, password: string) => Promise<void>;
+//   logout: () => Promise<void>;
+//   useAuth: () => AuthContextType;
+//   axiosInstance: AxiosInstance;
+//   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+//   useRole: () => 'normal' | 'club' | 'admin' | null;
+// }
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
@@ -49,7 +49,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     const instance = axios.create({
       baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || '',
       withCredentials: true,
-      timeout: 15000 // 15 seconds
+      timeout: 10000 // 10 seconds
     });
 
     // Add access token to requests
@@ -92,7 +92,9 @@ export default function AuthProvider({ children }: AuthProviderProps) {
             originalRequest.headers.Authorization = `Bearer ${idToken}`;
             return instance(originalRequest);
           } catch (err) {
-            if (err?.response?.status === 401) {
+            const axiosError = err as AxiosError;
+
+            if (axiosError.response?.status === 401) {
               // User just isn't logged in — no action needed
               console.warn("Not logged in — skipping refresh and logout.");
               return Promise.reject(err);

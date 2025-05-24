@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { ChevronDown, Download, Filter, Plus, Search, Loader2 } from "lucide-react"
 import { useAuth } from "@/context/auth/hooks"
@@ -39,20 +39,24 @@ export default function Branches() {
     const [isCreating, setIsCreating] = useState(false)
     const [deletingBranches, setDeletingBranches] = useState<number[]>([])
 
+    const hasGetDetailedBranched = useRef(false);
     useEffect(() => {
+        if (hasGetDetailedBranched.current) return;
         const fetchBranches = async () => {
             try {
                 const response = await axiosInstance.get("/api/branch/getDetailedBranch")
                 setBranches(response.data)
                 setFilteredBranches(response.data)
+                hasGetDetailedBranched.current = true
             } catch (error) {
                 console.error("Error fetching branches:", error)
             } finally {
                 setIsLoading(false)
             }
         }
+
         fetchBranches()
-    }, [axiosInstance])
+    }, [])
 
     useEffect(() => {
         if (searchQuery.trim() === '') {

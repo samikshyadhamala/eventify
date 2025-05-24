@@ -13,18 +13,18 @@ export default function EventCard(item: Event) {
     return (
         <motion.div
             key={item.event_id}
-            className="h-full rounded-lg border bg-card text-card-foreground shadow-sm"
+            className="h-full"
             initial={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 0.3 } }}
             exit={{ opacity: 0, scale: 0.95, filter: 'blur(10px)', transition: { duration: 0.2 } }}
             // onHoverStart={() => controls.start({ scale: 1.1 })}
             // onHoverEnd={() => controls.start({ scale: 1 })}
-            whileHover={{y:-10}}
+            whileHover={{y:-8}}
             layout
         >
             <Link href={`/event/${item.event_id}`}>
                 <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                    <div className="relative h-52 w-full overflow-hidden">
+                    <div className="relative h-48 w-full overflow-hidden">
                         <motion.div animate={controls} className="h-full w-full">
                             <ImageComponent
                                 imageFile={item.imageUrl}

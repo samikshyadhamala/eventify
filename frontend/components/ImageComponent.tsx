@@ -75,7 +75,7 @@ const ImageComponent = ({ imageFile, alt }: ImageComponentProps) => {
           width: "100%",
           height: "100%",
           backgroundColor: "#eee",
-          borderRadius: "8px",
+          // borderRadius: "8px",
         }}
       />
     );
@@ -90,7 +90,7 @@ const ImageComponent = ({ imageFile, alt }: ImageComponentProps) => {
         width: "100%",
         height: "100%",
         objectFit: "cover",
-        borderRadius: "8px",
+        // borderRadius: "8px",
       }}
       onError={() => {
         // If the image fails to load (e.g., Pexels image fails), use local placeholder
@@ -107,7 +107,7 @@ const ImageComponent = ({ imageFile, alt }: ImageComponentProps) => {
         width: "100%",
         height: "100%",
         objectFit: "cover",
-        borderRadius: "8px",
+        // borderRadius: "8px",
       }}
     />
   );

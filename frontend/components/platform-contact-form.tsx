@@ -128,7 +128,7 @@ export function PlatformContactForm() {
         <div className="space-y-2">
           <Label htmlFor="subject">Subject</Label>
           <Select value={subject} onValueChange={setSubject}>
-            <SelectTrigger id="subject">
+            <SelectTrigger id="subject" className="border-1">
               <SelectValue placeholder="Select a subject" />
             </SelectTrigger>
             <SelectContent>

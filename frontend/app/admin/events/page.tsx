@@ -240,7 +240,7 @@ export default function Events() {
                                                 </td>
                                             </tr>
                                         ) : (
-                                            currentEvents.map((event, i) => {
+                                            currentEvents.map((event, index) => {
                                                 const status = getEventStatus(event.event_date);
                                                 const registrationCount = eventRegistrations[event.event_id] || 0;
 
@@ -250,6 +250,7 @@ export default function Events() {
                                                         className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
                                                         initial={{ opacity: 0, y: 20 }}
                                                         animate={{ opacity: 1, y: 0 }}
+                                                        transition={{delay: 0.1 * index}}
                                                     >
                                                         <td className="p-4 align-middle font-medium">{event.title}</td>
                                                         <td className="p-4 align-middle">{new Date(event.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
@@ -286,7 +287,7 @@ export default function Events() {
                                                                 variant="outline"
                                                                 className={`
                                                                     ${event.is_paid
-                                                                        ? "border-purple-200 bg-purple-50 text-purple-700"
+                                                                        ? "bg-black text-white"
                                                                         : "border-gray-200 bg-gray-50 text-gray-700"
                                                                     }
                                                                 `}
@@ -297,7 +298,7 @@ export default function Events() {
                                                         <td className="p-4 align-middle">
                                                             <DropdownMenu>
                                                                 <DropdownMenuTrigger asChild>
-                                                                    <Button variant="ghost">
+                                                                    <Button variant="ghost" className="text-black">
                                                                         Actions
                                                                         <ChevronDown className="ml-2 h-4 w-4" />
                                                                     </Button>
@@ -325,10 +326,10 @@ export default function Events() {
                                 Showing <strong>{filteredEvents.length > 0 ? indexOfFirstEvent + 1 : 0}-{Math.min(indexOfLastEvent, totalEvents)}</strong> of <strong>{totalEvents}</strong> events
                             </div>
                             <div className="flex items-center gap-2">
-                                <Button variant="outline" disabled={currentPage === 1 || loading} onClick={prevPage}>
+                                <Button color='gray' variant="outline" disabled={currentPage === 1 || loading} onClick={prevPage}>
                                     Previous
                                 </Button>
-                                <Button variant="outline" disabled={currentPage >= Math.ceil(totalEvents / rowsPerPage) || loading} onClick={nextPage}>
+                                <Button variant="" highContrast color='gray' className="" disabled={currentPage >= Math.ceil(totalEvents / rowsPerPage) || loading} onClick={nextPage}>
                                     Next
                                 </Button>
                             </div>

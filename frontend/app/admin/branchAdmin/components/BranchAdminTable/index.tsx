@@ -28,8 +28,8 @@ const BranchAdminTable = ({
                                     No branch admins found
                                 </td>
                             </tr>
-                        ) : branchAdmins.map((admin) => (
-                            <AdminRow key={admin.user_id} admin={admin} onChangeBranch={onChangeBranch}/>
+                        ) : branchAdmins.map((admin, index) => (
+                            <AdminRow key={admin.user_id} admin={admin} index={index} onChangeBranch={onChangeBranch}/>
                         ))}
                     </tbody>
                 </table>

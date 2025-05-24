@@ -3,7 +3,9 @@ import { AxiosInstance } from 'axios';
 export interface User {
   id: string;
   email: string;
-  role: 'normal' | 'club' | 'super_admin';
+  role: 'normal' | 'club' | 'admin' | null;
+  imageUrl: string;
+  name: string;
 }
 
 export interface AuthContextType {
@@ -17,7 +19,7 @@ export interface AuthContextType {
   useAuth: () => AuthContextType;
   axiosInstance: AxiosInstance;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-  useRole: () => 'normal' | 'club' | 'super_admin' | null;
+  useRole: () => 'normal' | 'club' | 'admin' | null;
 }
 
 export interface AuthProviderProps {

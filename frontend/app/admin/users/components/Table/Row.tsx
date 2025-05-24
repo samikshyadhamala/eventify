@@ -74,18 +74,18 @@ export default function UserRow({ user, index }: UserRowProps) {
         role: newRole,
       })
 
-      setUsers(
-        users => users.map(u => {
-          if (u.fid === fid) {
-            return { ...u, role: newRole }
-          }
-          return u
-        })
-      )
+      // setUsers(
+      //   users => users.map(u => {
+      //     if (u.fid === fid) {
+      //       return { ...u, role: newRole }
+      //     }
+      //     return u
+      //   })
+      // )
     } catch (err) {
       toast.error('Error updating user role')
       console.error(err)
-      setUsers(users => users.map(u => u)) // Revert UI
+      // setUsers(users => users.map(u => u)) // Revert UI
     } finally {
       setChangingRole('')
     }
@@ -96,6 +96,7 @@ export default function UserRow({ user, index }: UserRowProps) {
       className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
+      transition={{delay: index * 0.1}}
     >
       <td className="p-4 align-middle font-medium">
         <div className="flex gap-3 items-center">

@@ -6,17 +6,19 @@ import { Button } from '@/components/ui/button'
 import { ChevronDown } from 'lucide-react'
 import { useBranchAdmin } from "../../context"
 import { useAuth } from '@/context/auth/hooks'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const AdminRow = (
     {
         admin,
         onChangeBranch,
+        index
     }:
         {
             admin: BranchAdmin
             onChangeBranch: (value: boolean) => void
+            index: number
 
         }) => (
     <motion.tr
@@ -24,6 +26,7 @@ const AdminRow = (
         className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{delay: index * 0.1}}
     >
         <td className="p-4 align-middle font-medium flex gap-3 items-center">
             <Avatar className="h-8 w-8">
@@ -51,7 +54,7 @@ const AdminActions = ({ userId, onChangeBranch }: { userId: string, onChangeBran
         onChangeBranch(true)
     }
 
-    const handleBranchAdminDelete = () => { 
+    const handleBranchAdminDelete = () => {
         try {
             axiosInstance.delete(`/api/user/deleteBranchAdmin/${userId}`)
         } catch (error) {

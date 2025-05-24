@@ -2,17 +2,7 @@ import Link from "next/link";
 import {
   ArrowLeft,
 } from "lucide-react";
-
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card";
-import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import EventContent from "./Components/EventContent";
-
-
 
 export default async function EventDetailsPage({
   params,
