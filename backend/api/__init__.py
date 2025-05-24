@@ -6,6 +6,7 @@ from api.config import Config
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_mail import Mail
+from flasgger import Swagger
 import os
 
 db = SQLAlchemy()
@@ -17,7 +18,7 @@ mail = Mail()
 def create_app():
     app = Flask(__name__, template_folder='../templates')
     app.config.from_object(Config)
-
+    swagger = Swagger(app)
     # Initialize extensions
     db.init_app(app)
     ma.init_app(app)

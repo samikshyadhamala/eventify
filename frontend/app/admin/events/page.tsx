@@ -54,17 +54,8 @@ export default function Events() {
                 setTotalEvents(allEvents.length);
 
                 // Fetch registration counts for all events
-                const registrationPromises = allEvents.map(event => 
-                    axiosInstance.get(`/api/registration/getEventRegistration/${event.event_id}`)
-                );
-                
-                const registrationResponses = await Promise.all(registrationPromises);
-                const registrationCounts = registrationResponses.reduce((acc, response, index) => {
-                    acc[allEvents[index].event_id] = response.data.registrations.length;
-                    return acc;
-                }, {});
-                
-                setEventRegistrations(registrationCounts);
+                const registrationCounts = await axiosInstance.get<{counts: {[key: number]: number}}>("/api/registration/getAllRegistrationCount")
+                setEventRegistrations(registrationCounts.data.counts);
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching events:", error);
