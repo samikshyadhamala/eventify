@@ -3,12 +3,16 @@ from firebase_admin import credentials
 from api.utils.logger import Logger
 from pathlib import Path
 from dotenv import load_dotenv
+import os 
 
 load_dotenv()
 
 # Get absolute path to service account file
-current_dir = Path(__file__).parent
-service_account_path = current_dir / 'serviceAccountKey.json'
+service_account_path = os.getenv("FIREBASE_SERVICE_ACCOUNT_JSON")
+
+if not service_account_path: 
+    current_dir = Path(__file__).parent
+    service_account_path = current_dir / 'serviceAccountKey.json'
 
 try:
     cred = credentials.Certificate(str(service_account_path))
