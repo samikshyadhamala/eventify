@@ -26,7 +26,7 @@ def create_app():
     api.init_app(app)
     cors.init_app(app, 
         resources={r"/api/*": {
-            "origins": ["http://localhost:3000", "http://192.168.1.83:3000", "https://eventify-kr4t53kyi-otakugod0s-projects.vercel.app"],
+            "origins": ["http://localhost:3000", "http://192.168.1.83:3000", "https://eventify-kr4t53kyi-otakugod0s-projects.vercel.app", "https://rotracteventify.vercel.app"],
             "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             "allow_headers": ["Content-Type", "Authorization"],
             "supports_credentials": True
