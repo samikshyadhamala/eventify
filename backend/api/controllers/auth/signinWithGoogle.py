@@ -25,9 +25,10 @@ def SigninWithGoogleController(request):
             user = User.query.filter_by(fid=decoded_token['uid']).first()
         except Exception as error:
             Logger.error(f"Error finding user: {str(error)}")
+            db.session.rollback()  # Reset the session after a query failure
             user = None
 
-        # Create new user if doesn't exist
+        # Create new user if doesn’t exist
         if not user:
             try:
                 user = User(
@@ -38,6 +39,7 @@ def SigninWithGoogleController(request):
                 db.session.commit()
             except Exception as error:
                 Logger.error(f"Error creating user: {str(error)}")
+                db.session.rollback()  # Reset the session after a creation failure
                 return jsonify({'error': 'Failed to create user'}), 500
 
         resp = make_response(
