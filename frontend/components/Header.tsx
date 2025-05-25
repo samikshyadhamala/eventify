@@ -5,44 +5,54 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../context/auth/hooks';
 import { Button } from '@/components/ui/button'
-import {Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import { Grid, LogOut, X, Menu } from 'lucide-react'
+import { motion } from 'framer-motion'
 
-const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
+const Header = ({ placeholder = false }) => {
   const [open, setOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
+  const [menuOpen, setMenuOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const [isUserLoading, setIsUserLoading] = useState(false);
   const { user, setIsAuthenticated, setUser, axiosInstance } = useAuth();
   const router = useRouter();
 
-  // fetching user info 
+  // Fetch user info on mount
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
-        setIsUserLoading(true)
-        const response = await axiosInstance.get("/api/auth/getUserInfo")
-        setUser(response.data)
+        setIsUserLoading(true);
+        const response = await axiosInstance.get("/api/auth/getUserInfo");
+        setUser(response.data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
+      } finally {
+        setIsUserLoading(false);
       }
-      finally { 
-        setIsUserLoading(false)
-      }
-    }
-    getCurrentUser()
-  }, [])
+    };
+    getCurrentUser();
+  }, []);
 
+  // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Prevent body scrolling when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+    return () => document.body.classList.remove('overflow-hidden');
+  }, [menuOpen]);
 
   const handleLogout = async () => {
     try {
@@ -66,74 +76,128 @@ const Header = ({ placeholder = false }: { placeholder?: boolean }) => {
 
   return (
     <>
-      <header className='px-5 bg-transparent absolute left-0 top-0 right-0 z-20'>
+      <header className="px-5 bg-transparent absolute left-0 top-0 right-0 z-20">
         <nav className="navbar flex justify-between items-center py-3">
-          <div 
-            className="logo-container"
-          >
+          {/* Logo */}
+          <div className="logo-container">
             <Link href="/" className="logo text-2xl font-bold text-white">Eventify</Link>
           </div>
 
-          <div className="nav-links flex justify-evenly">
-            <Link href="/" className='text-white'>Home</Link>
-            <Link href="/allevent" className='text-white'>Events</Link>
-            {/* <Link href="#" className='text-white'>About</Link> */}
-            <Link href="/contact" className='text-white'>Contact</Link>
+          {/* Desktop Navigation Links */}
+          <div className="nav-links hidden md:flex justify-center space-x-4">
+            <Link href="/" className="text-white hover:underline hover:text-gray-300">Home</Link>
+            <Link href="/allevent" className="text-white hover:underline hover:text-gray-300">Events</Link>
+            <Link href="/contact" className="text-white hover:underline hover:text-gray-300">Contact</Link>
           </div>
 
-          <div className="relative">
-            {user ? ( 
+          {/* Desktop User Section */}
+          <div className="relative hidden md:block">
+            {user ? (
               <>
-                <div>
-                  <button
-                    onClick={() => setOpen(!open)}
-                    className="focus:outline-none"
-                  >
-                    <Avatar>
-                      <AvatarImage src={user?.imageUrl || "/api/placeholder/40/40"} alt="Profile Picture" />
-                      <AvatarFallback>
-                        {user?.name?.charAt(0) || 'U'}
-                      </AvatarFallback>
-                    </Avatar>
-                  </button>
-                </div>
+                <button
+                  onClick={() => setOpen(!open)}
+                  className="focus:outline-none"
+                  aria-haspopup="true"
+                  aria-expanded={open}
+                >
+                  <Avatar>
+                    <AvatarImage src={user?.imageUrl || "/api/placeholder/40/40"} alt="Profile Picture" />
+                    <AvatarFallback>{user?.name?.charAt(0) || 'U'}</AvatarFallback>
+                  </Avatar>
+                </button>
+                {open && (
+                  <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                    {(user.role === 'admin' || user.role === 'club') && (
+                      <button
+                        className="flex items-center px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100"
+                        onClick={handleDashboardClick}
+                      >
+                        <Grid className="h-5 w-5 mr-2" />
+                        Dashboard
+                      </button>
+                    )}
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100"
+                    >
+                      <LogOut className="h-5 w-5 mr-2" />
+                      Logout
+                    </button>
+                  </div>
+                )}
               </>
             ) : (
-              <div className='fc gap-3'>
-                <Link
-                  className='px-3 py-2 button-sec font-extrabold text-white'
-                  href='/login'
+              <Link href="/login">
+                <Button
+                  variant="outline"
+                  className={`${placeholder ? 'bg-black' : 'bg-transparent'} hover:text-white text-white rounded-full px-8`}
+                  disabled={isUserLoading}
                 >
-                  <Button 
-                    variant={'outline'} 
-                    className={`${placeholder ? 'bg-black' : 'bg-transparent'} hover:text-white rounded-full px-8`}
-                    disabled={isUserLoading}
-                  >
-                    Login
-                  </Button>
-                </Link>
-              </div>
+                  Login
+                </Button>
+              </Link>
             )}
+          </div>
 
-            {open && (
-              <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white border overflow-hidden border-gray-200 rounded-lg shadow-lg z-50">
-                {user && (user.role === 'admin' || user.role === 'club') && (
-                  <button className="block px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100" onClick={handleDashboardClick}>
-                    Dashboard
-                  </button>
-                )}
-                <button
-                  onClick={handleLogout}
-                  className="block px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100"
-                >
-                  Logout
-                </button>
-              </div>
-            )}
+          {/* Mobile Hamburger Menu Button */}
+          <div className="md:hidden absolute right-0 top-5">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="text-white"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+            >
+              <Menu />
+            </button>
           </div>
         </nav>
       </header>
-      {placeholder && <div className='w-100 h-24 bg-[#100c0c] mb-2'></div>}
+
+      {/* Mobile Menu with Animation */}
+      {menuOpen && (
+        <motion.div
+          initial={{ opacity: 0, x: '100%' }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: '100%' }}
+          transition={{ duration: 0.3 }}
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden"
+        >
+          <div className="bg-white h-full w-full p-5">
+            <div className="flex justify-between items-center mb-10">
+              <Link href="/" className="logo text-2xl font-bold text-black">Eventify</Link>
+              <button onClick={() => setMenuOpen(false)} className="text-black" aria-label="Close menu">
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            <div className="flex flex-col space-y-4">
+              <Link href="/" className="text-black text-lg py-2 border-b border-gray-200" onClick={() => setMenuOpen(false)}>Home</Link>
+              <Link href="/allevent" className="text-black text-lg py-2 border-b border-gray-200" onClick={() => setMenuOpen(false)}>Events</Link>
+              <Link href="/contact" className="text-black text-lg py-2 border-b border-gray-200" onClick={() => setMenuOpen(false)}>Contact</Link>
+              {user ? (
+                <>
+                  {(user.role === 'admin' || user.role === 'club') && (
+                    <button
+                      className="text-black text-lg py-2 border-b border-gray-200 text-left"
+                      onClick={() => { handleDashboardClick(); setMenuOpen(false); }}
+                    >
+                      Dashboard
+                    </button>
+                  )}
+                  <button
+                    className="text-black text-lg py-2 border-b border-gray-200 text-left"
+                    onClick={() => { handleLogout(); setMenuOpen(false); }}
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link href="/login" className="text-black text-lg py-2 border-b border-gray-200" onClick={() => setMenuOpen(false)}>Login</Link>
+              )}
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      {placeholder && <div className="w-100 h-24 bg-[#100c0c] mb-2"></div>}
     </>
   );
 };

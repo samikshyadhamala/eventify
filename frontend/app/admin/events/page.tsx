@@ -329,7 +329,7 @@ export default function Events() {
                                 <Button color='gray' variant="outline" disabled={currentPage === 1 || loading} onClick={prevPage}>
                                     Previous
                                 </Button>
-                                <Button variant="" highContrast color='gray' className="" disabled={currentPage >= Math.ceil(totalEvents / rowsPerPage) || loading} onClick={nextPage}>
+                                <Button highContrast color='gray' className="" disabled={currentPage >= Math.ceil(totalEvents / rowsPerPage) || loading} onClick={nextPage}>
                                     Next
                                 </Button>
                             </div>
