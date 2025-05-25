@@ -40,8 +40,8 @@ def RegisterEvent(user: dict, event_id: int):
         if event.is_paid:
             # prepare event details for khalti
             payload = {
-                "return_url": f"{os.getenv("BACKEND_URL")}/api/payment/callbackKhalti",
-                "website_url": f"{os.getenv("BACKEND_URL")}",
+                "return_url": f"{os.getenv('BACKEND_URL')}/api/payment/callbackKhalti",
+                "website_url": f"{os.getenv('BACKEND_URL')}",
                 "amount": int(event.price) * 100, # converting in rs
                 "purchase_order_id": registration.registration_id,
                 "purchase_order_name": event.title,

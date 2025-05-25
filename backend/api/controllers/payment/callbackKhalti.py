@@ -25,7 +25,7 @@ def CallbackKhalti(registration_id, payment_status, pidx):
         response = requests.post("https://dev.khalti.com/api/v2/epayment/lookup/", json={
             'pidx': pidx
         }, 
-        headers={"Authorization": f"key {os.getenv("KHALTI_API_KEY")}"}
+        headers={"Authorization": f"key {os.getenv('KHALTI_API_KEY')}"}
         )
         data = response.json()
         if data.get("status") != "Completed": 
@@ -97,4 +97,4 @@ def CallbackKhalti(registration_id, payment_status, pidx):
         return {"message": "Error sening registration pass"}, 500
 
     # redirect to success page 
-    return redirect(f"{os.getenv("FRONTEND_URL")}/RegistrationSuccess")
+    return redirect(f"{os.getenv('FRONTEND_URL')}/RegistrationSuccess")
