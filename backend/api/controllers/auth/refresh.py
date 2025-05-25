@@ -3,6 +3,8 @@ from firebase_admin import auth
 from flask import jsonify, make_response
 import requests
 from api.models.user import User
+import dotenv 
+dotenv.load_dotenv()
 
 def refresh_token(refresh_token):
     if not refresh_token:
@@ -47,22 +49,25 @@ def refresh_token(refresh_token):
         }))
 
         # Set cookies
+        is_production = os.getenv('FLASK_ENV') == 'production'
         response.set_cookie(
             'loginToken',
             new_id_token,
             httponly=True,
-            secure=os.getenv('FLASK_ENV') == 'production',
-            samesite='Strict',
-            max_age=7 * 24 * 60 * 60  # 1 week
+            secure=is_production,
+            samesite='None' if is_production else 'Lax',
+            path='/',
+            max_age=7 * 24 * 60 * 60  # 1 week in seconds
         )
 
         response.set_cookie(
             'refreshToken',
             new_refresh_token,
             httponly=True,
-            secure=os.getenv('FLASK_ENV') == 'production',
-            samesite='Strict',
-            max_age=30 * 24 * 60 * 60  # 30 days
+            secure=is_production,
+            samesite='None' if is_production else 'Lax',
+            path='/',
+            max_age=7 * 24 * 60 * 60  # 1 week in seconds
         )
 
         return response

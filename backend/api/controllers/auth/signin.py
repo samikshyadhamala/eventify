@@ -95,18 +95,20 @@ def signin_controller():
             id_token,
             httponly=True,
             secure=is_production,
-            samesite='Strict',
-            max_age=24 * 60 * 60  # 24 hours
+            samesite='None' if is_production else 'Lax',
+            path='/',
+            max_age=7 * 24 * 60 * 60  # 1 week in seconds
         )
 
         # Set refresh token cookie
         resp.set_cookie(
             'refreshToken',
             refresh_token,
-            httponly=True, 
+            httponly=True,
             secure=is_production,
-            samesite='Strict',
-            max_age=30 * 24 * 60 * 60  # 30 days
+            samesite='None' if is_production else 'Lax',
+            path='/',
+            max_age=7 * 24 * 60 * 60  # 1 week in seconds
         )
 
         return resp

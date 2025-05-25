@@ -49,7 +49,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     const instance = axios.create({
       baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || '',
       withCredentials: true,
-      timeout: 10000 // 10 seconds
+      timeout: 30000 // 30 seconds
     });
 
     // Add access token to requests

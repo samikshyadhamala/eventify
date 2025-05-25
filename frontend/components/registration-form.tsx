@@ -21,7 +21,7 @@ export function RegistrationForm({ eventId, isPaid, price }: RegistrationFormPro
 
   useEffect(() => {
     const fetchData = async () => {
-      try { 
+      try {
         const response = await axiosInstance.get(`/api/registration/isAlreadyRegistered/${eventId}`)
         setIsAlreadyRegistered(response.data.isRegistered)
       } catch (error) {
@@ -54,9 +54,13 @@ export function RegistrationForm({ eventId, isPaid, price }: RegistrationFormPro
 
     setIsRegistering(true)
     try {
-      await axiosInstance.post("/api/registration/registerEvent", {
-        event_id: eventId
-      })
+      const response = await axiosInstance.post<
+        { message: string } | { redirect_url: string }
+      >("/api/registration/registerEvent", { event_id: eventId });
+      
+      if ("redirect_url" in response.data){
+        return router.push(response.data.redirect_url)
+      }
       toast.success("Successfully registered!")
       setIsAlreadyRegistered(true)
       router.refresh()
@@ -72,18 +76,22 @@ export function RegistrationForm({ eventId, isPaid, price }: RegistrationFormPro
 
   // Ensure price is a valid number, default to 0 if undefined
   const displayPrice = (price && !isNaN(price)) ? price.toFixed(2) : "0.00"
-  const buttonText = isRegistering 
-    ? "Processing..." 
-    : isPaid 
-      ? `Rs ${displayPrice}` 
-      : "Register Now"
+const buttonText =
+  isRegistering
+    ? "Processing..."
+    : isAlreadyRegistered
+      ? "You are Already Registered"
+      : isPaid
+        ? `Rs ${displayPrice}`
+        : "Register Now";
+
 
   return (
     <div className="space-y-4">
-      <Button 
-        className="w-full bg-black hover:bg-gray-800 transition-colors" 
+      <Button
+        className="w-full bg-black hover:bg-gray-800 transition-colors"
         onClick={handleRegister}
-        disabled={(isRegistering || !eventId ) || (isAlreadyRegistered)}
+        disabled={(isRegistering || !eventId) || (isAlreadyRegistered)}
         type="button"
       >
         {buttonText}

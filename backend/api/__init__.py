@@ -104,7 +104,7 @@ def create_app():
     from api.routes.branch import branch_bp
     from api.routes.registration import registration_bp
     from api.routes.contact import contact_bp
-    from api.routes.callback import callback_bp
+    from api.routes.payment import payment_bp
     
     app.register_blueprint(contact_bp, url_prefix="/api/contact/")
     app.register_blueprint(branch_bp, url_prefix="/api/branch/")
@@ -113,7 +113,7 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(user_bp, url_prefix='/api/user')
     app.register_blueprint(registration_bp, url_prefix='/api/registration')
-    app.register_blueprint(callback_bp, url_prefix='/api/callback')
+    app.register_blueprint(payment_bp, url_prefix='/api/payment')
     
     with app.app_context():
         db.create_all()  # Create database tables

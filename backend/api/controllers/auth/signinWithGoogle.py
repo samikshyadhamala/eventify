@@ -55,18 +55,20 @@ def SigninWithGoogleController(request):
             auth_token,
             httponly=True,
             secure=is_production,
-            samesite='Strict',
-            max_age=7 * 24 * 60 * 60  # 1 week
+            samesite='None' if is_production else 'Lax',
+            path='/',
+            max_age=7 * 24 * 60 * 60  # 1 week in seconds
         )
-
+        
         # Set refresh token cookie
         resp.set_cookie(
             'refreshToken',
             refresh_token,
             httponly=True,
             secure=is_production,
-            samesite='Strict',
-            max_age=30 * 7 * 24 * 60 * 60  # 30 weeks
+            samesite='None' if is_production else 'Lax',
+            path='/',
+            max_age=7 * 24 * 60 * 60  # 1 week in seconds
         )
 
         return resp
