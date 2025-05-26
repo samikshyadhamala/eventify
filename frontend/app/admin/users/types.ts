@@ -1,6 +1,6 @@
 export type User = {
     email: string
-    imageUrl: string | null
+    imageUrl: string | undefined
     createdAt: number
     role: string
     fid: string
@@ -38,4 +38,9 @@ export type User = {
     setBranchId: (id: string) => void
     changingRole: string
     setChangingRole: (id: string) => void
+    filteredUsers: User[]
+    setFilteredUsers: (users: User[]) => void
+    setSearchTerm: (query: string) => void
+    searchTerm: string
+    handleDelete: () => void
   }
