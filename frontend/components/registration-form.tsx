@@ -31,7 +31,7 @@ export function RegistrationForm({ eventId, isPaid, price }: RegistrationFormPro
       }
     }
     fetchData()
-  }, [eventId])
+  }, [eventId, isRegistering])
 
   // Validate eventId to prevent invalid registrations
   if (!eventId) {
