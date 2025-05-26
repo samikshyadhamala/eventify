@@ -51,11 +51,13 @@ export default function UserRow({ user, index }: UserRowProps) {
   const {
     currentUser,
     setUsers,
+    setFilteredUsers,
     setShowBranchDialog,
     setSelectedUserId,
     setSelectedRole,
     changingRole,
     setChangingRole,
+    handleDelete
   } = useUserManagement()
   const { axiosInstance } = useAuth()
 
@@ -74,21 +76,24 @@ export default function UserRow({ user, index }: UserRowProps) {
         role: newRole,
       })
 
-      // setUsers(
-      //   users => users.map(u => {
-      //     if (u.fid === fid) {
-      //       return { ...u, role: newRole }
-      //     }
-      //     return u
-      //   })
-      // )
+      // Update users and filteredUsers with new role
+      setUsers((users: User[]) =>
+        users.map(u => (u.fid === fid ? { ...u, role: newRole } : u))
+      )
+      setFilteredUsers((filteredUsers: User[]) =>
+        filteredUsers.map(u => (u.fid === fid ? { ...u, role: newRole } : u))
+      )
+      toast.success('User role updated successfully')
     } catch (err) {
       toast.error('Error updating user role')
       console.error(err)
-      // setUsers(users => users.map(u => u)) // Revert UI
     } finally {
       setChangingRole('')
     }
+  }
+
+  const handleUserDelete = async (id: string) => {
+    handleDelete(id)
   }
 
   return (
@@ -96,7 +101,7 @@ export default function UserRow({ user, index }: UserRowProps) {
       className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{delay: index * 0.1}}
+      transition={{ delay: index * 0.1 }}
     >
       <td className="p-4 align-middle font-medium">
         <div className="flex gap-3 items-center">
@@ -148,7 +153,12 @@ export default function UserRow({ user, index }: UserRowProps) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem className="text-red-600">Delete User</DropdownMenuItem>
+            <DropdownMenuItem 
+              className="text-red-600" 
+              onClick={() => handleUserDelete(user.fid)}
+            >
+              Delete User
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </td>
