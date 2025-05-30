@@ -77,14 +77,14 @@ const Header = ({ placeholder = false }) => {
   return (
     <>
       <header className="px-5 bg-transparent absolute left-0 top-0 right-0 z-20">
-        <nav className="navbar flex justify-between items-center py-3">
+        <nav className="px-2 flex justify-between items-center py-8">
           {/* Logo */}
           <div className="logo-container">
             <Link href="/" className="logo text-2xl font-bold text-white">Eventify</Link>
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="nav-links hidden md:flex justify-center space-x-4 ">
+          <div className="hidden md:flex justify-center space-x-12 ">
             <Link href="/" className="text-white hover:underline hover:text-gray-300 !text-lg">Home</Link>
             <Link href="/allevent" className="text-white hover:underline hover:text-gray-300 !text-lg">Events</Link>
             <Link href="/contact" className="text-white hover:underline hover:text-gray-300 !text-lg">Contact</Link>
@@ -145,7 +145,7 @@ const Header = ({ placeholder = false }) => {
           </div>
 
           {/* Mobile Hamburger Menu Button */}
-          <div className="md:hidden absolute right-0 top-5">
+          <div className="md:hidden absolute right-12 top-8">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="text-white"

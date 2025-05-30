@@ -3,7 +3,7 @@ from flask import jsonify
 
 def GetEvents():
     try:
-        all_events = Event.query.all()
+        all_events = Event.query.order_by(Event.updated_at.desc()).all()
         return jsonify({
             'events': [{
                 'event_id': event.event_id,

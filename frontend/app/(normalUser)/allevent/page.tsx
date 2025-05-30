@@ -50,9 +50,12 @@ export default function Home() {
     return (
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence>
-          {filteredEvents.map((item) => (
+          { filteredEvents.length >= 1 ? (
+          filteredEvents.map((item) => (
             <EventCard {...item} key={item.event_id} /> 
-          ))}
+          ))):(
+            <div className='col-span-3 text-center text-2xl py-8'>No results found</div>
+          )}
         </AnimatePresence>
       </div>
     )

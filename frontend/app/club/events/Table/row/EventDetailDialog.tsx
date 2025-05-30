@@ -109,7 +109,10 @@ export default function EventDetailsDialog({
                     </div>
                     <div>
                       <h4 className="text-sm font-medium text-gray-500">Description</h4>
-                      <p className="mt-1">{selectedEvent.description}</p>
+                      <p
+                        className="prose max-w-none"
+                        dangerouslySetInnerHTML={{ __html: selectedEvent.description }}
+                      />
                     </div>
                   </CardContent>
                 </Card>

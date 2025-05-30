@@ -8,3 +8,4 @@ from .createEvent import CreateEvent
 from .getBranchEvents import GetBranchEvents
 from .getUpcomingBranchEvent import GetUpcomingBranchEvent
 from .updateEvent import UpdateEvent
+from .getOrganizerContact import GetOrganizerContact
