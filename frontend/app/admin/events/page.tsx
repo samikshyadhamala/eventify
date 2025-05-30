@@ -40,7 +40,7 @@ export default function Events() {
     const [showEventDialog, setShowEventDialog] = useState(false);
     const [registrations, setRegistrations] = useState<any[]>([]);
     const [loadingRegistrations, setLoadingRegistrations] = useState(false);
-    const [eventRegistrations, setEventRegistrations] = useState<{[key: number]: number}>({});
+    const [eventRegistrations, setEventRegistrations] = useState<{ [key: number]: number }>({});
     const rowsPerPage = 10;
 
     useEffect(() => {
@@ -54,7 +54,7 @@ export default function Events() {
                 setTotalEvents(allEvents.length);
 
                 // Fetch registration counts for all events
-                const registrationCounts = await axiosInstance.get<{counts: {[key: number]: number}}>("/api/registration/getAllRegistrationCount")
+                const registrationCounts = await axiosInstance.get<{ counts: { [key: number]: number } }>("/api/registration/getAllRegistrationCount")
                 setEventRegistrations(registrationCounts.data.counts);
                 setLoading(false);
             } catch (error) {
@@ -250,7 +250,7 @@ export default function Events() {
                                                         className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
                                                         initial={{ opacity: 0, y: 20 }}
                                                         animate={{ opacity: 1, y: 0 }}
-                                                        transition={{delay: 0.1 * index}}
+                                                        transition={{ delay: 0.1 * index }}
                                                     >
                                                         <td className="p-4 align-middle font-medium">{event.title}</td>
                                                         <td className="p-4 align-middle">{new Date(event.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
@@ -400,7 +400,10 @@ export default function Events() {
 
                                         <div>
                                             <h4 className="text-sm font-medium text-gray-500">Description</h4>
-                                            <p className="mt-1">{selectedEvent.description}</p>
+                                            <p
+                                                className="prose max-w-none"
+                                                dangerouslySetInnerHTML={{ __html: selectedEvent.description }}
+                                            />
                                         </div>
                                     </CardContent>
                                 </Card>

@@ -8,7 +8,7 @@ def GetBranchEvents(user_id):
         if not branch_id: 
             return {'message': 'No branch associated with user found'}, 500
         
-        all_events = Event.query.filter_by(branch_id=branch_id).all()
+        all_events = Event.query.filter_by(branch_id=branch_id).order_by(Event.updated_at.desc()).all()
         
         # response
         return {

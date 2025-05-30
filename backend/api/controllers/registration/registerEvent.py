@@ -89,7 +89,7 @@ def RegisterEvent(user: dict, event_id: int):
         # set payment status to complete for unpaid event
         registration.payment_status = 'completed'
         db.session.add(registration)
-        db.session.commit(registration)
+        db.session.commit()
 
         # Generate QR code as base64
         qr_data = str(registration.registration_id)
