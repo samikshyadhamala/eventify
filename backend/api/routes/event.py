@@ -54,3 +54,8 @@ def getUpcomingBranchEvent():
 def updateEvent(id): 
     data = request.get_json()
     return UpdateEvent(id, data)
+
+@event_bp.get("/getOrganizerContact")
+def getOrganizerContact(): 
+    event_id = request.args.get("event_id")
+    return GetOrganizerContact(event_id)

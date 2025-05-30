@@ -145,7 +145,7 @@ const Header = ({ placeholder = false }) => {
           </div>
 
           {/* Mobile Hamburger Menu Button */}
-          <div className="md:hidden absolute right-0 top-5">
+          <div className="md:hidden absolute right-12 top-8">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="text-white"
