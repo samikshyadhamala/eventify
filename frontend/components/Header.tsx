@@ -84,10 +84,15 @@ const Header = ({ placeholder = false }) => {
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="nav-links hidden md:flex justify-center space-x-4">
-            <Link href="/" className="text-white hover:underline hover:text-gray-300">Home</Link>
-            <Link href="/allevent" className="text-white hover:underline hover:text-gray-300">Events</Link>
-            <Link href="/contact" className="text-white hover:underline hover:text-gray-300">Contact</Link>
+          <div className="nav-links hidden md:flex justify-center space-x-4 ">
+            <Link href="/" className="text-white hover:underline hover:text-gray-300 !text-lg">Home</Link>
+            <Link href="/allevent" className="text-white hover:underline hover:text-gray-300 !text-lg">Events</Link>
+            <Link href="/contact" className="text-white hover:underline hover:text-gray-300 !text-lg">Contact</Link>
+            {user?.role === "normal" && (
+              <Link href="/MyEvents" className='text-white !text-lg'> 
+                MyEvents
+              </Link>
+            ) }
           </div>
 
           {/* Desktop User Section */}
@@ -197,7 +202,7 @@ const Header = ({ placeholder = false }) => {
         </motion.div>
       )}
 
-      {placeholder && <div className="w-100 h-24 bg-[#100c0c] mb-2"></div>}
+      {placeholder && <div className="w-100 h-24 bg-[#100c0c] mb-0"></div>}
     </>
   );
 };
