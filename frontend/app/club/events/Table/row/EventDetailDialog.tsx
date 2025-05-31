@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Calendar, MapPin, User, Users } from 'lucide-react'
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface Event {
   branch_id: number

@@ -81,6 +81,13 @@ export default function EventContent({ eventId }: { eventId: string }) {
     const fetchData = async () => {
       try {
         const data = await getEvent(eventId);
+        try {
+          const response = await axiosInstance.get<OrganizersType>('/api/event/getOrganizerContact', { params: { event_id: eventId } });
+          setOrganizers(response.data);
+        } catch (error) {
+          console.error(error);
+          toast.error("Error retrieving organizer contact");
+        }
         setEvent(data);
       } catch (error) {
         console.error(error);
@@ -95,19 +102,6 @@ export default function EventContent({ eventId }: { eventId: string }) {
       fetchCoordinates(event.location);
     }
   }, [event?.location]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get<OrganizersType>('/api/event/getOrganizerContact', {params: {event_id: eventId}});
-        setOrganizers(response.data);
-      } catch (error) {
-        console.error(error);
-        toast.error("Error retrieving organizer contact");
-      }
-    };
-    fetchData();
-  }, [axiosInstance]);
 
   const fetchCoordinates = async (address: string) => {
     setLoadingMap(true);
