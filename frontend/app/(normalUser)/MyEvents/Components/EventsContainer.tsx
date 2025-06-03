@@ -3,8 +3,6 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/auth/hooks';
-import { Input } from '@/components/ui/input';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import SkeletonEvents from '@/components/TrendingEvent/SkeletonEvents'
 import { AnimatePresence } from "framer-motion";
 import EventCard from '@/components/EventCard';
@@ -20,7 +18,7 @@ export default function EventsContainer() {
         const fetchData = async () => {
             try {
                 setIsLoading(true)
-                const response = await axiosInstance.get("/api/event/getEvents")
+                const response = await axiosInstance.get("/api/event/getRegisteredEvents")
                 setData(response.data.events)
             }
             catch (error) {
@@ -44,11 +42,14 @@ export default function EventsContainer() {
             )
 
         return (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-wrap gap-4 justify-center">
                 <AnimatePresence>
-                    {filteredEvents.map((item) => (
-                        <EventCard {...item} key={item.event_id} />
-                    ))}
+                    {filteredEvents.length > 0 ? (
+                        filteredEvents.map((item) => (
+                            <EventCard {...item} key={item.event_id} />
+                        ))) : (
+                        <div className='w-full h-40 text-center col-span-3 text-3xl font-semibold'>No Registered Events</div>
+                    )}
                 </AnimatePresence>
             </div>
         )

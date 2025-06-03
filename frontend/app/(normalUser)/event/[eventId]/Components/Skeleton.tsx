@@ -25,8 +25,8 @@ export function EventSkeleton() {
 
 export function SidebarSkeleton() {
   return (
-    <div className="space-y-6">
-      <Card className="sticky top-20">
+    <div className="space-y-6 sticky top-20">
+      <Card className="">
         <CardHeader>
           <Skeleton className="h-6 w-32 mb-2" />
           <Skeleton className="h-4 w-48" />
@@ -38,7 +38,7 @@ export function SidebarSkeleton() {
           <Skeleton className="h-10 w-full" />
         </CardContent>
       </Card>
-      <Card className="sticky top-20">
+      <Card className="">
         <CardHeader>
           <Skeleton className="h-8 w-40 mb-1" />
         </CardHeader>

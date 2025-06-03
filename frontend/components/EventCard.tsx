@@ -13,7 +13,7 @@ export default function EventCard(item: Event) {
     return (
         <motion.div
             key={item.event_id}
-            className="h-full"
+            className="h-full w-80"
             initial={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 0.3 } }}
             exit={{ opacity: 0, scale: 0.95, filter: 'blur(10px)', transition: { duration: 0.2 } }}
