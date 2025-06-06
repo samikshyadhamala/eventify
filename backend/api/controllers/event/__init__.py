@@ -9,3 +9,5 @@ from .getBranchEvents import GetBranchEvents
 from .getUpcomingBranchEvent import GetUpcomingBranchEvent
 from .updateEvent import UpdateEvent
 from .getOrganizerContact import GetOrganizerContact
+from .getRegisteredEvents import GetRegisteredEvents
+from .getEventsNames import GetEventsName

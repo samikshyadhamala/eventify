@@ -276,56 +276,58 @@ export default function EventContent({ eventId }: { eventId: string }) {
               </TabsContent>
             </Tabs>
           </div>
-          <div className="space-y-6">
-            <Card className="sticky top-20">
-              <CardHeader>
-                <CardTitle>Registration</CardTitle>
-                <CardDescription>Secure your spot for this event</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {event.isPaid ? (
-                  <div className="flex items-center text-2xl font-bold">
-                    <span>NPR {(event.price || 0).toFixed(2)}</span>
-                  </div>
-                ) : (
-                  <Badge variant="outline" className="text-lg py-1 px-2">
-                    Free
-                  </Badge>
-                )}
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <Users className="mr-2 h-4 w-4" />
-                  <span>Capacity: {event.maxCapacity || "N/A"} spots</span>
-                </div>
-                <RegistrationForm
-                  eventId={event.id || ""}
-                  isPaid={event.isPaid || false}
-                  price={event.price || 0}
-                />
-              </CardContent>
-            </Card>
-            <Card className="sticky top-[23rem]">
-              <CardHeader>
-                <CardTitle>Contact Organizer</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {organizers.organizers.length > 0 ? (
-                  organizers.organizers.map((organizer: Organizer) => (
-                    <div key={organizer.email} className="flex items-center gap-3 mb-4">
-                      <Avatar className="h-10 w-10">
-                        <AvatarImage src={organizer.imageUrl} />
-                        <AvatarFallback>{organizer.email[0].toUpperCase()}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col justify-center">
-                        <div className="font-bold">{organizer.name}</div>
-                        <div className="text-sm text-gray-600">{organizer.email}</div>
-                      </div>
+          <div className=" flex items-start justify-center">
+            <div className="space-y-6 sticky top-[2rem] w-full">
+              <Card className="">
+                <CardHeader>
+                  <CardTitle>Registration</CardTitle>
+                  <CardDescription>Secure your spot for this event</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {event.isPaid ? (
+                    <div className="flex items-center text-2xl font-bold">
+                      <span>NPR {(event.price || 0).toFixed(2)}</span>
                     </div>
-                  ))
-                ) : (
-                  <p className="text-sm text-gray-600">No organizer information available</p>
-                )}
-              </CardContent>
-            </Card>
+                  ) : (
+                    <Badge variant="outline" className="text-lg py-1 px-2">
+                      Free
+                    </Badge>
+                  )}
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <Users className="mr-2 h-4 w-4" />
+                    <span>Capacity: {event.maxCapacity || "N/A"} spots</span>
+                  </div>
+                  <RegistrationForm
+                    eventId={event.id || ""}
+                    isPaid={event.isPaid || false}
+                    price={event.price || 0}
+                  />
+                </CardContent>
+              </Card>
+              <Card className="">
+                <CardHeader>
+                  <CardTitle>Contact Organizer</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {organizers.organizers.length > 0 ? (
+                    organizers.organizers.map((organizer: Organizer) => (
+                      <div key={organizer.email} className="flex items-center gap-3 mb-4">
+                        <Avatar className="h-10 w-10">
+                          <AvatarImage src={organizer.imageUrl} />
+                          <AvatarFallback>{organizer.email[0].toUpperCase()}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col justify-center">
+                          <div className="font-bold">{organizer.name}</div>
+                          <div className="text-sm text-gray-600">{organizer.email}</div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-gray-600">No organizer information available</p>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </>
       )}

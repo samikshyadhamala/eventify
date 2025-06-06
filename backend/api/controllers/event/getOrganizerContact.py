@@ -6,13 +6,13 @@ from api.models.branch import Branch
 
 def GetOrganizerContact(event_id): 
     if not event_id: 
-        return {"message": "Event id is required"}, 400
+        return {"message": "Event id is required"}
     
     # get event 
     selectedEvent = Event.query.get(event_id)
     
-    if not selectedEvent:
-        return {"message": "Event not found"}, 404
+    if not selectedEvent:   
+        return {"message": "Event not found"}
     
     # get branch id from event 
     branch_id = selectedEvent.branch_id

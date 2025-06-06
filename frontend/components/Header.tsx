@@ -77,7 +77,7 @@ const Header = ({ placeholder = false }) => {
   return (
     <>
       <header className="px-5 bg-transparent absolute left-0 top-0 right-0 z-20">
-        <nav className="px-2 flex justify-between items-center py-8">
+        <nav className="px-2 flex justify-between items-center py-4">
           {/* Logo */}
           <div className="logo-container">
             <Link href="/" className="logo text-2xl font-bold text-white">Eventify</Link>
@@ -88,7 +88,7 @@ const Header = ({ placeholder = false }) => {
             <Link href="/" className="text-white hover:underline hover:text-gray-300 !text-lg">Home</Link>
             <Link href="/allevent" className="text-white hover:underline hover:text-gray-300 !text-lg">Events</Link>
             <Link href="/contact" className="text-white hover:underline hover:text-gray-300 !text-lg">Contact</Link>
-            {user?.role === "normal" && (
+            {user?.role && (
               <Link href="/MyEvents" className='text-white !text-lg'> 
                 MyEvents
               </Link>

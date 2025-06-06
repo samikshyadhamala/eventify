@@ -7,7 +7,7 @@ import { Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@radix-ui/themes';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import SkeletonEvents from '@/components/TrendingEvent/SkeletonEvents'
+import SkeletonEvents from '@/components/LandingPage/TrendingEvent/SkeletonEvents'
 import Header from '@/components/Header';
 import { AnimatePresence, useAnimation } from "framer-motion";
 import EventCard from '../../../components/EventCard';

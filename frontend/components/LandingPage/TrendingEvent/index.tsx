@@ -2,7 +2,7 @@
 
 import styles from '@/styles/Freeevent.module.css';
 import Link from 'next/link';
-import ImageComponent from '../ImageComponent';
+import ImageComponent from '../../ImageComponent';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/auth/hooks';
 import { Search, Filter } from 'lucide-react';

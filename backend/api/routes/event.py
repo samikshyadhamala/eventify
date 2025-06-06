@@ -59,3 +59,13 @@ def updateEvent(id):
 def getOrganizerContact(): 
     event_id = request.args.get("event_id")
     return GetOrganizerContact(event_id)
+
+@event_bp.get("/getRegisteredEvents")
+@verify_firebase_token
+def getRegisteredEvents(): 
+    user_id = request.user.get('uid')
+    return GetRegisteredEvents(user_id)
+
+@event_bp.get("/getEventsName")
+def getEventsName(): 
+    return GetEventsName()
