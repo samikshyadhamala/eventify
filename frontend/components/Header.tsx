@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Grid, LogOut, X, Menu } from 'lucide-react'
 import { motion } from 'framer-motion'
+import NavSearchBar from './NavSearchBar';
 
 const Header = ({ placeholder = false }) => {
   const [open, setOpen] = useState(false);
@@ -40,7 +41,7 @@ const Header = ({ placeholder = false }) => {
         setOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);   
+    document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
@@ -79,8 +80,15 @@ const Header = ({ placeholder = false }) => {
       <header className="px-5 bg-transparent absolute left-0 top-0 right-0 z-20">
         <nav className="px-2 flex justify-between items-center py-4">
           {/* Logo */}
-          <div className="logo-container">
-            <Link href="/" className="logo text-2xl font-bold text-white">Eventify</Link>
+          <div className='flex items-center space-x-8'>
+            <div className="logo-container">
+              <Link href="/" className="logo text-2xl font-bold text-white">Eventify</Link>
+            </div>
+
+            {/* Search Bar */}
+            <div className="hidden md:block">
+              <NavSearchBar placeholder={placeholder}/>
+            </div>
           </div>
 
           {/* Desktop Navigation Links */}
@@ -89,10 +97,10 @@ const Header = ({ placeholder = false }) => {
             <Link href="/allevent" className="text-white hover:underline hover:text-gray-300 !text-lg">Events</Link>
             <Link href="/contact" className="text-white hover:underline hover:text-gray-300 !text-lg">Contact</Link>
             {user?.role && (
-              <Link href="/MyEvents" className='text-white !text-lg'> 
+              <Link href="/MyEvents" className='text-white !text-lg'>
                 MyEvents
               </Link>
-            ) }
+            )}
           </div>
 
           {/* Desktop User Section */}
