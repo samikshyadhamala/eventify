@@ -35,6 +35,7 @@ interface Event {
   description?: string;
   price?: number;
   maxCapacity?: number | string;
+  availableSpots?: number;
 }
 
 interface Coordinates {
@@ -295,7 +296,7 @@ export default function EventContent({ eventId }: { eventId: string }) {
                   )}
                   <div className="flex items-center text-sm text-muted-foreground">
                     <Users className="mr-2 h-4 w-4" />
-                    <span>Capacity: {event.maxCapacity || "N/A"} spots</span>
+                    <span>Available Spots: <span className={`${event?.availableSpots <=10 && `text-red-400`}`}>{event.availableSpots || "N/A"}</span></span>
                   </div>
                   <RegistrationForm
                     eventId={event.id || ""}

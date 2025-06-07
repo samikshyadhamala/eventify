@@ -87,7 +87,7 @@ const Header = ({ placeholder = false }) => {
 
             {/* Search Bar */}
             <div className="hidden md:block">
-              <NavSearchBar placeholder={placeholder}/>
+              <NavSearchBar placeholder={placeholder} />
             </div>
           </div>
 
@@ -185,6 +185,11 @@ const Header = ({ placeholder = false }) => {
               <Link href="/" className="text-black text-lg py-2 border-b border-gray-200" onClick={() => setMenuOpen(false)}>Home</Link>
               <Link href="/allevent" className="text-black text-lg py-2 border-b border-gray-200" onClick={() => setMenuOpen(false)}>Events</Link>
               <Link href="/contact" className="text-black text-lg py-2 border-b border-gray-200" onClick={() => setMenuOpen(false)}>Contact</Link>
+              {user?.role && (
+                <Link href="/MyEvents" className="text-black text-lg py-2 border-b border-gray-200" onClick={() => setMenuOpen(false)}>
+                  MyEvents
+                </Link>
+              )}
               {user ? (
                 <>
                   {(user.role === 'admin' || user.role === 'club') && (

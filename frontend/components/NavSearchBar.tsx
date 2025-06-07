@@ -42,15 +42,15 @@ export default function NavSearchBar({placeholder = false}: {placeholder: boolea
 
     return (
         <div className="relative z-50">
-            <Command className={`rounded-lg shadow-md md:min-w-[17rem] relative overflow-visible bg-accent`}>
+            <Command className={`rounded-lg shadow-md md:min-w-[17rem] relative overflow-visible`}>
                 <CommandInput
                     placeholder="Type a command or search..."
                     onFocus={() => setOpen(true)}
                     onBlur={() => setOpen(false)}
-                    className='border-0 focus:ring-0 focus:border-0 bg-accent text-black placeholder:text-gray-500'
+                    className='border-0 focus:ring-0 focus:border-0 text-black placeholder:text-gray-500'
                 />
                 {open && (
-                    <CommandList className="absolute bottom-2 left-0 right-0 transform translate-y-full bg-accent z-50">
+                    <CommandList className="absolute bottom-2 left-0 right-0 transform translate-y-full z-50 bg-white">
                         <CommandEmpty>No results found.</CommandEmpty>
                         <CommandGroup heading="Suggestions">
                             <ScrollArea className="h-60">
@@ -58,6 +58,7 @@ export default function NavSearchBar({placeholder = false}: {placeholder: boolea
                                     <CommandItem
                                         key={event.event_id}
                                         onMouseDown={() => { router.push(`/event/${event.event_id}`) }}
+                                        className='py-2'
                                     >
                                         {event.title}
                                     </CommandItem>

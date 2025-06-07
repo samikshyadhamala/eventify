@@ -13,7 +13,6 @@ export default function EventCard(item: Event) {
     const { setSelectedEvent, setIsDialogOpen } = useMyEventsContext();
 
     const handleDetailsClick = (item: Event) => {
-        debugger
         setSelectedEvent(item);
         setIsDialogOpen(true);
     }  

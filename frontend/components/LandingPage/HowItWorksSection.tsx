@@ -1,7 +1,7 @@
 export default function HowItWorksSection() {
     return (
         <section className="py-16 bg-muted/50 px-12">
-            <div className="container text-black flex items-center">
+            <div className="container text-black flex items-center flex-col md:flex-row">
                 <div className="mb-12">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -9,7 +9,7 @@ export default function HowItWorksSection() {
                     </p>
                 </div>
 
-                <div className="grid grid-rows-1 md:grid-rows-3 gap-8">
+                <div className="">
                     <div className="flex gap-4 items-center">
                         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-black text-primary-foreground text-xl font-bold mb-4">
                             1
