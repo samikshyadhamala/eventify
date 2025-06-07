@@ -28,8 +28,12 @@ def RegisterEvent(user: dict, event_id: int):
             return jsonify({"error": "Event not found"}), 404
 
         # Check for duplicate registration
-        if Registration.query.filter_by(user_id=user["uid"], event_id=event_id).first():
-            return jsonify({"error": "User already registered for this event"}), 400
+        if existingRegistration := Registration.query.filter_by(user_id=user["uid"], event_id=event_id).first():
+            if existingRegistration.payment_status == 'completed':
+                return jsonify({"error": "User already registered for this event"}), 400
+            
+            db.session.delete(existingRegistration)
+            db.session.commit()
 
         # Create registration entry
         registration = Registration(user_id=user["uid"], event_id=event_id)

@@ -42,15 +42,15 @@ export default function NavSearchBar({placeholder = false}: {placeholder: boolea
 
     return (
         <div className="relative z-50">
-            <Command className={`rounded-lg shadow-md md:min-w-[20rem] relative overflow-visible ${placeholder ? '' : 'bg-transparent text-white'}`}>
+            <Command className={`rounded-lg shadow-md md:min-w-[17rem] relative overflow-visible bg-accent`}>
                 <CommandInput
                     placeholder="Type a command or search..."
                     onFocus={() => setOpen(true)}
                     onBlur={() => setOpen(false)}
-                    className='border-0 focus:ring-0 focus:border-0 bg-transparent text-white placeholder:text-gray-300'
+                    className='border-0 focus:ring-0 focus:border-0 bg-accent text-black placeholder:text-gray-500'
                 />
                 {open && (
-                    <CommandList className="absolute bottom-0 left-0 right-0 transform translate-y-full bg-white z-50">
+                    <CommandList className="absolute bottom-2 left-0 right-0 transform translate-y-full bg-accent z-50">
                         <CommandEmpty>No results found.</CommandEmpty>
                         <CommandGroup heading="Suggestions">
                             <ScrollArea className="h-60">

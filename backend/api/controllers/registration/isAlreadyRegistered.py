@@ -9,7 +9,7 @@ def IsAlreadyRegistered(user_id, event_id):
             Registration.user_id == user_id,
             Registration.event_id == event_id
         ).first()
-        if selectedRegistration:
+        if selectedRegistration and selectedRegistration.payment_status == 'completed':
             return jsonify({"isRegistered": True})
         return jsonify({"isRegistered": False})
     except Exception as e:
