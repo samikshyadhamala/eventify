@@ -11,27 +11,15 @@ interface RegistrationFormProps {
   eventId: string
   isPaid: boolean
   price: number
+  isAlreadyRegistered: boolean
+  setIsAlreadyRegistered: (value: boolean) => void
+  isRegistering: boolean
+  setIsRegistering: (value: boolean) => void
 }
 
-export function RegistrationForm({ eventId, isPaid, price }: RegistrationFormProps) {
+export function RegistrationForm({ eventId, isPaid, price, isAlreadyRegistered, setIsAlreadyRegistered, isRegistering, setIsRegistering }: RegistrationFormProps) {
   const router = useRouter()
-  const [isRegistering, setIsRegistering] = useState(false)
   const { axiosInstance, user } = useAuth()
-  const [isAlreadyRegistered, setIsAlreadyRegistered] = useState(false)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get(`/api/registration/isAlreadyRegistered/${eventId}`)
-        setIsAlreadyRegistered(response.data.isRegistered)
-      } catch (error) {
-        console.warn("Error checking registration status:", error)
-        return null
-        // toast.error("Failed to check registration status")
-      }
-    }
-    fetchData()
-  }, [eventId, isRegistering])
 
   // Validate eventId to prevent invalid registrations
   if (!eventId) {

@@ -47,3 +47,9 @@ def getBranchRegistrationCount():
     user_id = request.user['uid']
     branch_id =GetRelatedBranch(user_id)
     return GetBranchRegistrationCount(branch_id)
+
+@registration_bp.get("/getRegistrationPass/<event_id>")
+@verify_firebase_token
+def getRegistrationPass(event_id):
+    user_id = request.user['uid']
+    return GetRegistrationPass(user_id, event_id)

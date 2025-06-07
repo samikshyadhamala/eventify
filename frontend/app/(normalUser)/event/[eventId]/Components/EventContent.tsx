@@ -24,6 +24,7 @@ import { toast } from "react-toastify";
 import { SidebarSkeleton, EventSkeleton } from './Skeleton';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/context/auth/hooks";
+import EventPass from "./EventPass";
 
 interface Event {
   id?: string;
@@ -35,7 +36,7 @@ interface Event {
   description?: string;
   price?: number;
   maxCapacity?: number | string;
-  availableSpots?: number;
+  availableSpots: number;
 }
 
 interface Coordinates {
@@ -77,6 +78,24 @@ export default function EventContent({ eventId }: { eventId: string }) {
   const [mapError, setMapError] = useState<string | null>(null);
   const [organizers, setOrganizers] = useState<OrganizersType>({ organizers: [] });
   const { axiosInstance } = useAuth();
+
+  // fetch if already registered
+  const [isAlreadyRegistered, setIsAlreadyRegistered] = useState(false)
+  const [isRegistering, setIsRegistering] = useState(false)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(`/api/registration/isAlreadyRegistered/${eventId}`)
+        setIsAlreadyRegistered(response.data.isRegistered)
+      } catch (error) {
+        console.warn("Error checking registration status:", error)
+        return null
+        // toast.error("Failed to check registration status")
+      }
+    }
+    fetchData()
+  }, [eventId, isRegistering])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -279,32 +298,40 @@ export default function EventContent({ eventId }: { eventId: string }) {
           </div>
           <div className=" flex items-start justify-center">
             <div className="space-y-6 sticky top-[2rem] w-full">
-              <Card className="">
-                <CardHeader>
-                  <CardTitle>Registration</CardTitle>
-                  <CardDescription>Secure your spot for this event</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {event.isPaid ? (
-                    <div className="flex items-center text-2xl font-bold">
-                      <span>NPR {(event.price || 0).toFixed(2)}</span>
+              {isAlreadyRegistered ? (
+                <EventPass eventId = {eventId}/>
+              ) : (
+                <Card className="">
+                  <CardHeader>
+                    <CardTitle>Registration</CardTitle>
+                    <CardDescription>Secure your spot for this event</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {event.isPaid ? (
+                      <div className="flex items-center text-2xl font-bold">
+                        <span>NPR {(event.price || 0).toFixed(2)}</span>
+                      </div>
+                    ) : (
+                      <Badge variant="outline" className="text-lg py-1 px-2">
+                        Free
+                      </Badge>
+                    )}
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <Users className="mr-2 h-4 w-4" />
+                      <span>Available Spots: <span className={`${event?.availableSpots <= 10 && `text-red-400`}`}>{event.availableSpots || "N/A"}</span></span>
                     </div>
-                  ) : (
-                    <Badge variant="outline" className="text-lg py-1 px-2">
-                      Free
-                    </Badge>
-                  )}
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Users className="mr-2 h-4 w-4" />
-                    <span>Available Spots: <span className={`${event?.availableSpots <=10 && `text-red-400`}`}>{event.availableSpots || "N/A"}</span></span>
-                  </div>
-                  <RegistrationForm
-                    eventId={event.id || ""}
-                    isPaid={event.isPaid || false}
-                    price={event.price || 0}
-                  />
-                </CardContent>
-              </Card>
+                    <RegistrationForm
+                      eventId={event.id || ""}
+                      isPaid={event.isPaid || false}
+                      price={event.price || 0}
+                      isAlreadyRegistered={isAlreadyRegistered}
+                      setIsAlreadyRegistered={setIsAlreadyRegistered}
+                      isRegistering={isRegistering}
+                      setIsRegistering={setIsRegistering}
+                    />
+                  </CardContent>
+                </Card>
+              )}
               <Card className="">
                 <CardHeader>
                   <CardTitle>Contact Organizer</CardTitle>

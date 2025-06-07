@@ -34,7 +34,7 @@ interface EventDetailsDialogProps {
 const EventDetailsDialog = ({ event, isOpen, setIsOpen }: EventDetailsDialogProps) => {
   if (!event) return null;
   const { organizers } = useMyEventsContext();
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${event.registration_id}`;
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${event.registration_id}`;
 
   // Extract date and time
   const [date, time] = event.event_date.split("T");
