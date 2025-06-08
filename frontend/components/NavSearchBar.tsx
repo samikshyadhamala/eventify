@@ -44,7 +44,7 @@ export default function NavSearchBar({placeholder = false}: {placeholder: boolea
         <div className="relative z-50">
             <Command className={`rounded-lg shadow-md md:min-w-[17rem] relative overflow-visible bg-background`}>
                 <CommandInput
-                    placeholder="Type a command or search..."
+                    placeholder="Search for events..."
                     onFocus={() => setOpen(true)}
                     onBlur={() => setOpen(false)}
                     className='border-0 focus:ring-0 h-9 focus:border-0 bg-background text-black placeholder:text-gray-500'
