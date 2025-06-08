@@ -1,7 +1,7 @@
 'use client'
 import type React from "react"
-import { SidebarProvider } from "@/components/ui/sidebar"
-import { AdminSidebar } from "@/components/admin-sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { ClubSidebar } from "@/components/clubSidebar"
 import { useEffect, useState } from 'react'
 import { useAuth } from "@/context/auth/hooks"
 import { redirect } from 'next/navigation'
@@ -35,12 +35,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <SidebarProvider>
-      <div className="grid min-h-screen w-full md:grid-cols-[16.5rem_1fr]">
-        <AdminSidebar />
-        <main className="flex flex-col">
-          {children}
-        </main>
-      </div>
+      <ClubSidebar />
+      <main className="min-h-screen w-full flex flex-col">
+        <SidebarTrigger />
+        {children}
+      </main>
     </SidebarProvider>
   )
 }

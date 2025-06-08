@@ -204,7 +204,7 @@ function UpcomingEventsCard({
       <CardContent>
         {loading ? (
           <LoadingSkeleton />
-        ) : (
+        ) : upcomingEvents.length > 0 ? (
           <div className="space-y-4">
             {upcomingEvents.slice(0, 5).map((event, i) => (
               <UpcomingEventCard 
@@ -213,6 +213,10 @@ function UpcomingEventsCard({
                 registrationCount={registrationCounts[event.event_id] || 0} 
               />
             ))}
+          </div>
+        ) : (
+          <div className="text-center">
+            <p className="text-xl text-muted-foreground">No upcoming events</p>
           </div>
         )}
       </CardContent>

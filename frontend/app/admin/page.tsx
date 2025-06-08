@@ -18,6 +18,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
+import DeleteBranchDialog from "./components/DeleteBranchDialog"
 
 type Branch = {
     branch_id: number
@@ -38,6 +39,12 @@ export default function Branches() {
     const [location, setLocation] = useState('')
     const [isCreating, setIsCreating] = useState(false)
     const [deletingBranches, setDeletingBranches] = useState<number[]>([])
+    const [isDeleteBranchDialogOpen, setIsDeleteBranchDialogOpen] = useState<boolean>(false)
+    const [selectedBranchId, setSelectedBranchId] = useState<number | null>(null)
+    const handleDeleteBranchDialogOpen = (branch_id: number) => {
+        setSelectedBranchId(branch_id)
+        setIsDeleteBranchDialogOpen(true)
+    }
 
     const hasGetDetailedBranched = useRef(false);
     useEffect(() => {
@@ -75,7 +82,11 @@ export default function Branches() {
         setSearchQuery(e.target.value)
     }
 
-    const handleDeleteBranch = async (branch_id: number) => {
+    const handleDeleteBranch = async (branch_id: number | null) => {
+        if (branch_id === null) {
+            toast.error('Branch ID is required for deletion')
+            return
+        }
         setDeletingBranches(prev => [...prev, branch_id])
         try {
             await axiosInstance.delete(`/api/branch/deleteBranch/${branch_id}`)
@@ -263,9 +274,9 @@ export default function Branches() {
                                                 <DropdownMenuContent align="end">
                                                     <DropdownMenuItem><Link href={`/admin/users/branchAdmin`} className='text-black'>Manage Admins</Link></DropdownMenuItem>
                                                     <DropdownMenuItem><Link href={`/admin/events`} className='text-black'>View Events</Link></DropdownMenuItem>
-                                                    <DropdownMenuItem 
-                                                        className="text-red-600" 
-                                                        onClick={() => handleDeleteBranch(branch.branch_id)}
+                                                    <DropdownMenuItem
+                                                        className="text-red-600"
+                                                        onClick={() => handleDeleteBranchDialogOpen(branch.branch_id)}
                                                         disabled={deletingBranches.includes(branch.branch_id)}
                                                     >
                                                         Delete Branch
@@ -280,6 +291,12 @@ export default function Branches() {
                     </table>
                 </div>
             </div>
+            <DeleteBranchDialog
+                isOpen={isDeleteBranchDialogOpen}
+                setIsOpen={setIsDeleteBranchDialogOpen}
+                onDeleteBranch={handleDeleteBranch}
+                selectedBranchId={selectedBranchId}
+            />
         </div>
     )
 }

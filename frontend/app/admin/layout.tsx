@@ -1,6 +1,6 @@
 'use client'
 import type React from "react"
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import Sidebar from "./components/Sidebar"
 import {useEffect, useState} from 'react'
 import { useAuth } from "@/context/auth/hooks"
@@ -34,10 +34,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
   return (
     <SidebarProvider>
-      <div className="grid min-h-screen w-full md:grid-cols-[16rem_1fr]">
         <Sidebar />
-        <div className="flex flex-col w-full">{children}</div>
-      </div>
+      <main className="min-h-screen w-full flex flex-col">
+          <SidebarTrigger />
+          {children}
+      </main>
     </SidebarProvider>
   )
 }
