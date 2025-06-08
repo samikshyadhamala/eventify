@@ -28,6 +28,8 @@ interface EventRowProps {
   handleDelete: (event_id: number) => void
   handleEventDetails: (event: Event) => void
   handleEditEvent: (event: Event) => void
+  setIsDeleteDialogOpen: (isOpen: boolean) => void
+  setSelectedEventId: (event_id: number | null) => void
 }
 
 const getEventStatus = (eventDate: string) => {
@@ -45,10 +47,14 @@ const getEventStatus = (eventDate: string) => {
   }
 }
 
-export default function EventRow({ event, eventRegistrations, handleDelete, handleEventDetails, handleEditEvent }: EventRowProps) {
+export default function EventRow({ event, eventRegistrations, handleDelete, handleEventDetails, handleEditEvent, setIsDeleteDialogOpen, setSelectedEventId }: EventRowProps) {
   const status = getEventStatus(event.event_date)
   const registrationCount = eventRegistrations?.[event.event_id] || 0
 
+  const handleDeleteButtonClick = () => {
+    setIsDeleteDialogOpen(true)
+    setSelectedEventId(event.event_id)
+  }
   return (
     <motion.tr
       className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
@@ -97,7 +103,7 @@ export default function EventRow({ event, eventRegistrations, handleDelete, hand
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => handleEventDetails(event)}>Event Details</DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleEditEvent(event)}>Edit</DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600" onClick={() => handleDelete(event.event_id)}>
+            <DropdownMenuItem className="text-red-600" onClick={handleDeleteButtonClick}>
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>

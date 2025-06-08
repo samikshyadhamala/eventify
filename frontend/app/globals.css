@@ -25,7 +25,7 @@ body {
 }
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 210 20% 98%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -37,7 +37,7 @@ body {
     --secondary-foreground: 0 0% 9%;
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
+    --accent: 220 25% 94%;
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
@@ -50,11 +50,11 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 210 20% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent: 220 25% 94%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
@@ -107,4 +107,58 @@ body {
 a {
   text-decoration: none !important;
   color: black;
+}
+
+
+/* sidebar css */
+/* Make scrollbars overlay content without shifting layout */
+html, body {
+  scrollbar-gutter: stable overlay; /* Firefox + Chromium */
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: '4px'; /* Thicker than 'thin' */
+  scrollbar-color: rgba(200, 200, 200, 0.5) transparent;
+}
+
+/* Chromium/WebKit scrollbar styling */
+*::-webkit-scrollbar {
+  width: 2px; /* Slightly thinner than Firefox's 'auto' */
+  height: 8px;
+  background: transparent;
+}
+
+/* Track styling */
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Thumb styling */
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(200, 200, 200, 0.5);
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  z-index: 9999;
+}
+
+/* Thumb hover effect */
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(200, 200, 200, 0.9);
+}
+
+/* Hide scrollbar buttons (up/down arrows) in WebKit */
+*::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
+/* Make scrollbar transparent when not hovering (WebKit) */
+body:not(:hover) *::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }

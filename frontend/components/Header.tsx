@@ -77,10 +77,10 @@ const Header = ({ placeholder = false }) => {
 
   return (
     <>
-      <header className="px-5 bg-transparent absolute left-0 top-0 right-0 z-50">
-        <nav className="px-2 flex justify-evenly items-center py-4">
+      <header className="px-20 bg-transparent absolute left-0 top-0 right-0 z-50">
+        <nav className="px-2 flex justify-between items-center py-4">
           {/* Logo */}
-          <div className='flex items-center space-x-8'>
+          <div className='flex items-center space-x-10'>
             <div className="logo-container">
               <Link href="/" className="logo text-2xl font-bold text-white">Eventify</Link>
             </div>
@@ -92,7 +92,7 @@ const Header = ({ placeholder = false }) => {
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex justify-center space-x-12 ">
+          <div className="hidden md:flex justify-center space-x-12 items-center">
             <Link href="/" className="text-white hover:underline hover:text-gray-300 !text-lg">Home</Link>
             <Link href="/allevent" className="text-white hover:underline hover:text-gray-300 !text-lg">Events</Link>
             <Link href="/contact" className="text-white hover:underline hover:text-gray-300 !text-lg">Contact</Link>
@@ -101,56 +101,56 @@ const Header = ({ placeholder = false }) => {
                 MyEvents
               </Link>
             )}
+            {/* Desktop User Section */}
+            <div className="relative hidden md:block">
+              {user ? (
+                <>
+                  <button
+                    onClick={() => setOpen(!open)}
+                    className="focus:outline-none"
+                    aria-haspopup="true"
+                    aria-expanded={open}
+                  >
+                    <Avatar>
+                      <AvatarImage src={user?.imageUrl || "/api/placeholder/40/40"} alt="Profile Picture" />
+                      <AvatarFallback>{user?.email?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
+                    </Avatar>
+                  </button>
+                  {open && (
+                    <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                      {(user.role === 'admin' || user.role === 'club') && (
+                        <button
+                          className="flex items-center px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100"
+                          onClick={handleDashboardClick}
+                        >
+                          <Grid className="h-5 w-5 mr-2" />
+                          Dashboard
+                        </button>
+                      )}
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100"
+                      >
+                        <LogOut className="h-5 w-5 mr-2" />
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Link href="/login">
+                  <Button
+                    variant="outline"
+                    className={`${placeholder ? 'bg-black' : 'bg-transparent'} hover:text-white text-white rounded-full px-8`}
+                    disabled={isUserLoading}
+                  >
+                    Login
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
 
-          {/* Desktop User Section */}
-          <div className="relative hidden md:block">
-            {user ? (
-              <>
-                <button
-                  onClick={() => setOpen(!open)}
-                  className="focus:outline-none"
-                  aria-haspopup="true"
-                  aria-expanded={open}
-                >
-                  <Avatar>
-                    <AvatarImage src={user?.imageUrl || "/api/placeholder/40/40"} alt="Profile Picture" />
-                    <AvatarFallback>{user?.name?.charAt(0) || 'U'}</AvatarFallback>
-                  </Avatar>
-                </button>
-                {open && (
-                  <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-                    {(user.role === 'admin' || user.role === 'club') && (
-                      <button
-                        className="flex items-center px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100"
-                        onClick={handleDashboardClick}
-                      >
-                        <Grid className="h-5 w-5 mr-2" />
-                        Dashboard
-                      </button>
-                    )}
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center px-4 py-2 text-sm w-full text-left text-gray-700 hover:bg-gray-100"
-                    >
-                      <LogOut className="h-5 w-5 mr-2" />
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </>
-            ) : (
-              <Link href="/login">
-                <Button
-                  variant="outline"
-                  className={`${placeholder ? 'bg-black' : 'bg-transparent'} hover:text-white text-white rounded-full px-8`}
-                  disabled={isUserLoading}
-                >
-                  Login
-                </Button>
-              </Link>
-            )}
-          </div>
 
           {/* Mobile Hamburger Menu Button */}
           <div className="md:hidden absolute right-12 top-8">

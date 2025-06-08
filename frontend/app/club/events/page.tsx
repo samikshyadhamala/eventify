@@ -9,6 +9,7 @@ import Link from 'next/link'
 import EventsTable from './Table'
 import EventDetailsDialog from './Table/row/EventDetailDialog'
 import EditEventDialog from './Table/row/EditEventDialog'
+import DeleteEventDialog from './Table/row/DeleteEventDialog'
 
 interface Event {
   branch_id: number
@@ -37,6 +38,8 @@ export default function Events() {
   const [registrations, setRegistrations] = useState<any[]>([])
   const [loadingRegistrations, setLoadingRegistrations] = useState(false)
   const [eventRegistrations, setEventRegistrations] = useState<{ [key: number]: number }>({})
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [selectedEventId, setSelectedEventId] = useState<number | null>(null)
   const rowsPerPage = 10
 
   useEffect(() => {
@@ -82,7 +85,9 @@ export default function Events() {
     setCurrentPage(1)
   }, [searchQuery, events])
 
-  const handleDelete = (event_id: number) => {
+  const handleDelete = (event_id: number | null) => {
+    if (!event_id) return;
+
     axiosInstance
       .delete(`/api/event/deleteEvent/${event_id}`)
       .then(() => {
@@ -137,6 +142,8 @@ export default function Events() {
         handleDelete={handleDelete}
         handleEventDetails={handleEventDetails}
         handleEditEvent={handleEditEvent}
+        setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+        setSelectedEventId={setSelectedEventId}
       />
       <EventDetailsDialog
         selectedEvent={selectedEvent}
@@ -149,6 +156,12 @@ export default function Events() {
         setEditEvent={setEditEvent}
         axiosInstance={axiosInstance}
         setEvents={setEvents}
+      />
+      <DeleteEventDialog
+        isOpen={isDeleteDialogOpen}
+        setIsOpen={setIsDeleteDialogOpen}
+        onDeleteEvent={handleDelete}
+        selectedEventId={selectedEventId}
       />
     </div>
   )

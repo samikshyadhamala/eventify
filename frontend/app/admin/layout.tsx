@@ -35,7 +35,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <SidebarProvider>
         <Sidebar />
-      <main className="min-h-screen w-full flex flex-col">
+      <main className="min-h-screen w-full flex bg-background flex-col">
           <SidebarTrigger />
           {children}
       </main>

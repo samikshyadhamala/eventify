@@ -3,7 +3,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
 import { Button } from "@radix-ui/themes"
-import { Plus, Download, ChevronDown, Filter, Search } from 'lucide-react'
+import { Plus, Download, ChevronDown, Filter, Search, Delete } from 'lucide-react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/tabs"
 import { Calendar, Clock, MapPin, User, Users, BarChart } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import DeleteEventDialog from "./Components/DeleteEventDialog"
 
 export default function Events() {
     const { axiosInstance } = useAuth();
@@ -41,7 +42,17 @@ export default function Events() {
     const [registrations, setRegistrations] = useState<any[]>([]);
     const [loadingRegistrations, setLoadingRegistrations] = useState(false);
     const [eventRegistrations, setEventRegistrations] = useState<{ [key: number]: number }>({});
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
     const rowsPerPage = 10;
+
+    const handleDeleteEvent = (event_id: string) => {
+        debugger
+        if (event_id === null) return;
+        setSelectedEventId(event_id);
+        setIsDeleteDialogOpen(true);
+
+    }
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -89,7 +100,7 @@ export default function Events() {
         created_at: string;
         description: string;
         event_date: string;
-        event_id: number;
+        event_id: string;
         imageUrl: string;
         is_paid: boolean;
         location: string;
@@ -139,7 +150,7 @@ export default function Events() {
     };
 
     // delete logic
-    const handleDelete = (event_id: number) => {
+    const DeleteEvent = (event_id: string) => {
         axiosInstance.delete(`/api/event/deleteEvent/${event_id}`)
             .then(() => {
                 setEvents(events.filter(event => event.event_id !== event_id));
@@ -164,10 +175,10 @@ export default function Events() {
 
     return (
         <div className="w-full">
-            <div className="p-2 py-4">
+            <div className="sm:p-2 p-0"> 
                 <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
-                        <h1 className="font-bold tracking-tight">Events Management</h1>
+                        <h1 className="font-bold tracking-tight text-lg sm:text-4xl">Events Management</h1>
                         <Link href="/admin/create-event">
                             <Button className="gap-1 bg-black">
                                 <Plus className="h-4 w-4" />
@@ -177,7 +188,7 @@ export default function Events() {
                     </div>
                     <CardDescription>Manage all your events in one place</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-3">
                     <div className="flex flex-col gap-4">
                         <div className="flex flex-col sm:flex-row gap-4 justify-between">
                             <div className="flex flex-1 items-center gap-2">
@@ -307,7 +318,7 @@ export default function Events() {
                                                                     <DropdownMenuItem onClick={() => handleEventDetails(event)}>
                                                                         Event Details
                                                                     </DropdownMenuItem>
-                                                                    <DropdownMenuItem className="text-red-600" onClick={() => handleDelete(event.event_id)}>
+                                                                    <DropdownMenuItem className="text-red-600" onClick={() => handleDeleteEvent(event.event_id)}>
                                                                         Delete
                                                                     </DropdownMenuItem>
                                                                 </DropdownMenuContent>
@@ -443,6 +454,12 @@ export default function Events() {
                     </DialogContent>
                 </Dialog>
             )}
+            <DeleteEventDialog
+                isOpen={isDeleteDialogOpen}
+                setIsOpen={setIsDeleteDialogOpen}
+                onDeleteEvent={DeleteEvent}
+                selectedEventId={selectedEventId}
+            />
         </div>
     )
 }

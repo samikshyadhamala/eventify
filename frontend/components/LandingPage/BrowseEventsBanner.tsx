@@ -10,11 +10,11 @@ export default function BrowseEventsBanner() {
                     Join thousands of event enthusiasts and start your journey today
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <Button size="lg" className="bg-accent" variant={'secondary'}>
-                        <Link href="/allevent" className="text-black">
+                    <Link href="/allevent" className="text-black">
+                        <Button size="lg" className="text-black bg-slate-100 hover:bg-slate-200">
                             Browse Events
-                        </Link>
-                    </Button>
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </section>

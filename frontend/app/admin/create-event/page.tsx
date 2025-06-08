@@ -101,10 +101,10 @@ const CreateEvent = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-5xl mx-auto px-4">
+      <div className="max-w-5xl mx-auto px-3 sm:px-4">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold">Create New Event</h1>
+            <h1 className="sm:text-3xl text-2xl font-bold">Create New Event</h1>
             <p className="text-gray-600 mt-1">Fill out the form below to create a new event</p>
           </div>
           <Button
@@ -205,7 +205,7 @@ const CreateEvent = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Price ($)</label>
+                      <label className="block text-sm font-medium mb-2">Price (Rs)</label>
                       <Input
                         type="number"
                         name="price"
@@ -214,6 +214,7 @@ const CreateEvent = () => {
                         min="0"
                         step="0.01"
                         disabled={isSubmitting}
+                        onFocus={(e) => e.target.select()}
                       />
                     </div>
                   </div>

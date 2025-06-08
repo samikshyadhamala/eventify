@@ -128,7 +128,7 @@ export default function Branches() {
     }
 
     return (
-        <div className="p-4">
+        <div className="p-3 sm:p-4">
             <h1>All Branches</h1>
             <div className="flex items-center justify-between my-4">
                 <div className="flex items-center gap-2">
@@ -136,7 +136,7 @@ export default function Branches() {
                         <Input
                             type="search"
                             placeholder="Search branches..."
-                            className="w-96 pl-8 bg-muted border-none"
+                            className="w-52 sm:w-96 pl-8 bg-muted border-none"
                             value={searchQuery}
                             onChange={handleSearchChange}
                         />

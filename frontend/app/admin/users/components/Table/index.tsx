@@ -6,6 +6,7 @@ import { useUserManagement } from '../../context'
 import { useUserManagementData } from '../../hooks'
 import { User } from '../../types'
 import Skeleton from './Skeleton'
+
 export default function UserTable() {
   const { filteredUsers, isLoading } = useUserManagement()
   useUserManagementData()

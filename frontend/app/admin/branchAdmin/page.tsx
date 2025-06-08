@@ -29,7 +29,7 @@ export default function ManageUsers() {
     } = useBranchAdmin()
 
     return (
-        <div className="py-4 px-6">
+        <div className="py-4 px-3 sm:px-6">
             <h1>Manage Club Admins</h1>
             <HeaderActions setShowCreateDialog={setShowCreateDialog} />
             <BranchAdminTable

@@ -35,7 +35,7 @@ export default function EventsContainer() {
                         filteredEvents.map((item) => (
                             <EventCard {...item} key={item.event_id} />
                         ))) : (
-                        <div className='w-full h-40 text-center col-span-3 text-3xl font-semibold'>No Registered Events</div>
+                        <div className='w-full h-40 text-center col-span-3 text-3xl '>No Registered Events</div>
                     )}
                 </AnimatePresence>
             </div>
@@ -44,7 +44,7 @@ export default function EventsContainer() {
 
     return (
         <>
-            <div className="container px-4 md:px-6 flex justify-center mt-8 mb-12">
+            <div className="container px-4 md:px-6 flex justify-center mt-2 mb-12">
                 <div className="flex w-full max-w-[63rem] flex-col gap-4">
                     <div className="flex flex-col gap-2 sm:flex-row">
                         {/* <Button variant="outline" className="shrink-0">

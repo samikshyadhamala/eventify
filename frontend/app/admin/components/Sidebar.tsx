@@ -44,7 +44,7 @@ export default function SuperAdminSidebar() {
   }, [])
 
   return (
-    <Sidebar>
+    <Sidebar className="bg-background">
       <SidebarHeader className="h-16 border-b border-sidebar-border">
         <Link href='/' className="text-black">
           <h4 className="text-center my-2 font-logo">
@@ -111,7 +111,7 @@ export default function SuperAdminSidebar() {
                 <div className="flex items-center gap-3 rounded-md border p-2">
                   <Avatar>
                     <AvatarImage src={user.imageUrl} alt="@userAvatar" />
-                    <AvatarFallback>JD</AvatarFallback>
+                    <AvatarFallback>{user.email[0].toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">
                     <span className="text-sm font-medium truncate max-w-[120px]" title={user.email}>{user.email}</span>

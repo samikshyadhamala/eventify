@@ -33,6 +33,8 @@ interface EventsTableProps {
   handleDelete: (event_id: number) => void
   handleEventDetails: (event: Event) => void
   handleEditEvent: (event: Event) => void
+  setIsDeleteDialogOpen: (isOpen: boolean) => void
+  setSelectedEventId: (event_id: number | null) => void
 }
 
 export default function EventsTable({
@@ -48,6 +50,8 @@ export default function EventsTable({
   handleDelete,
   handleEventDetails,
   handleEditEvent,
+  setIsDeleteDialogOpen,
+  setSelectedEventId
 }: EventsTableProps) {
   const indexOfLastEvent = currentPage * rowsPerPage
   const indexOfFirstEvent = indexOfLastEvent - rowsPerPage
@@ -131,6 +135,8 @@ export default function EventsTable({
                   handleDelete={handleDelete}
                   handleEventDetails={handleEventDetails}
                   handleEditEvent={handleEditEvent}
+                  setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+                  setSelectedEventId={setSelectedEventId}
                 />
               ))
             )}

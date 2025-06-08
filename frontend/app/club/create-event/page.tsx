@@ -224,6 +224,7 @@ const CreateEvent = () => {
                         min="0"
                         step="0.01"
                         disabled={isSubmitting}
+                        onFocus={(e) => e.target.select()}
                       />
                     </div>
                   </div>

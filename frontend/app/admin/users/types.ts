@@ -30,7 +30,7 @@ export type User = {
     setIsLoading: (loading: boolean) => void
     showBranchDialog: boolean
     setShowBranchDialog: (show: boolean) => void
-    selectedUserId: string
+    selectedUserId: number
     setSelectedUserId: (id: string) => void
     selectedRole: string
     setSelectedRole: (role: string) => void
@@ -42,5 +42,10 @@ export type User = {
     setFilteredUsers: (users: User[]) => void
     setSearchTerm: (query: string) => void
     searchTerm: string
-    handleDelete: () => void
+    setIsDeleteUserDialogOpen: (isOpen: boolean) => void
+    isDeleteUserDialogOpen: boolean
+    handleDelete: (user_id: number) => void
+    isAdminRoleChangeDialogOpen: boolean
+    setIsAdminRoleChangeDialogOpen: (isOpen: boolean) => void
+    changeRole: (user_id: string, new_role: string) => void
   }

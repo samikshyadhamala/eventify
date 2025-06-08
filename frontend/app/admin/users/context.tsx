@@ -19,7 +19,34 @@ export function UserManagementProvider({ children }: { children: ReactNode }) {
   const [branchId, setBranchId] = useState('')
   const [changingRole, setChangingRole] = useState<string>('')
   const [searchTerm, setSearchTerm] = useState<string>('')
+  const [isDeleteUserDialogOpen, setIsDeleteUserDialogOpen] = useState(false)
   const { axiosInstance } = useAuth()
+  const [isAdminRoleChangeDialogOpen, setIsAdminRoleChangeDialogOpen] = useState(false)
+
+  // role change handler
+  const changeRole = async (fid: string, newRole: string) => {
+    setChangingRole(fid)
+    try {
+      await axiosInstance.put('/api/user/updateRole', {
+        user_id: fid,
+        role: newRole,
+      })
+
+      // Update users and filteredUsers with new role
+      setUsers((users: User[]) =>
+        users.map(u => (u.fid === fid ? { ...u, role: newRole } : u))
+      )
+      setFilteredUsers((filteredUsers: User[]) =>
+        filteredUsers.map(u => (u.fid === fid ? { ...u, role: newRole } : u))
+      )
+      toast.success('User role updated successfully')
+    } catch (err) {
+      toast.error('Error updating user role')
+      console.error(err)
+    } finally {
+      setChangingRole('')
+    }
+  }
 
   // Handle search
   useEffect(() => {
@@ -82,7 +109,12 @@ export function UserManagementProvider({ children }: { children: ReactNode }) {
         setChangingRole,
         searchTerm,
         setSearchTerm,
-        handleDelete
+        handleDelete,
+        setIsDeleteUserDialogOpen,
+        isDeleteUserDialogOpen,
+        isAdminRoleChangeDialogOpen,
+        setIsAdminRoleChangeDialogOpen,
+        changeRole
       }}
     >
       {children}

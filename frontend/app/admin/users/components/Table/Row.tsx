@@ -31,14 +31,14 @@ const roleColorMap: Record<"normal" | "club" | "admin", string> = {
     focus:ring-2 focus:ring-neutral-400
   `,
   club: `
-    bg-teal-500 text-white
-    hover:bg-teal-600
-    focus:ring-2 focus:ring-teal-400
-  `,
-  admin: `
     bg-emerald-600 text-white
     hover:bg-emerald-700
     focus:ring-2 focus:ring-emerald-500
+  `,
+  admin: `
+    bg-orange-500 text-white
+    hover:bg-orange-600
+    focus:ring-2 focus:ring-orange-400
   `,
 }
 
@@ -57,7 +57,9 @@ export default function UserRow({ user, index }: UserRowProps) {
     setSelectedRole,
     changingRole,
     setChangingRole,
-    handleDelete
+    setIsDeleteUserDialogOpen,
+    changeRole,
+    setIsAdminRoleChangeDialogOpen
   } = useUserManagement()
   const { axiosInstance } = useAuth()
 
@@ -68,32 +70,19 @@ export default function UserRow({ user, index }: UserRowProps) {
       setShowBranchDialog(true)
       return
     }
-
-    setChangingRole(fid)
-    try {
-      await axiosInstance.put('/api/user/updateRole', {
-        user_id: fid,
-        role: newRole,
-      })
-
-      // Update users and filteredUsers with new role
-      setUsers((users: User[]) =>
-        users.map(u => (u.fid === fid ? { ...u, role: newRole } : u))
-      )
-      setFilteredUsers((filteredUsers: User[]) =>
-        filteredUsers.map(u => (u.fid === fid ? { ...u, role: newRole } : u))
-      )
-      toast.success('User role updated successfully')
-    } catch (err) {
-      toast.error('Error updating user role')
-      console.error(err)
-    } finally {
-      setChangingRole('')
+    if (newRole === 'admin') { 
+      setSelectedUserId(fid)
+      setIsAdminRoleChangeDialogOpen(true)
+      return
     }
+    changeRole(fid, newRole)
   }
+  
 
-  const handleUserDelete = async (id: string) => {
-    handleDelete(id)
+  const handleUserDelete = (id: string) => {
+    
+    setSelectedUserId(id)
+    setIsDeleteUserDialogOpen(true)
   }
 
   return (
@@ -153,9 +142,10 @@ export default function UserRow({ user, index }: UserRowProps) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem 
-              className="text-red-600" 
+            <DropdownMenuItem
+              className="text-red-600"
               onClick={() => handleUserDelete(user.fid)}
+              disabled={user.fid === currentUser?.fid}
             >
               Delete User
             </DropdownMenuItem>
