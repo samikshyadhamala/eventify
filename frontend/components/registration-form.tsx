@@ -70,7 +70,7 @@ const buttonText =
     : isAlreadyRegistered
       ? "You are Already Registered"
       : isPaid
-        ? `Rs ${displayPrice}`
+        ? `Pay Now`
         : "Register Now";
 
 

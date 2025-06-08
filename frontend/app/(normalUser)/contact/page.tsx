@@ -126,22 +126,22 @@ export default function ContactPage() {
                   </TabsContent>
                   <TabsContent value="events" className="mt-4 space-y-4">
                     <div className="space-y-2">
-                      <h3 className="font-medium">How do I register for an event?</h3>
+                      <h3 className="text-lg font-medium">How do I register for an event?</h3>
                       <p className="text-sm text-muted-foreground">
-                        Navigate to the event page and click the "Register Now" button to secure your spot.
+                      Navigate to the event page and click the "Register Now" button to secure your spot.
                       </p>
                     </div>
                     <div className="space-y-2">
-                      <h3 className="font-medium">Can I get a refund for a paid event?</h3>
+                      <h3 className="text-lg font-medium">Can I get a refund for a paid event?</h3>
                       <p className="text-sm text-muted-foreground">
-                        Refund policies vary by event. Check the event details page or contact the organizer directly.
+                      Refund policies vary by event. Check the event details page or contact the organizer directly.
                       </p>
                     </div>
                     <div className="space-y-2">
-                      <h3 className="font-medium">How do I create my own event?</h3>
+                      <h3 className="text-lg font-medium">How do I create my own event?</h3>
                       <p className="text-sm text-muted-foreground">
-                        Once you're an approved organizer, you can create events from your dashboard by clicking "Create
-                        Event."
+                      Once you're an approved organizer, you can create events from your dashboard by clicking "Create
+                      Event."
                       </p>
                     </div>
                   </TabsContent>
