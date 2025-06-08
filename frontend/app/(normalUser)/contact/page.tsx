@@ -104,20 +104,20 @@ export default function ContactPage() {
                   </TabsList>
                   <TabsContent value="general" className="mt-4 space-y-4">
                     <div className="space-y-2">
-                      <h3 className="font-medium">How do I create an account?</h3>
+                      <div className="text-lg">How do I create an account?</div>
                       <p className="text-sm text-muted-foreground">
                         Click the "Sign up" button in the top right corner and follow the instructions to create your
                         account.
                       </p>
                     </div>
                     <div className="space-y-2">
-                      <h3 className="font-medium">Is EventHub available in my city?</h3>
+                      <div className="text-lg">Is EventHub available in my city?</div>
                       <p className="text-sm text-muted-foreground">
                         EventHub is available in most major cities. Check our locations page for a complete list.
                       </p>
                     </div>
                     <div className="space-y-2">
-                      <h3 className="font-medium">How can I become an event organizer?</h3>
+                      <div className="text-lg">How can I become an event organizer?</div>
                       <p className="text-sm text-muted-foreground">
                         After creating an account, go to your profile settings and select "Become an Organizer" to
                         apply.
@@ -126,19 +126,19 @@ export default function ContactPage() {
                   </TabsContent>
                   <TabsContent value="events" className="mt-4 space-y-4">
                     <div className="space-y-2">
-                      <h3 className="text-lg font-medium">How do I register for an event?</h3>
+                      <div className="text-lg">How do I register for an event?</div>
                       <p className="text-sm text-muted-foreground">
                       Navigate to the event page and click the "Register Now" button to secure your spot.
                       </p>
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-lg font-medium">Can I get a refund for a paid event?</h3>
+                      <div className="text-lg">Can I get a refund for a paid event?</div>
                       <p className="text-sm text-muted-foreground">
                       Refund policies vary by event. Check the event details page or contact the organizer directly.
                       </p>
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-lg font-medium">How do I create my own event?</h3>
+                      <div className="text-lg">How do I create my own event?</div>
                       <p className="text-sm text-muted-foreground">
                       Once you're an approved organizer, you can create events from your dashboard by clicking "Create
                       Event."
