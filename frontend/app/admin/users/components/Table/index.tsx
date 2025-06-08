@@ -23,7 +23,7 @@ export default function UserTable() {
               <th className="h-12 px-4 align-middle font-medium text-center">Actions</th>
             </tr>
           </thead>
-          <tbody className="[&_tr:last-child]:border-0">
+          <tbody className="[&_tr:last-child]:border-0 ">
             {isLoading ? (
               <Skeleton />
             ) : filteredUsers.length === 0 ? (

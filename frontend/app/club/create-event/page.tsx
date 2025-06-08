@@ -117,13 +117,6 @@ const CreateEvent = () => {
             <h1 className="text-3xl font-bold">Create New Event</h1>
             <p className="text-gray-600 mt-1">Fill out the form below to create a new event</p>
           </div>
-          <Button
-            variant="outline"
-            onClick={() => router.push("/club")}
-            disabled={isSubmitting}
-          >
-            Cancel
-          </Button>
         </div>
 
         <Card>

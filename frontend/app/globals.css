@@ -109,56 +109,51 @@ a {
   color: black;
 }
 
-
 /* sidebar css */
-/* Make scrollbars overlay content without shifting layout */
-html, body {
-  scrollbar-gutter: stable overlay; /* Firefox + Chromium */
+/* Ensure consistent layout and scrollbar behavior across browsers */
+body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: auto;
+  overflow-y: scroll; /* Always show scrollbar to prevent layout shifts */
 }
 
-/* Firefox */
+/* Reserve space for scrollbar to avoid content shift */
+body {
+  padding-right: 0px; /* Matches typical scrollbar width; adjust if needed */
+}
+
+/* Firefox-specific scrollbar styling */
 * {
-  scrollbar-width: '4px'; /* Thicker than 'thin' */
-  scrollbar-color: rgba(200, 200, 200, 0.5) transparent;
+  scrollbar-width: thin; /* Thin scrollbar that overlays content */
+  scrollbar-color: rgba(200, 200, 200, 0.5) transparent; /* Thumb and track colors */
 }
 
-/* Chromium/WebKit scrollbar styling */
+/* Chromium/WebKit scrollbar styling (Edge, Chrome) */
 *::-webkit-scrollbar {
-  width: 2px; /* Slightly thinner than Firefox's 'auto' */
+  width: 8px; /* Consistent width with padding-right */
   height: 8px;
   background: transparent;
 }
 
-/* Track styling */
+/* Track styling for WebKit browsers */
 *::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* Thumb styling */
+/* Thumb styling for WebKit browsers */
 *::-webkit-scrollbar-thumb {
   background-color: rgba(200, 200, 200, 0.5);
-  border-radius: 8px;
+  border-radius: 4px; /* Slightly smaller radius for better rendering */
   transition: background-color 0.3s ease;
-  z-index: 9999;
 }
 
-/* Thumb hover effect */
+/* Thumb hover effect for WebKit browsers */
 *::-webkit-scrollbar-thumb:hover {
   background-color: rgba(200, 200, 200, 0.9);
 }
 
-/* Hide scrollbar buttons (up/down arrows) in WebKit */
+/* Hide scrollbar buttons (up/down arrows) in WebKit browsers */
 *::-webkit-scrollbar-button {
   display: none;
-  height: 0;
-  width: 0;
-}
-
-/* Make scrollbar transparent when not hovering (WebKit) */
-body:not(:hover) *::-webkit-scrollbar-thumb {
-  background-color: transparent;
 }
