@@ -90,7 +90,7 @@ export default function Home() {
   }
 
   return (
-    <section className="w-full py-8 md:py-16 px-8 md:px-28 lg:py-20">
+    <section className="w-full py-8 md:py-16 px-2 sm:px-8 md:px-28 lg:py-20">
       <div className="container flex justify-center">
         <div className="flex w-full max-w-[64rem] flex-col gap-4">
           <div className="flex flex-col gap-2 sm:flex-row">
@@ -114,25 +114,25 @@ export default function Home() {
               <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
                 <TabsTrigger
                   value="all"
-                  className="rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-primary"
+                  className="rounded-none border-b-2 border-transparent px-3 sm:px-4 py-2 data-[state=active]:border-primary"
                 >
                   All Events
                 </TabsTrigger>
                 <TabsTrigger
                   value="upcoming"
-                  className="rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-primary"
+                  className="rounded-none border-b-2 border-transparent px-3 sm:px-4 py-2 data-[state=active]:border-primary"
                 >
                   Upcoming
                 </TabsTrigger>
                 <TabsTrigger
                   value="free"
-                  className="rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-primary"
+                  className="rounded-none border-b-2 border-transparent px-3 sm:px-4 py-2 data-[state=active]:border-primary"
                 >
                   Free
                 </TabsTrigger>
                 <TabsTrigger
                   value="paid"
-                  className="rounded-none border-b-2 border-transparent px-4 py-2 data-[state=active]:border-primary"
+                  className="rounded-none border-b-2 border-transparent px-3 sm:px-4 py-2 data-[state=active]:border-primary"
                 >
                   Paid
                 </TabsTrigger>

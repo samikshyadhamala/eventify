@@ -44,7 +44,7 @@ export default function SuperAdminSidebar() {
   }, [])
 
   return (
-    <Sidebar className="bg-background">
+    <Sidebar className="bg-background" >
       <SidebarHeader className="h-16 border-b border-sidebar-border">
         <Link href='/' className="text-black">
           <h4 className="text-center my-2 font-logo">

@@ -77,7 +77,7 @@ const Header = ({ placeholder = false }) => {
 
   return (
     <>
-      <header className="px-20 bg-transparent absolute left-0 top-0 right-0 z-50">
+      <header className="sm:px-20 px-6 bg-transparent absolute left-0 top-0 right-0 z-50">
         <nav className="px-2 flex justify-between items-center py-4">
           {/* Logo */}
           <div className='flex items-center space-x-10'>
@@ -153,7 +153,7 @@ const Header = ({ placeholder = false }) => {
 
 
           {/* Mobile Hamburger Menu Button */}
-          <div className="md:hidden absolute right-12 top-8">
+          <div className="md:hidden absolute right-8 top-7">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="text-white"

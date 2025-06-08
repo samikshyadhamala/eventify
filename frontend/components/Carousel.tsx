@@ -233,7 +233,7 @@ const Carousel = () => {
             <AnimatePresence mode="popLayout">
               <motion.div
                 key={`title-${currentSlide}`}
-                className='text-8xl font-display font-light mb-2 text-center'
+                className='sm:text-8xl text-6xl font-display font-light mb-2 text-center'
                 custom={1}
                 variants={textVariants}
                 initial="hidden"

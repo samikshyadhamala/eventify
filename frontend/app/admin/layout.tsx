@@ -2,7 +2,7 @@
 import type React from "react"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import Sidebar from "./components/Sidebar"
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from "@/context/auth/hooks"
 import { redirect } from 'next/navigation'
 
@@ -16,6 +16,7 @@ type CurrentUser = {
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { axiosInstance } = useAuth()
   const [currentUser, setCurrentUsers] = useState<CurrentUser | null>(null)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   // fetching current user
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -34,10 +35,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
   return (
     <SidebarProvider>
-        <Sidebar />
+      <Sidebar />
       <main className="min-h-screen w-full flex bg-background flex-col">
-          <SidebarTrigger />
-          {children}
+        <SidebarTrigger />
+        {children}
       </main>
     </SidebarProvider>
   )

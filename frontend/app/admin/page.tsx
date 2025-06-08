@@ -136,7 +136,7 @@ export default function Branches() {
                         <Input
                             type="search"
                             placeholder="Search branches..."
-                            className="w-52 sm:w-96 pl-8 bg-muted border-none"
+                            className="w-48 sm:w-96 pl-8 bg-muted border-none"
                             value={searchQuery}
                             onChange={handleSearchChange}
                         />
