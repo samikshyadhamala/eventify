@@ -1,44 +1,54 @@
 'use client';
 
-import styles from '@/styles/Freeevent.module.css';
-import Link from 'next/link';
-import ImageComponent from '../../ImageComponent';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/auth/hooks';
-import { Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import SkeletonEvents from './SkeletonEvents'
-import { AnimatePresence, motion, useAnimation } from 'framer-motion'
+import { motion, useAnimation } from 'framer-motion'
 import EventCard from '@/components/EventCard';
 import { Event } from "@/components/types/EventCardTypes"
+// import { toast } from "sonner"
+import { toast } from 'react-toastify';
 
 export default function Home() {
   const [data, setData] = useState<Event[]>([])
   const { axiosInstance } = useAuth()
   const [searchQuery, setSearchQuery] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
   const [visibleCount, setVisibleCount] = useState(6)
-  const controls = useAnimation()
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    let isMounted = true; // to avoid setting state on unmounted component
+
     const fetchData = async () => {
       try {
-        setIsLoading(true)
-        const response = await axiosInstance.get("/api/event/getEvents")
-        setData(response.data.events)
+        const response = await axiosInstance.get("/api/event/getEvents");
+        if (isMounted) {
+          setData(response.data.events);
+        }
+      } catch (error) {
+        console.error(error);
+        if (isMounted) {
+          setData([]);
+          toast.info(
+            "Oops! Our server decided to take an unscheduled nap 😴💤 It's probably dreaming of better API responses! Try again in a few seconds 🔄✨"
+          );
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
-      catch (error) {
-        console.log(error)
-        setData([])
-      }
-      finally {
-        setIsLoading(false)
-      }
-    }
-    fetchData()
-  }, [axiosInstance])
+    };
+
+    fetchData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [axiosInstance]);
 
   const loadMore = () => {
     setVisibleCount(prevCount => prevCount + 6)

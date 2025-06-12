@@ -8,7 +8,7 @@ import { Theme } from "@radix-ui/themes";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import "./globals.css";
-
+import { Toaster } from "@/components/ui/sonner";
 export const metadata: Metadata = {
   title: "Eventify", // Updated title
   description: "Find and book events near you",
@@ -42,7 +42,7 @@ export default function RootLayout({
         <AuthProvider>
           <Theme>
             <ToastContainer
-              position="top-right"
+              position="bottom-right"
               autoClose={3000}
               hideProgressBar={false}
               newestOnTop={false}
@@ -53,6 +53,7 @@ export default function RootLayout({
               pauseOnHover
               theme="light"
             />
+            <Toaster /> {/* better Toasts */}
             {children}
           </Theme>
         </AuthProvider>
