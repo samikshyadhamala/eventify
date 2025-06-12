@@ -201,14 +201,14 @@ export default function Branches() {
 
             <div className="rounded-md border">
                 <div className="relative w-full overflow-auto">
-                    <table className="w-full caption-bottom text-sm">
+                    <table className="w-full caption-bottom text-sm overflow-hidden h-auto">
                         <thead className="[&_tr]:border-b">
                             <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                                 <th className="h-12 px-4 text-left align-middle font-medium">Branch Name</th>
                                 <th className="h-12 px-4 text-left align-middle font-medium">Location</th>
                                 <th className="h-12 px-4 text-left align-middle font-medium">Events</th>
                                 <th className="h-12 px-4 text-left align-middle font-medium">Created At</th>
-                                <th className="h-12 px-4 text-left align-middle font-medium text-center">Actions</th>
+                                <th className="h-12 px-4 align-middle font-medium text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="[&_tr:last-child]:border-0">

@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import SkeletonEvents from './SkeletonEvents'
-import { motion, useAnimation } from 'framer-motion'
+import { motion } from 'framer-motion'
 import EventCard from '@/components/EventCard';
 import { Event } from "@/components/types/EventCardTypes"
 // import { toast } from "sonner"
@@ -23,6 +23,7 @@ export default function Home() {
     let isMounted = true; // to avoid setting state on unmounted component
 
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const response = await axiosInstance.get("/api/event/getEvents");
         if (isMounted) {

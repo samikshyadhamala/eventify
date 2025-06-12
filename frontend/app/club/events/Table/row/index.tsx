@@ -30,6 +30,7 @@ interface EventRowProps {
   handleEditEvent: (event: Event) => void
   setIsDeleteDialogOpen: (isOpen: boolean) => void
   setSelectedEventId: (event_id: number | null) => void
+  index: number
 }
 
 const getEventStatus = (eventDate: string) => {
@@ -47,7 +48,7 @@ const getEventStatus = (eventDate: string) => {
   }
 }
 
-export default function EventRow({ event, eventRegistrations, handleDelete, handleEventDetails, handleEditEvent, setIsDeleteDialogOpen, setSelectedEventId }: EventRowProps) {
+export default function EventRow({ event, eventRegistrations, handleDelete, handleEventDetails, handleEditEvent, setIsDeleteDialogOpen, setSelectedEventId, index }: EventRowProps) {
   const status = getEventStatus(event.event_date)
   const registrationCount = eventRegistrations?.[event.event_id] || 0
 
@@ -59,7 +60,7 @@ export default function EventRow({ event, eventRegistrations, handleDelete, hand
     <motion.tr
       className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      animate={{ opacity: 1, y: 0, transition: {delay: index * 0.1 }}}
     >
       <TableCell className="font-medium">{event.title}</TableCell>
       <TableCell>{new Date(event.event_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</TableCell>

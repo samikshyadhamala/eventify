@@ -83,7 +83,7 @@ export default function EventsTable({
         </div>
       </div>
       <div className="rounded-md border">
-        <Table>
+        <Table className='overflow-hidden h-auto'>
           <TableHeader>
             <TableRow>
               <TableHead>Event Name</TableHead>
@@ -127,7 +127,7 @@ export default function EventsTable({
                 </td>
               </TableRow>
             ) : (
-              currentEvents.map((event) => (
+              currentEvents.map((event, index) => (
                 <EventRow
                   key={event.event_id}
                   event={event}
@@ -137,6 +137,7 @@ export default function EventsTable({
                   handleEditEvent={handleEditEvent}
                   setIsDeleteDialogOpen={setIsDeleteDialogOpen}
                   setSelectedEventId={setSelectedEventId}
+                  index={index}
                 />
               ))
             )}

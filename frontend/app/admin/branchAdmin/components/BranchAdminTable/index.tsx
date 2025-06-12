@@ -15,7 +15,7 @@ const BranchAdminTable = ({
     return (
         <div className="rounded-md border">
             <div className="relative w-full overflow-auto">
-                <table className="w-full caption-bottom text-sm">
+                <table className="w-full caption-bottom text-sm overflow-hidden h-auto">
                     <TableHeader />
                     <tbody className="[&_tr:last-child]:border-0">
                         {isLoading ? (

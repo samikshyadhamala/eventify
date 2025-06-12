@@ -157,3 +157,13 @@ body {
 *::-webkit-scrollbar-button {
   display: none;
 }
+
+.scrollbar-none {
+  overflow: scroll !important; /* or auto */
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* Internet Explorer 10+ */
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+}

@@ -8,7 +8,7 @@ import Footer from "@/components/Footer"
 import Header from "@/components/Header"
 import { signInWithPopup, auth, provider } from "../firebase"
 import { useAuth } from "@/context/auth/hooks"
-
+import { Loader2 } from "lucide-react"
 interface InputFieldProps {
   id: string
   label: string
@@ -62,9 +62,7 @@ const GoogleButton = ({ onClick, disabled, isLoading }: GoogleButtonProps) => (
     disabled={disabled || isLoading}
   >
     {isLoading ? (
-      <div className="spinner-border spinner-border-sm me-2" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
+      <Loader2 className="animate-spin me-2" width={32} height={32} />
     ) : (
       <img src="/images/google_icon.webp" alt="Google" width="32" height="32" className="me-2" />
     )}
