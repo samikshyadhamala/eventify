@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Clock, Phone, Mail, User, QrCode } from "lucide-react";
@@ -7,6 +8,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Organizer } from "./types/EventCardTypes";
 import { useMyEventsContext } from "../context";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useAuth } from '@/context/auth/hooks';
 // interface Event {
 //   id: string;
 //   title: string;
@@ -33,11 +35,11 @@ interface EventDetailsDialogProps {
 
 const EventDetailsDialog = ({ event, isOpen, setIsOpen }: EventDetailsDialogProps) => {
   if (!event) return null;
-  const { organizers } = useMyEventsContext();
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${event.registration_id}`;
+  const { organizers, qrCodeUrl } = useMyEventsContext();
 
   // Extract date and time
   const [date, time] = event.event_date.split("T");
+  
 
   // download QR code image
   const downloadImage = () => {
@@ -121,11 +123,16 @@ const EventDetailsDialog = ({ event, isOpen, setIsOpen }: EventDetailsDialogProp
 
               <div className="text-center space-y-4">
                 <div className="bg-white p-4 rounded-lg inline-block">
-                  <img
-                    src={qrCodeUrl}
-                    alt="Event QR Code"
-                    className="w-48 h-48 mx-auto"
-                  />
+                  {qrCodeUrl ? (
+                    <img
+                      src={qrCodeUrl}
+                      alt="Event QR Code"
+                      className="w-48 h-48 mx-auto"
+                    />
+                  ) : (
+                    <div className="w-48 h-48 rounded-lg flex items-center justify-center animate-pulse bg-gray-200">
+                    </div>
+                  )}
                 </div>
 
                 <div className="text-sm text-gray-600">

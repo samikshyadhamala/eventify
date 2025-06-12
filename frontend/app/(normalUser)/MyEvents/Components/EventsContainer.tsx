@@ -1,13 +1,11 @@
 'use client';
 
-
-import { useEffect, useState } from 'react';
-import { useAuth } from '@/context/auth/hooks';
 import SkeletonEvents from '@/components/LandingPage/TrendingEvent/SkeletonEvents'
 import { AnimatePresence } from "framer-motion";
 import EventCard from './EventCard';
 import { Event } from './types/EventCardTypes'
 import EventDetailsDialog from './EventDetailsDialog';
+
 import { useMyEventsContext } from '../context';
 export default function EventsContainer() {
     const {
@@ -18,7 +16,7 @@ export default function EventsContainer() {
         isDialogOpen,
         setIsDialogOpen
     } = useMyEventsContext();
-
+    
     const renderEventCards = (events: Event[]) => {
         const now = new Date()
         const filteredEvents = events

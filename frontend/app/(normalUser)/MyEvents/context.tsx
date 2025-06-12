@@ -18,6 +18,7 @@ interface MyEventsContextType {
     getFreeEvents: () => Event[];
     getPaidEvents: () => Event[];
     organizers: OrganizersType | null;
+    qrCodeUrl: string;
 }
 
 // Create context with a default value
@@ -35,6 +36,22 @@ export const MyEventsProvider = ({ children }: MyEventsProviderProps) => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [organizers, setOrganizers] = useState<OrganizersType | null>(null);
     const { axiosInstance } = useAuth();
+    const [qrCodeUrl, setQrCodeUrl] = useState<string>('');
+    
+    useEffect(() => {
+        const fetchEventPass = async () => {
+            try {
+                const response = await axiosInstance.get(`/api/registration/getRegistrationPass/${selectedEvent?.event_id}`);
+                const data = await response.data;
+                const registration_pass = data?.registration_pass;
+                setQrCodeUrl(`https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${registration_pass}`);
+            } catch (error) {
+                console.error('Error fetching event pass:', error);
+            }
+        };
+
+        fetchEventPass();
+    }, [selectedEvent, axiosInstance]);
 
     const fetchEvents = async () => {
         try {
@@ -50,24 +67,24 @@ export const MyEventsProvider = ({ children }: MyEventsProviderProps) => {
             setIsLoading(false);
         }
     };
-     useEffect(() => {
+    useEffect(() => {
         const fetchData = async () => {
-          try {
-            const data = selectedEvent?.event_id;
             try {
-              const response = await axiosInstance.get<OrganizersType>('/api/event/getOrganizerContact', { params: { event_id: selectedEvent?.event_id } });
-              setOrganizers(response.data);
+                const data = selectedEvent?.event_id;
+                try {
+                    const response = await axiosInstance.get<OrganizersType>('/api/event/getOrganizerContact', { params: { event_id: selectedEvent?.event_id } });
+                    setOrganizers(response.data);
+                } catch (error) {
+                    console.error(error);
+                    //   toast.error("Error retrieving organizer contact");
+                }
             } catch (error) {
-              console.error(error);
-            //   toast.error("Error retrieving organizer contact");
+                console.error(error);
+                // toast.error("Failed to fetch event details");
             }
-          } catch (error) {
-            console.error(error);
-            // toast.error("Failed to fetch event details");
-          }
         };
         fetchData();
-      }, [selectedEvent]);
+    }, [selectedEvent]);
 
     useEffect(() => {
         fetchEvents();
@@ -99,7 +116,8 @@ export const MyEventsProvider = ({ children }: MyEventsProviderProps) => {
         getUpcomingEvents,
         getFreeEvents,
         getPaidEvents,
-        organizers
+        organizers, 
+        qrCodeUrl
     };
 
     return (
