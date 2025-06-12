@@ -9,6 +9,7 @@ import Header from "@/components/Header"
 import { signInWithPopup, auth, provider } from "../firebase"
 import { useAuth } from "@/context/auth/hooks"
 import { Loader2 } from "lucide-react"
+import { set } from "date-fns"
 interface InputFieldProps {
   id: string
   label: string
@@ -200,6 +201,7 @@ export default function Login() {
           router.push('/')
         }
       } catch (error) {
+        setIsGoogleLoading(false)
         toast.error("Error during login")
         console.error('Login error:', error)
       }

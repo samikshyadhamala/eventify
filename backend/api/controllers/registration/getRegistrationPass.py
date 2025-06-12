@@ -6,6 +6,10 @@ from cryptography.fernet import Fernet, InvalidToken
 import json
 
 def GetRegistrationPass(user_id, event_id):
+    # validating input 
+    if not user_id or not event_id or event_id == 'undefined':
+        Logger.error("User ID and Event ID are required")
+        return {"error": "User ID and Event ID are required"}
     try:
         # Fetch the registration for the user and event
         registration = Registration.query.filter_by(
