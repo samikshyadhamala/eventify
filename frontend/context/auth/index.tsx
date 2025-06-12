@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { AuthProviderProps, User } from './types';
 import { useAuth, useRole } from './hooks';
 import { AuthContextType } from './types';
+
 // interface AuthContextType {
 //   user: User | null;
 //   setUser: React.Dispatch<React.SetStateAction<User | null>>;
@@ -49,7 +50,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     const instance = axios.create({
       baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || '',
       withCredentials: true,
-      timeout: 30000 // 30 seconds
+      timeout: 8000 // 5 seconds
     });
 
     // Add access token to requests
