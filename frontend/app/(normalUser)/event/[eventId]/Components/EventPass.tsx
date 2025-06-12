@@ -15,6 +15,7 @@ export default function EventPass({eventId}: { eventId: string }) {
                 const response = await axiosInstance.get(`/api/registration/getRegistrationPass/${eventId}`);
                 const data = await response.data;
                 const registration_pass = data?.registration_pass;
+                debugger
                 setQrCodeUrl(`https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${registration_pass}`);
             } catch (error) {
                 console.error('Error fetching event pass:', error);

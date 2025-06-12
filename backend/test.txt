@@ -1,5 +1,0 @@
-b'{"amount":["A valid integer is required."],
-"amount_breakdown":{"0":{"amount":["A valid integer is required."]}},
-"product_details":{"0":{"unit_price":["A valid integer is required."],
-"total_price":["A valid integer is required."]}},
-"error_key":"validation_error"}'

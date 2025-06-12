@@ -6,3 +6,4 @@ from .getEventRegistration import GetEventRegistration
 from .getAllRegistrationCount import GetAllRegistrationCount
 from .getBranchRegistrationCount import GetBranchRegistrationCount
 from .getRegistrationPass import GetRegistrationPass
+from .verifyRegistration import VerifyRegistration

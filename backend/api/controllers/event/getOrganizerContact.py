@@ -21,7 +21,7 @@ def GetOrganizerContact(event_id):
     branch_admins = BranchAdmin.query.filter_by(branch_id=branch_id).all()
     
     if not branch_admins:
-        return {"message": "No organizers found for this event"}, 404
+        return {"message": "No organizers found for this event"}
     
     # Get user details for each branch admin
     organizer_contacts = []

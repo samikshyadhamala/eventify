@@ -53,3 +53,12 @@ def getBranchRegistrationCount():
 def getRegistrationPass(event_id):
     user_id = request.user['uid']
     return GetRegistrationPass(user_id, event_id)
+
+@registration_bp.get("/verifyRegistration")
+def verifyRegistration():
+    encrypted_data = request.args.get("encryptedData")
+    encrypted_data = encrypted_data.strip("b'").strip("'")
+    if not encrypted_data:
+        return {"message": "No data provided for verification."}, 400
+
+    return VerifyRegistration(encrypted_data)

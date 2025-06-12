@@ -1,0 +1,146 @@
+event_id,branch_id,title,description,event_date,location,is_paid,price,max_capacity,imageUrl,created_at,updated_at
+11,1,AI & Ethics Symposium,Discuss the future of AI and its ethical implications.,2025-06-30 10:00:00,"AI Research Center, IOE, Pulchowk, Lalitpur 44700, Nepal",t,921.14,130,event11.jpg,2025-05-13 19:54:18.665745,2025-05-13 19:54:18.665745
+12,1,Cultural Dance Night,Enjoy traditional dances and performances from all over Nepal.,2025-07-02 10:00:00,"Gandaki Hall, Hotel Barahi, Lakeside, Pokhara 33700, Nepal",f,0.00,186,event12.jpg,2025-05-13 19:54:22.33188,2025-05-13 19:54:22.33188
+13,1,Blockchain for Beginners,Get started with blockchain through this beginner-friendly session.,2025-07-04 10:00:00,"Classroom C2, King's College, Babarmahal, Kathmandu 44600, Nepal",f,0.00,123,event13.jpg,2025-05-13 19:54:25.985531,2025-05-13 19:54:25.985531
+14,1,Wildlife Conservation Talk,Support wildlife protection through this interactive talk.,2025-07-06 10:00:00,"DNPWC HQ Meeting Room, Babarmahal, Kathmandu 44600, Nepal",t,538.33,186,event14.jpg,2025-05-13 19:54:29.690111,2025-05-13 19:54:29.690111
+15,1,Gaming Tournament: Pokhara Edition,Compete in the ultimate gaming challenge in Pokhara.,2025-07-08 10:00:00,"LAN Arena, Opposite to Hallan Chowk, Pokhara 33700, Nepal",t,722.19,199,event15.jpg,2025-05-13 19:54:33.344567,2025-05-13 19:54:33.344567
+16,1,Film Screening & Discussion,Watch and analyze powerful indie films with directors.,2025-07-10 10:00:00,"Film Development Board, Chabahil, Kathmandu 44600, Nepal",f,0.00,242,event16.jpg,2025-05-13 19:54:36.999376,2025-05-13 19:54:36.999376
+17,1,AI in Healthcare Forum,Panel discussion on AI innovations in the health industry.,2025-07-12 10:00:00,"Grande International Hospital, Tokha Road, Kathmandu 44600, Nepal",t,1.66,236,event17.jpg,2025-05-13 19:54:40.653955,2025-05-13 19:54:40.653955
+18,1,Mountain Cleanup Drive,Volunteer to clean up the Himalayas and promote eco-tourism.,2025-07-14 10:00:00,"Thorang La Guest House, Manang, Nepal",t,865.77,198,event18.jpg,2025-05-13 19:54:44.308212,2025-05-13 19:54:44.308212
+19,1,Entrepreneurship 101,Learn how to start and scale your own business.,2025-07-16 10:00:00,"Room 201, Kathmandu College of Management, Gwarko, Lalitpur 44700, Nepal",t,882.09,143,event19.jpg,2025-05-13 19:54:47.939702,2025-05-13 19:54:47.939702
+20,1,Virtual Reality Demo Day,"Experience VR in education, games, and therapy.",2025-07-18 10:00:00,"Lab 3, Nami College, Gokarneshwor, Kathmandu 44600, Nepal",t,810.57,63,event20.jpg,2025-05-13 19:54:51.591533,2025-05-13 19:54:51.591533
+21,1,Food & AgriTech Expo,Explore agriculture's future with tech innovations.,2025-07-20 10:00:00,"Kisaan Tech Park, Bharatpur 44200, Nepal",t,600.13,80,event21.jpg,2025-05-13 19:54:55.484871,2025-05-13 19:54:55.484871
+22,1,Cybersecurity Bootcamp,Intensive course on securing apps and networks.,2025-07-22 10:00:00,"Living with ICT, Sukedhara, Kathmandu 44600, Nepal",f,0.00,66,event22.jpg,2025-05-13 19:54:59.141201,2025-05-13 19:54:59.141201
+23,1,Street Art Festival,Create murals and street art in this open-air fest.,2025-07-24 10:00:00,"Basantapur Square, Kathmandu 44600, Nepal",f,0.00,31,event23.jpg,2025-05-13 19:55:02.798919,2025-05-13 19:55:02.798919
+24,1,Public Speaking Masterclass,Sharpen your speaking skills with public feedback.,2025-07-26 10:00:00,"ACE Institute of Management, New Baneshwor, Kathmandu 44600, Nepal",f,0.00,131,event24.jpg,2025-05-13 19:55:06.440567,2025-05-13 19:55:06.440567
+25,1,IoT Devices Showcase,See real IoT gadgets in action.,2025-07-28 10:00:00,"IoT Nepal Lab, Balkumari, Lalitpur 44700, Nepal",t,766.88,252,event25.jpg,2025-05-13 19:55:10.138781,2025-05-13 19:55:10.138781
+26,1,Online Freelancing Workshop,How to earn online with your existing skillsets.,2025-07-30 10:00:00,"Women Lead Nepal, Kupondole, Lalitpur 44700, Nepal",f,0.00,267,event26.jpg,2025-05-13 19:55:13.822162,2025-05-13 19:55:13.822162
+27,1,Green Coding Sprint,Create energy-efficient and optimized code.,2025-08-01 10:00:00,"Leapfrog Technology, Gyaneshwor, Kathmandu 44600, Nepal",f,0.00,282,event27.jpg,2025-05-13 19:55:17.532077,2025-05-13 19:55:17.532077
+28,1,App Development Training,Make your own app with guidance from developers.,2025-08-03 10:00:00,"NCIT College, Balkumari, Lalitpur 44700, Nepal",t,277.23,193,event28.jpg,2025-05-13 19:55:21.191253,2025-05-13 19:55:21.191253
+29,1,Design Thinking Crash Course,Learn how to innovate under constraints.,2025-08-05 10:00:00,"Nepal Innovation Lab, Jhamsikhel, Lalitpur 44700, Nepal",f,0.00,63,event29.jpg,2025-05-13 19:55:24.85605,2025-05-13 19:55:24.85605
+30,1,Youth Career Counseling Fair,Explore career options and get guidance from pros.,2025-08-07 10:00:00,"Rising Nepal Hostel Seminar Hall, Putalisadak, Kathmandu 44600, Nepal",f,0.00,177,event30.jpg,2025-05-13 19:55:28.501102,2025-05-13 19:55:28.501102
+9,1,Mental Health Awareness Camp,Workshops and one-on-one sessions to boost mental health awareness.,2025-06-26 00:00:00,"Tribhuvan University Teaching Hospital, Maharajgunj, Kathmandu 44600, Nepal",f,,68,event9.jpg,2025-05-13 19:54:11.356531,2025-05-21 18:30:09.692934
+3,1,Art & Expression Workshop,"<div style=""font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 0px;"">
+  <h2 style=""font-size: 24px; color: #333; margin-bottom: 10px;"">Art & Expression Workshop: Create. Connect. Come Alive.</h2>
+  
+  <section style=""margin-bottom: 0px;"">
+    <h3 style=""font-size: 18px; color: #555;"">Event Overview</h3>
+    <p style=""font-size: 16px; color: #666; line-height: 1.5;"">
+      Whether your canvas is a wall, a page, or your own voice — this is your space to break free and express. The <strong>Art & Expression Workshop</strong> is a safe and inspiring environment to explore creativity through different mediums, channel emotions into form, and connect with others through raw, authentic expression.
+    </p>
+  </section>
+
+  <section style=""margin-bottom: 20px;"">
+    <h3 style=""font-size: 18px; color: #555;"">Key Highlights</h3>
+    <ul style=""font-size: 16px; color: #666; line-height: 1.5; padding-left: 20px;"">
+      <li><strong>Multimedia Creation Zones</strong>: Paint, draw, write, collage, or sculpt — choose your outlet and unleash your flow.</li>
+      <li><strong>Spoken Word & Open Mic</strong>: Share your thoughts, poetry, and stories with a supportive audience.</li>
+      <li><strong>Emotion through Motion</strong>: Movement-based expression through guided dance and body language workshops.</li>
+      <li><strong>Collaborative Murals</strong>: Co-create large art pieces that represent group emotions, messages, or dreams.</li>
+      <li><strong>Mindful Art Practices</strong>: Learn how art can be a tool for healing, self-reflection, and mental clarity.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3 style=""font-size: 18px; color: #555;"">Why Attend?</h3>
+    <ul style=""font-size: 16px; color: #666; line-height: 1.5; padding-left: 20px;"">
+      <li>Rediscover the joy of unfiltered creativity, regardless of skill level.</li>
+      <li>Connect deeply with yourself and others through shared expression.</li>
+      <li>Explore the intersection of art, emotion, and identity in a non-judgmental space.</li>
+      <li>Leave with your own art, a lighter heart, and a clearer voice.</li>
+    </ul>
+  </section>
+</div>
+",2025-06-13 00:00:00,"Pokhara Art Gallery, Baidam Rd, Lakeside-6, Pokhara 33700, Nepal",t,356.05,286,event3.jpg,2025-05-13 19:53:49.452054,2025-05-30 15:55:19.076488
+38,1,Midnight Brew Fest,"<div style=""font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 0px;"">
+  <h2 style=""font-size: 24px; color: #333; margin-bottom: 10px;"">Midnight Brew Fest: Where Coffee Meets Creativity</h2>
+  
+  <section style=""margin-bottom: 0px;"">
+    <h3 style=""font-size: 18px; color: #555;"">Event Overview</h3>
+    <p style=""font-size: 16px; color: #666; line-height: 1.5;"">
+      When the sun sets and the stars rise, the brews begin to flow. <strong>Midnight Brew Fest</strong> is a nocturnal celebration of coffee culture, creativity, and good vibes. Join fellow night owls for a sensory experience full of artisanal blends, ambient music, spontaneous art, and cozy conversations — all fueled by the perfect cup.
+    </p>
+  </section>
+
+  <section style=""margin-bottom: 20px;"">
+    <h3 style=""font-size: 18px; color: #555;"">Key Highlights</h3>
+    <ul style=""font-size: 16px; color: #666; line-height: 1.5; padding-left: 20px;"">
+      <li><strong>Brew Battles</strong>: Baristas go head-to-head in a live showdown of espresso artistry and latte flair.</li>
+      <li><strong>Tasting Trails</strong>: Sample unique blends, cold brews, nitro infusions, and rare roasts from local and global bean crafters.</li>
+      <li><strong>Live Acoustic & Lo-Fi Sets</strong>: Let the mellow rhythms of live music accompany your midnight sips.</li>
+      <li><strong>Coffee & Canvas</strong>: Unwind with paint and a pour — create your masterpiece in a guided open-air session.</li>
+      <li><strong>After-Hours Conversations</strong>: Lounge in our chill corners and spark deep talks over steamy mugs and starry skies.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3 style=""font-size: 18px; color: #555;"">Why Attend?</h3>
+    <ul style=""font-size: 16px; color: #666; line-height: 1.5; padding-left: 20px;"">
+      <li>Fuel your inner night owl with world-class brews and bold flavors.</li>
+      <li>Connect with fellow creatives, caffeine lovers, and dreamers.</li>
+      <li>Experience the perfect blend of chill vibes, art, and aroma — all after dark.</li>
+      <li>Take home exclusive blends and barista tips to elevate your coffee game.</li>
+    </ul>
+  </section>
+</div>
+",2025-06-14 00:00:00,"Sydney, Australia ",f,,100,pexels-pixabay-86596.jpg,2025-05-21 14:28:31.189524,2025-05-30 15:55:19.076488
+8,1,Robotics Expo,"<div style=""font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 0px;"">
+  <h2 style=""font-size: 24px; color: #333; margin-bottom: 10px;"">Exhibit and Interact with Real Robotic Prototypes</h2>
+  
+  <section style=""margin-bottom: 0px;"">
+    <h3 style=""font-size: 18px; color: #555;"">Event Overview</h3>
+    <p style=""font-size: 16px; color: #666; line-height: 1.5;"">
+      Discover the future of robotics at this hands-on event showcasing cutting-edge robotic prototypes. Engage with innovative designs, interact with creators, and experience the latest advancements in robotics technology.
+    </p>
+  </section>
+
+  <section style=""margin-bottom: 20px;"">
+    <h3 style=""font-size: 18px; color: #555;"">Key Highlights</h3>
+    <ul style=""font-size: 16px; color: #666; line-height: 1.5; padding-left: 20px;"">
+      <li><strong>Live Demonstrations</strong>: Witness robotic prototypes in action, from autonomous drones to humanoid assistants.</li>
+      <li><strong>Interactive Sessions</strong>: Get hands-on with select prototypes and explore their functionalities.</li>
+      <li><strong>Meet the Innovators</strong>: Connect with engineers and designers to learn about the development process.</li>
+      <li><strong>Technology Showcase</strong>: Discover real-world applications in healthcare, manufacturing, and more.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3 style=""font-size: 18px; color: #555;"">Why Attend?</h3>
+    <ul style=""font-size: 16px; color: #666; line-height: 1.5; padding-left: 20px;"">
+      <li>Gain insights into the future of automation and AI-driven robotics.</li>
+      <li>Network with industry professionals and enthusiasts.</li>
+      <li>Experience the thrill of interacting with next-gen technology.</li>
+    </ul>
+  </section>
+</div>",2025-06-21 00:00:00,"Biratnagar Engineering College Auditorium, Tinpaini Road, Biratnagar 56613, Nepal",t,177.17,241,event8.jpg,2025-05-13 19:54:07.708733,2025-05-30 15:55:19.076488
+7,1,Photography Walk,"<div style=""font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 0px;"">
+  <h2 style=""font-size: 24px; color: #333; margin-bottom: 10px;"">Explore the World Through Your Lens: Photography Walk</h2>
+  
+  <section style=""margin-bottom: 0px;"">
+    <h3 style=""font-size: 18px; color: #555;"">Event Overview</h3>
+    <p style=""font-size: 16px; color: #666; line-height: 1.5;"">
+      Join fellow photography enthusiasts for a guided walk through scenic locations, where every corner becomes a canvas for creativity. Whether you're using a DSLR, smartphone, or film camera, this event is designed to inspire and help you see the world with fresh perspective.
+    </p>
+  </section>
+
+  <section style=""margin-bottom: 20px;"">
+    <h3 style=""font-size: 18px; color: #555;"">Key Highlights</h3>
+    <ul style=""font-size: 16px; color: #666; line-height: 1.5; padding-left: 20px;"">
+      <li><strong>Curated Routes</strong>: Walk through handpicked spots known for their visual charm and storytelling potential.</li>
+      <li><strong>Mentor Guidance</strong>: Learn tips and tricks from experienced photographers at every stop.</li>
+      <li><strong>Theme-Based Shooting</strong>: Challenge yourself with themes like street life, architecture, portraits, and nature.</li>
+      <li><strong>Community Interaction</strong>: Share your shots, exchange ideas, and grow your creative network.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3 style=""font-size: 18px; color: #555;"">Why Attend?</h3>
+    <ul style=""font-size: 16px; color: #666; line-height: 1.5; padding-left: 20px;"">
+      <li>Sharpen your photography skills in real-world scenarios.</li>
+      <li>Discover hidden gems in your city or town through a creative lens.</li>
+      <li>Be part of a vibrant, supportive photography community.</li>
+      <li>Receive feedback and insights to improve your craft.</li>
+    </ul>
+  </section>
+</div>
+",2025-06-21 00:00:00,"Meet at Basundhara Park Gate, Lakeside Rd, Pokhara 33700, Nepal",f,,130,Futuristic Event Registration in Neon.png,2025-05-13 19:54:04.063666,2025-05-30 15:55:19.076488

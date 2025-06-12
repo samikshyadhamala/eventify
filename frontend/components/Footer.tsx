@@ -54,8 +54,8 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Contact Us</h3>
+          <div className="space-y-4 ">
+            <h3 className="text-lg font-semibold ">Contact Us</h3>
             <ul className="space-y-3 text-gray-400">
               <li className="flex items-start">
                 <MapPin size={18} className="mr-2 mt-0.5 flex-shrink-0" />
@@ -67,7 +67,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center">
                 <Mail size={18} className="mr-2 flex-shrink-0" />
-                <span>eventify.services@gmail.com</span>
+                <a href="mailto:eventify.services@gmail.com" className="decoration-underline text-gray-400">eventify.services@gmail.com</a>
               </li>
             </ul>
           </div>

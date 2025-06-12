@@ -11,6 +11,8 @@ import io
 import base64
 from email.utils import make_msgid
 import requests
+from cryptography.fernet import Fernet, InvalidToken
+import json
 
 dotenv.load_dotenv()
 
@@ -96,8 +98,24 @@ def RegisterEvent(user: dict, event_id: int):
         db.session.commit()
 
         # Generate QR code as base64
-        qr_data = str(registration.registration_id)
-        qr_img = qrcode.make(qr_data)
+        qr_data = { 
+            "registration_id": registration.registration_id,
+            "user_id": user["uid"],
+            "user_name": user.get("name", None),
+        }
+        key = os.getenv("REGISTRATION_VERIFICATION_KEY")
+        if not key:
+            Logger.error("Registration verification key is not set in environment variables.")
+            return jsonify({"error": "Internal server error"}), 500
+        cipher = Fernet(key)
+        try:
+            encrypted_data = cipher.encrypt(json.dumps(qr_data).encode())
+        except InvalidToken:
+            Logger.error("Invalid token: encryption failed.")
+            return jsonify({"error": "Internal server error"}), 400
+        
+        verification_url= f"{os.getenv('BACKEND_URL')}/api/registration/verifyRegistration?encryptedData={encrypted_data}"
+        qr_img = qrcode.make(verification_url)
         buf = io.BytesIO()
         qr_img.save(buf, format="PNG")
         qr_base64 = base64.b64encode(buf.getvalue()).decode("utf-8")
@@ -108,7 +126,7 @@ def RegisterEvent(user: dict, event_id: int):
         registration_info = {
             "userName": user.get("name", None),
             "eventName": event.title,
-            "RegistrationNumber": qr_data,
+            "RegistrationNumber": registration.registration_id,
             "Date": event.event_date.strftime("%Y-%m-%d"),
             "Time": event.event_date.strftime("%H:%M"),
             "userEmail": user["email"],

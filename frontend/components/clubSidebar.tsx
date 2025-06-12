@@ -101,7 +101,7 @@ export function ClubSidebar() {
             <div className="flex items-center gap-3 rounded-md border p-2">
               <Avatar>
                 <AvatarImage src={user.imageUrl} alt="@userAvatar" />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarFallback>{user.email.slice(0, 1).toUpperCase()}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
                 <span className="text-sm font-medium truncate max-w-[120px]" title={user.email}>{user.email}</span>

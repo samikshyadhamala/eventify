@@ -97,12 +97,12 @@ def signin_controller():
             secure=is_production,
             samesite='None' if is_production else 'Lax',
             path='/',
-            max_age=7 * 24 * 60 * 60  # 1 week in seconds
+            max_age=7 * 24 * 60 * 60  
         )
 
         # Set refresh token cookie
         resp.set_cookie(
-            'refreshToken',
+            'refreshToken', 
             refresh_token,
             httponly=True,
             secure=is_production,
