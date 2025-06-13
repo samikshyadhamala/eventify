@@ -31,7 +31,7 @@ def create_app():
             "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             "allow_headers": ["Content-Type", "Authorization"],
             "supports_credentials": True
-        }}
+        }}  
     )
     mail.init_app(app)
     
