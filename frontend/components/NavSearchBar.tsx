@@ -50,7 +50,7 @@ export default function NavSearchBar({placeholder = false}: {placeholder: boolea
                     className='border-0 focus:ring-0 h-9 focus:border-0 bg-background text-black placeholder:text-gray-500'
                 />
                 {open && (
-                    <CommandList className="absolute bottom-2 left-0 right-0 transform translate-y-full z-50 bg-white">
+                    <CommandList className="absolute bottom-2 left-0 right-0 transform translate-y-full z-50 bg-background">
                         <CommandEmpty>No results found.</CommandEmpty>
                         <CommandGroup heading="Suggestions">
                             <ScrollArea className="h-60">
