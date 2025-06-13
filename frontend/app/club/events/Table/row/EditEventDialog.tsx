@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
@@ -9,38 +8,19 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
-import { useToast } from "@/components/ui/use-toast"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { CalendarIcon, ImageIcon, Loader2 } from "lucide-react"
-import Image from 'next/image'
 import { toast } from 'react-toastify'
+import { useEvents } from "../../context"
+import { useAuth } from "@/context/auth/hooks"
 
-interface Event {
-  branch_id: number
-  created_at: string
-  description: string
-  event_date: string
-  event_id: number
-  imageUrl: string
-  is_paid: boolean
-  location: string
-  max_capacity: number
-  price: string | number | null
-  title: string
-}
-
-interface EditEventDialogProps {
-  editEvent: Event | null
-  setEditEvent: (event: Event | null) => void
-  axiosInstance: any
-  setEvents: (events: Event[] | ((prev: Event[]) => Event[])) => void
-}
-
-export default function EditEventDialog({ editEvent, setEditEvent, axiosInstance, setEvents }: EditEventDialogProps) {
+export default function EditEventDialog() {
   // const { toast } = useToast()
+  const {editEvent, setEditEvent, setEvents, events, fetchEventsAndRegistrations} = useEvents()
+  const { axiosInstance } = useAuth()
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -221,15 +201,10 @@ export default function EditEventDialog({ editEvent, setEditEvent, axiosInstance
       const response = await axiosInstance.put(`/api/event/updateEvent/${editEvent.event_id}`, updatedData)
 
       if (response.status === 200) {
-        setEvents((prev) =>
-          prev.map((event) => (event.event_id === editEvent.event_id ? { ...event, ...response.data.event } : event)),
-        )
-
-        toast.success("Event updated successfully")
-
+        setEvents(events.map((event) => (event.event_id === editEvent.event_id ? { ...event, ...response.data.event } : event)))
+        // toast.success("Event updated successfully")
         setEditEvent(null)
       } else {
-        debugger
         toast.error("Failed to update event")
       }
     } catch (error: any) {
@@ -240,6 +215,7 @@ export default function EditEventDialog({ editEvent, setEditEvent, axiosInstance
     } finally {
       setIsSubmitting(false)
       setEditEvent(null)
+      fetchEventsAndRegistrations() // Refresh events after edit
     }
   }
 

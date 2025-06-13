@@ -2,57 +2,28 @@
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@radix-ui/themes'
-import { Search } from 'lucide-react'
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import EventRow from './row'
+import { useEvents } from '../context'
 
-interface Event {
-  branch_id: number
-  created_at: string
-  description: string
-  event_date: string
-  event_id: number
-  imageUrl: string
-  is_paid: boolean
-  location: string
-  max_capacity: number
-  price: string
-  title: string
-}
+export default function EventsTable() {
+  const {
+    filteredEvents: events,
+    currentPage,
+    rowsPerPage,
+    totalEvents,
+    loading,
+    eventRegistrations,
+    searchQuery,
+    setSearchQuery,
+    setCurrentPage,
+    handleDelete,
+    handleEventDetails,
+    handleEditEvent,
+    setIsDeleteDialogOpen,
+    setSelectedEventId
+  } = useEvents()
 
-interface EventsTableProps {
-  events: Event[]
-  currentPage: number
-  rowsPerPage: number
-  totalEvents: number
-  loading: boolean
-  eventRegistrations: { [key: number]: number }
-  searchQuery: string
-  setSearchQuery: (query: string) => void
-  setCurrentPage: (page: number) => void
-  handleDelete: (event_id: number) => void
-  handleEventDetails: (event: Event) => void
-  handleEditEvent: (event: Event) => void
-  setIsDeleteDialogOpen: (isOpen: boolean) => void
-  setSelectedEventId: (event_id: number | null) => void
-}
-
-export default function EventsTable({
-  events,
-  currentPage,
-  rowsPerPage,
-  totalEvents,
-  loading,
-  eventRegistrations,
-  searchQuery,
-  setSearchQuery,
-  setCurrentPage,
-  handleDelete,
-  handleEventDetails,
-  handleEditEvent,
-  setIsDeleteDialogOpen,
-  setSelectedEventId
-}: EventsTableProps) {
   const indexOfLastEvent = currentPage * rowsPerPage
   const indexOfFirstEvent = indexOfLastEvent - rowsPerPage
   const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent)
@@ -130,13 +101,6 @@ export default function EventsTable({
               currentEvents.map((event, index) => (
                 <EventRow
                   key={event.event_id}
-                  event={event}
-                  eventRegistrations={eventRegistrations}
-                  handleDelete={handleDelete}
-                  handleEventDetails={handleEventDetails}
-                  handleEditEvent={handleEditEvent}
-                  setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-                  setSelectedEventId={setSelectedEventId}
                   index={index}
                 />
               ))
@@ -153,7 +117,7 @@ export default function EventsTable({
           <Button variant="outline" disabled={currentPage === 1 || loading} onClick={prevPage}>
             Previous
           </Button>
-          <Button variant="outline" color ='gray' className='text-black' disabled={currentPage >= Math.ceil(totalEvents / rowsPerPage) || loading} onClick={nextPage}>
+          <Button variant="outline" color='gray' className='text-black' disabled={currentPage >= Math.ceil(totalEvents / rowsPerPage) || loading} onClick={nextPage}>
             Next
           </Button>
         </div>

@@ -5,31 +5,11 @@ import { Progress } from '@/components/ui/progress'
 import { Button } from '@radix-ui/themes'
 import { ChevronDown } from 'lucide-react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { TableCell, TableRow } from '@/components/ui/table'
+import { TableCell } from '@/components/ui/table'
 import { motion } from 'framer-motion'
-
-interface Event {
-  branch_id: number
-  created_at: string
-  description: string
-  event_date: string
-  event_id: number
-  imageUrl: string
-  is_paid: boolean
-  location: string
-  max_capacity: number
-  price: string
-  title: string
-}
+import { useEvents } from '../../context'
 
 interface EventRowProps {
-  event: Event
-  eventRegistrations: { [key: number]: number }
-  handleDelete: (event_id: number) => void
-  handleEventDetails: (event: Event) => void
-  handleEditEvent: (event: Event) => void
-  setIsDeleteDialogOpen: (isOpen: boolean) => void
-  setSelectedEventId: (event_id: number | null) => void
   index: number
 }
 
@@ -48,7 +28,18 @@ const getEventStatus = (eventDate: string) => {
   }
 }
 
-export default function EventRow({ event, eventRegistrations, handleDelete, handleEventDetails, handleEditEvent, setIsDeleteDialogOpen, setSelectedEventId, index }: EventRowProps) {
+export default function EventRow({ index }: EventRowProps) {
+  const { 
+    events,
+    eventRegistrations,
+    handleDelete,
+    handleEventDetails,
+    handleEditEvent,
+    setIsDeleteDialogOpen,
+    setSelectedEventId
+  } = useEvents();
+  
+  const event = events[index];
   const status = getEventStatus(event.event_date)
   const registrationCount = eventRegistrations?.[event.event_id] || 0
 
