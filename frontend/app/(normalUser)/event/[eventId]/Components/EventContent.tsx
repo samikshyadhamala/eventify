@@ -336,10 +336,10 @@ export default function EventContent({ eventId }: { eventId: string }) {
                 <CardHeader>
                   <CardTitle>Contact Organizer</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex flex-col gap-4">
                   {organizers.organizers.length > 0 ? (
                     organizers.organizers.map((organizer: Organizer) => (
-                      <div key={organizer.email} className="flex items-center gap-3 mb-4">
+                      <div key={organizer.email} className="flex items-center gap-3">
                         <Avatar className="h-10 w-10">
                           <AvatarImage src={organizer.imageUrl} />
                           <AvatarFallback>{organizer.email[0].toUpperCase()}</AvatarFallback>
