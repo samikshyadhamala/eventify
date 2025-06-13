@@ -346,7 +346,7 @@ export default function EventContent({ eventId }: { eventId: string }) {
                         </Avatar>
                         <div className="flex flex-col justify-center">
                           <div className="font-bold">{organizer.name}</div>
-                          <div className="text-sm text-gray-600">{organizer.email}</div>
+                          <a className="text-sm text-gray-600" href={`mailto:${organizer.email}`}>{organizer.email}</a>
                         </div>
                       </div>
                     ))
