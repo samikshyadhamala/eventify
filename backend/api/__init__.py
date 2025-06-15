@@ -107,6 +107,7 @@ def create_app():
     from api.routes.contact import contact_bp
     from api.routes.payment import payment_bp
     from api.routes.newsLetter import news_letter_bp
+    from api.routes.ml import ml_bp
     
     app.register_blueprint(contact_bp, url_prefix="/api/contact/")
     app.register_blueprint(branch_bp, url_prefix="/api/branch/")
@@ -117,6 +118,7 @@ def create_app():
     app.register_blueprint(registration_bp, url_prefix='/api/registration')
     app.register_blueprint(payment_bp, url_prefix='/api/payment')
     app.register_blueprint(news_letter_bp, url_prefix='/api/newsletter')
+    app.register_blueprint(ml_bp, url_prefix='/api/ml')
     
     with app.app_context():
         db.create_all()  # Create database tables

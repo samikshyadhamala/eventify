@@ -6,10 +6,11 @@ import EventifyFeatures from "@/components/LandingPage/EventifyFeatures";
 import HowItWorksSection from "@/components/LandingPage/HowItWorksSection";
 import BrowseEventBanner from "@/components/LandingPage/BrowseEventsBanner";
 import NewsLetter from "@/components/LandingPage/NewsLetter";
+import Chatbot from "@/components/chatbot";
 
 export default function Home() {
   return (
-    <div className="w-100 overflow-hidden">
+    <div className="w-100 overflow-hidden relative">
       <Header />
       <Carousel />
       <TrendingEvent />
@@ -18,6 +19,7 @@ export default function Home() {
       <EventifyFeatures />
       <NewsLetter />
       <Footer />
+      <Chatbot />
     </div>
   );
 }
