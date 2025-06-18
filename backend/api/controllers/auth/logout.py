@@ -4,7 +4,6 @@ import dotenv
 
 dotenv.load_dotenv()
 
-
 def logout():
     is_production = os.getenv("FLASK_ENV") == "production"
     response = make_response("Cookie cleared!")

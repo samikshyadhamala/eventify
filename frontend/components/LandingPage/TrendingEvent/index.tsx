@@ -87,11 +87,11 @@ export default function Home() {
 
     return (
       <>
-        <motion.div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 justify-center items-center">
           {visibleEvents.length >= 1 ? (
             visibleEvents.map((item) => (
               // <TrendingEventCard key={item.event_id} event={item} />
-              <EventCard {...item} key={item.event_id} />
+              <EventCard {...item} key={item.event_id} /> 
             ))) : (
             <div className='col-span-3 text-center text-2xl py-8'>No results found</div>
           )}

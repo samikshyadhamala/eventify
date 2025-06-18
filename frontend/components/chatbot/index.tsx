@@ -1,6 +1,26 @@
-export default function Chatbot() {
+'use client';
+import ChatCard from './chatCard'
+import ChatTrigger from './chatTrigger';
+import { ChatbotProvider, useChatbot } from './context';
+import { motion } from 'framer-motion';
+
+export default function ChatbotWrapper() {
     return (
-        <div className="h-16 w-16 rounded-full fixed bottom-8 right-8 bg-black flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow duration-300">
-        </div>
+        <ChatbotProvider>
+            <Chatbot />
+        </ChatbotProvider>
+    );
+}
+
+function Chatbot() {
+    const { isOpen } = useChatbot();
+    return (
+        <motion.div layout>
+            {isOpen ? (
+                <ChatCard />
+            ) : (
+                <ChatTrigger />
+            )}
+        </motion.div>
     );
 }
