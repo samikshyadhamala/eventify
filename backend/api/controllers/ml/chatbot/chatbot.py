@@ -21,7 +21,7 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 if not GOOGLE_API_KEY:
     raise ValueError("GOOGLE_API_KEY not set in environment variables")
 
-llm = ChatGoogleGenerativeAI(api_key=GOOGLE_API_KEY, model="gemini-2.5-flash-preview-04-17", temperature=0.2, max_output_tokens=1000)
+llm = ChatGoogleGenerativeAI(api_key=GOOGLE_API_KEY, model="gemini-2.5-flash-preview-04-17", temperature=0.2, max_output_tokens=500)
 
 # ---------------------- TOOLS ---------------------- #
 
@@ -56,13 +56,24 @@ def get_events():
             return f"Error fetching events: {events['error']}"
     except Exception as e:
         return f"An error occurred while fetching events: {str(e)}"
+    
+@tool
+def get_eventify_desc() -> str:
+    """Return platform descriptions from eventify.txt"""
+    eventify_path = os.path.join(os.path.dirname(__file__),  'eventify.txt')
+    with open(eventify_path, 'r', encoding='utf-8') as f:
+        return f.read()
 
-tools = [get_policy, get_events]
+tools = [get_policy, get_events, get_eventify_desc]
 llm_with_tools = llm.bind_tools(tools)
 
 # ---------------------- LLM NODE ---------------------- #
-
-sys_msg = SystemMessage(content="You are a helpful assistant providing information and policies.")
+sys_msg = SystemMessage(
+    content="""You are an assistant for Eventify. If the user asks about:
+    - policies, use the `get_policy` tool
+    - platform description, use the `get_eventify_desc` tool
+    - events, use the `get_event_details` tool"""
+)
 
 def assistant_node(state: MessagesState):
     response = llm_with_tools.invoke([sys_msg] + state["messages"])

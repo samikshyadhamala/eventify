@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from api.controllers.ml import Recommendation 
-from api.controllers.ml import ChatBot, GetChatHistory
+from api.controllers.ml import ChatBot, GetChatHistory, ClearChat
 from api.utils.getUserId import GetUserId
 
 ml_bp = Blueprint('ml', __name__)
@@ -29,3 +29,9 @@ def getChatHistory():
     user_uuid = request.cookies.get('user_uuid')
 
     return GetChatHistory(user_id, user_uuid)
+
+@ml_bp.delete("/chat")
+def clearChat():
+    user_id = request.cookies.get('user_id')
+    user_uuid = request.cookies.get('user_uuid')
+    return ClearChat(user_id, user_uuid)

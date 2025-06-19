@@ -13,6 +13,5 @@ def GetChatHistory(user_id: Optional[str], user_uuid: Optional[str]):
     messages = Message.query.filter_by(chat_id=chat.chat_id).order_by(Message.timestamp).all()
 
     return {
-        "chat_id": chat.chat_id,
         "messages": [msg.to_dict() for msg in messages]
     }
