@@ -244,7 +244,7 @@ const CreateEvent = () => {
                         <div className="space-y-4">
                           <img
                             src={imagePreview}
-                            alt="Event preview"
+                            alt="Event preview"Upload
                             className="mx-auto h-40 object-cover rounded-md"
                           />
                           <Button

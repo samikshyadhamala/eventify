@@ -53,7 +53,7 @@ export default function NavSearchBar({placeholder = false}: {placeholder: boolea
                     <CommandList className="absolute bottom-2 left-0 right-0 transform translate-y-full z-50 bg-background">
                         <CommandEmpty>No results found.</CommandEmpty>
                         <CommandGroup heading="Suggestions">
-                            <ScrollArea className="h-60">
+                            <div className="max-h-60 overflow-y-scroll">
                                 {eventNames.events.map((event) => (
                                     <CommandItem
                                         key={event.event_id}
@@ -63,7 +63,7 @@ export default function NavSearchBar({placeholder = false}: {placeholder: boolea
                                         {event.title}
                                     </CommandItem>
                                 ))}
-                            </ScrollArea>
+                            </div>
                         </CommandGroup>
                     </CommandList>
                 )}

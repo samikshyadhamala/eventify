@@ -1,0 +1,65 @@
+Eventify - Smart Event Management for Rotaract Clubs
+
+Overview:
+Eventify is a powerful event management and registration platform tailored specifically for Rotaract Club branches. Built as a full-stack web application, Eventify streamlines the entire event lifecycle — from discovery to registration, payment, and communication — for both organizers and attendees.
+
+Problem:
+Rotaract events often suffer from fragmented tools: Google Forms for registration, Excel for tracking, separate Khalti screenshots for payments, and group chats for updates. This results in inefficiency, manual errors, and a poor experience for both clubs and participants.
+
+Solution:
+Eventify brings everything together in one unified platform. Organizers can create events, manage attendees, track payments, and send updates — all from a single dashboard. Attendees can easily browse, register, pay, and receive real-time notifications, making event participation smoother than ever.
+
+Key Features:
+- 🔍 Event Discovery: Users can explore events from different Rotaract branches.
+- 🔐 User Authentication: Secure and quick login system using Firebase.
+- 📝 Event Registration: Hassle-free event signup for attendees.
+- 💳 Payment Integration: Pay directly through Khalti with integrated APIs.
+- 🗺️ Location Services: View event locations on maps and get direction support.
+- 📧 Email Notifications: Automated confirmation and reminder emails.
+- 🧑‍💼 Admin Dashboard: Manage event details, registrations, payments, and analytics.
+- 🏛️ Club Pages: Each Rotaract branch has its own event space.
+- 📱 Responsive UI: Fully mobile-friendly interface using modern web design.
+- 🔄 Real-time Updates: See registration status and event changes live.
+
+Target Users:
+- Rotaract Club members and executives
+- District-level Rotaract organizers
+- Event attendees and volunteers
+- Community partners and sponsors
+
+Tech Stack:
+
+Frontend:
+- Framework: Next.js 14+ with TypeScript
+- UI: Tailwind CSS + shadcn/ui components
+- State: React Context API + Hooks
+- Authentication: Firebase
+- Maps & Geocoding: Google Maps API, OpenRouteService, OpenCage API
+
+Backend:
+- Framework: Flask (Python)
+- Database: PostgreSQL (via Supabase)
+- Auth Admin: Firebase Admin SDK
+- Email Service: Resend API & Gmail SMTP
+- Payment Gateway: Khalti API
+- Storage: Media handling for event assets
+- Architecture: RESTful API
+
+Business Strategy:
+- Yearly Subscription: Clubs pay an annual membership fee.
+- Transaction Fee: A small percentage is taken from each ticket sale.
+- Partnerships: Long-term partnerships with district-level Rotaract organizers for broader adoption.
+
+Vision:
+To become the go-to platform for event management in youth-led organizations like Rotaract — promoting seamless collaboration, better engagement, and stress-free logistics.
+
+Future Scope:
+- Mobile App for iOS/Android
+- Role-based access control (organizers, volunteers, district admins)
+- Real-time check-in and QR-based attendance
+- Sponsor branding and analytics
+- AI-based event recommendations
+- Integration with Google Calendar and social sharing
+
+Quote:
+"Eventify isn’t just a tool — it’s the digital backbone of every Rotaract event."

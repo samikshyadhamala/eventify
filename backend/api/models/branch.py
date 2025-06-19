@@ -1,5 +1,6 @@
 from api import db 
 import datetime
+
 class Branch(db.Model):
     __tablename__ = 'branches'
     branch_id = db.Column(db.Integer, primary_key=True, autoincrement=True)

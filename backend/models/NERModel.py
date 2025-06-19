@@ -80,3 +80,9 @@ class NERModel:
         """
         soup = BeautifulSoup(description, "html.parser")
         return soup.get_text()
+
+if __name__ == "__main__":
+    ner_model = NERModel()
+    sample_text = "<p>Apple Inc. is looking to hire new employees in San Francisco.</p>"
+    entities = ner_model.getNamedEntities(sample_text)
+    print("Named Entities:", entities)

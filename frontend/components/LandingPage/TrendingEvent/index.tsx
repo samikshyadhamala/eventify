@@ -11,6 +11,7 @@ import EventCard from '@/components/EventCard';
 import { Event } from "@/components/types/EventCardTypes"
 // import { toast } from "sonner"
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 export default function Home() {
   const [data, setData] = useState<Event[]>([])
@@ -18,6 +19,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('')
   const [visibleCount, setVisibleCount] = useState(6)
   const [isLoading, setIsLoading] = useState(false);
+  const [forYouEvent, setForYouEvent] = useState<number[]>([])
 
   useEffect(() => {
     let isMounted = true; // to avoid setting state on unmounted component
@@ -51,6 +53,22 @@ export default function Home() {
     };
   }, [axiosInstance]);
 
+  // fetch event recommendations
+  useEffect(() => {
+    const fetchForYouEvents = async () => {
+      try {
+        const response = await axiosInstance.get<number[]>("/api/ml/recommend");
+        setForYouEvent(response.data);
+      } catch (error) {
+        console.error("Error fetching for you events:", error);
+        toast.info(
+          "Oops! Our server decided to take an unscheduled nap 😴💤 It's probably dreaming of better API responses! Try again in a few seconds 🔄✨"
+        );
+      }
+    }
+    fetchForYouEvents();
+  }, [axiosInstance]);
+
   const loadMore = () => {
     setVisibleCount(prevCount => prevCount + 6)
   }
@@ -69,22 +87,34 @@ export default function Home() {
 
     return (
       <>
-        <motion.div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 justify-center items-center">
           {visibleEvents.length >= 1 ? (
             visibleEvents.map((item) => (
               // <TrendingEventCard key={item.event_id} event={item} />
-              <EventCard {...item} key={item.event_id} />
+              <EventCard {...item} key={item.event_id} /> 
             ))) : (
             <div className='col-span-3 text-center text-2xl py-8'>No results found</div>
           )}
         </motion.div>
-        {hasMore && (
+        {hasMore ? (
           <div className="flex justify-center mt-6">
             <Button onClick={loadMore} variant="outline">Load More</Button>
+          </div>
+        ) : (
+          <div className="flex justify-center mt-6">
+            <Link href="/allevent">
+              <Button variant="outline" className='text-black'>Explore All Events</Button>
+            </Link>
           </div>
         )}
       </>
     )
+  }
+
+  const getForYouEvents = () => {
+    return data
+      .filter(event =>
+        forYouEvent.includes(event.event_id))
   }
 
   const getUpcomingEvents = () => {
@@ -121,13 +151,13 @@ export default function Home() {
           </div>
 
           {isLoading ? <SkeletonEvents /> : (
-            <Tabs defaultValue="all" className="w-full">
+            <Tabs defaultValue="forYou" className="w-full">
               <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
                 <TabsTrigger
-                  value="all"
+                  value="forYou"
                   className="rounded-none border-b-2 border-transparent px-3 sm:px-4 py-2 data-[state=active]:border-primary"
                 >
-                  All Events
+                  For You
                 </TabsTrigger>
                 <TabsTrigger
                   value="upcoming"
@@ -149,8 +179,8 @@ export default function Home() {
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="all" className="pt-6">
-                {renderEventCards(data)}
+              <TabsContent value="forYou" className="pt-6">
+                {renderEventCards(getForYouEvents())}
               </TabsContent>
               <TabsContent value="upcoming" className="pt-6">
                 {renderEventCards(getUpcomingEvents())}
