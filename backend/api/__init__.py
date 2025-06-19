@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, abort, send_file, request
+from flask import Flask, send_from_directory, abort, send_file, request, g
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_restful import Api
@@ -9,7 +9,8 @@ from flask_mail import Mail
 from flasgger import Swagger
 import os
 import dotenv; dotenv.load_dotenv()
-
+import uuid
+    
 db = SQLAlchemy()
 ma = Marshmallow()
 migrate = Migrate()
@@ -90,6 +91,24 @@ def create_app():
     def serve_media(filename):
         return send_from_directory(app.config['MEDIA_FOLDER'], filename)
 
+    @app.before_request
+    def assign_anonymous_uuid():
+        if not request.cookies.get('user_uuid'):
+            g.user_uuid = str(uuid.uuid4())  # Store in request context
+
+    @app.after_request
+    def set_uuid_cookie(response):
+        if hasattr(g, 'user_uuid'):
+            is_production = os.getenv('FLASK_ENV') == 'production'
+            response.set_cookie(
+                'user_uuid',
+                g.user_uuid,
+                httponly=True,
+                secure=is_production,
+                samesite='Strict',
+                max_age=24 * 60 * 60  # 1 day
+            )
+        return response
     
     # Register blueprints
     # from api.routes.events import events_bp
