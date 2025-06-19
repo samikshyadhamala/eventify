@@ -1,5 +1,5 @@
 // src/components/Chatbot/ChatbotWidget.jsx
-
+'use client'
 import React, { useState } from 'react';
 import './ChatbotWidget.css';
 
