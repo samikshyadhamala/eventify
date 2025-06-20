@@ -1,16 +1,24 @@
 'use client';
-
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, { createContext, useState, useEffect, useMemo, useCallback } from 'react';
 import axios, { AxiosInstance, AxiosError } from 'axios';
 import Cookies from 'js-cookie';
-import { AuthProviderProps, User, AuthContextType } from './types';
+import { AuthProviderProps, User } from './types';
 import { useAuth, useRole } from './hooks';
+import { AuthContextType } from './types';
+
+// interface AuthContextType {
+//   user: User | null;
+//   setUser: React.Dispatch<React.SetStateAction<User | null>>;
+//   accessToken: string | null;
+//   isAuthenticated: boolean;
+//   authCookie: string | undefined;
+//   login: (email: string, password: string) => Promise<void>;
+//   logout: () => Promise<void>;
+//   useAuth: () => AuthContextType;
+//   axiosInstance: AxiosInstance;
+//   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+//   useRole: () => 'normal' | 'club' | 'admin' | null;
+// }
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
@@ -21,15 +29,11 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const authCookie = Cookies.get('loginToken');
-
-  // ✅ logout function (not memoized to avoid stale closure)
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
-      console.log("Logging out...");
       const tempAxios = axios.create({
         baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || '',
-        withCredentials: true,
+        withCredentials: true
       });
       await tempAxios.post(`/api/auth/logout`, {}, { withCredentials: true });
     } catch (e) {
@@ -40,16 +44,16 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       setRefreshToken(null);
       setIsAuthenticated(false);
     }
-  };
+  }, []);
 
-  // ✅ Axios instance configured to respect latest tokens
   const axiosInstance = useMemo(() => {
     const instance = axios.create({
       baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || '',
       withCredentials: true,
-      timeout: 8000,
+      timeout: 8000 // 5 seconds
     });
 
+    // Add access token to requests
     instance.interceptors.request.use(
       config => {
         if (accessToken) {
@@ -60,6 +64,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       error => Promise.reject(error)
     );
 
+    // Handle 401s and token refresh
     instance.interceptors.response.use(
       response => response,
       async error => {
@@ -78,11 +83,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
               { withCredentials: true }
             );
 
-            const {
-              idToken,
-              refreshToken: newRefreshToken,
-              user: userData,
-            } = res.data;
+            const { idToken, refreshToken: newRefreshToken, user: userData } = res.data;
 
             setAccessToken(idToken);
             setRefreshToken(newRefreshToken);
@@ -93,41 +94,44 @@ export default function AuthProvider({ children }: AuthProviderProps) {
             return instance(originalRequest);
           } catch (err) {
             const axiosError = err as AxiosError;
+
             if (axiosError.response?.status === 401) {
-              console.warn('Not logged in — skipping refresh and logout.');
+              // User just isn't logged in — no action needed
+              console.warn("Not logged in — skipping refresh and logout.");
               return Promise.reject(err);
             }
             await logout();
             return Promise.reject(err);
           }
         }
-
+        
         return Promise.reject(error);
       }
     );
 
     return instance;
-  }, [accessToken]);
+  }, [accessToken, logout]);
 
-  // ✅ login using the memoized axios instance
-  const login = useCallback(
-    async (email: string, password: string) => {
-      const response = await axiosInstance.post('/api/auth/signin', {
-        email,
-        password,
-      });
+  useEffect(() => {
+    const fetchUser = async () => {
+      const response = await axiosInstance.get("/api/auth/is-authenticated");
+      setUser(response.data.user || null);
+    }
+    if (isAuthenticated) {
+      fetchUser();
+    }
+  }, [axiosInstance, isAuthenticated]);
 
-      const { idToken, refreshToken, user } = response.data;
+  const login = useCallback(async (email: string, password: string) => {
+    const response = await axiosInstance.post('/api/auth/signin', { email, password });
+    const { idToken, refreshToken, user } = response.data;
 
-      setAccessToken(idToken);
-      setRefreshToken(refreshToken);
-      setUser(user);
-      setIsAuthenticated(true);
-    },
-    [axiosInstance]
-  );
+    setAccessToken(idToken);
+    setRefreshToken(refreshToken);
+    setUser(user);
+    setIsAuthenticated(true);
+  }, [axiosInstance]);
 
-  // ✅ Init auth on mount
   useEffect(() => {
     const initAuth = async () => {
       try {
@@ -136,11 +140,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
           {},
           { withCredentials: true }
         );
-        const {
-          idToken,
-          refreshToken: newRefreshToken,
-          user: userData,
-        } = res.data;
+        const { idToken, refreshToken: newRefreshToken, user: userData } = res.data;
 
         setAccessToken(idToken);
         setRefreshToken(newRefreshToken);
@@ -157,22 +157,11 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     };
 
     initAuth();
-  }, [axiosInstance]);
+  }, []);
 
-  // ✅ Fetch user if already authenticated
-  useEffect(() => {
-    const fetchUser = async () => {
-      const response = await axiosInstance.get('/api/auth/is-authenticated');
-      setUser(response.data.user || null);
-    };
+  const authCookie = Cookies.get('loginToken');
 
-    if (isAuthenticated) {
-      fetchUser();
-    }
-  }, [axiosInstance, isAuthenticated]);
-
-  // ✅ Clean context value — no `useMemo` here; all values are stable
-  const value: AuthContextType = {
+  const value = useMemo(() => ({
     user,
     setUser,
     accessToken,
@@ -184,7 +173,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     axiosInstance,
     setIsAuthenticated,
     useRole,
-  };
+  }), [user, setUser, accessToken, isAuthenticated, setIsAuthenticated, authCookie, login, logout, axiosInstance]);
 
   if (loading) return null;
 
