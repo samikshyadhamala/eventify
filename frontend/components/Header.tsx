@@ -94,6 +94,8 @@ const Header = ({ placeholder = false }) => {
             <Link href="/" className="text-white hover:underline hover:text-gray-300 !text-lg">Home</Link>
             <Link href="/allevent" className="text-white hover:underline hover:text-gray-300 !text-lg">Events</Link>
             <Link href="/contact" className="text-white hover:underline hover:text-gray-300 !text-lg">Contact</Link>
+            <Link href="/aboutus" className="text-white hover:underline hover:text-gray-300 !text-lg">About Us</Link>
+            
             {user?.role && (
               <Link href="/MyEvents" className='text-white !text-lg'>
                 MyEvents
