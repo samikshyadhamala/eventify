@@ -3,10 +3,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 export default function EventifyFeatures() {
-  const variants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0 }
-  }
   const features = [
     {
       image: "/images/landingPage/easyRegistration.png",
@@ -48,21 +44,21 @@ export default function EventifyFeatures() {
         <div key={index} className={`py-12 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`}>
           <div className="container mx-auto px-4">
             <div className={`flex flex-col md:flex-row items-center justify-center gap-8 ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
-                <motion.div
+              <motion.div
                 className="w-full md:w-1/2 text-left"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
-                >
+              >
                 <motion.div
                   className="text-2xl font-semibold mb-4"
                   variants={{
-                  hidden: { opacity: 0, y: 60 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.6, ease: "easeOut" }
-                  }
+                    hidden: { opacity: 0, y: 40 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.8 }
+                    }
                   }}
                 >
                   {feature.title}
@@ -71,18 +67,17 @@ export default function EventifyFeatures() {
                 <motion.p
                   className="text-lg text-gray-600 mb-4"
                   variants={{
-                  hidden: { opacity: 0, y: 60 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.4, delay: 0.1, ease: "easeOut" }
-                  }
+                    hidden: { opacity: 0, y: 40 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.4, delay: 0.2 }
+                    }
                   }}
                 >
                   {feature.description}
                 </motion.p>
-                </motion.div>
-
+              </motion.div>
               <div className="w-80 flex justify-center items-center">
                 <img src={feature.image} alt={feature.title} className="w-full rounded shadow border" />
               </div>
