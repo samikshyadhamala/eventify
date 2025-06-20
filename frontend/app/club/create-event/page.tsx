@@ -96,7 +96,7 @@ const CreateEvent = () => {
         description: "Event created successfully!",
       });
       
-      router.push("/admin");
+      router.push("/club");
     } catch (error) {
       console.error(error);
       toast({

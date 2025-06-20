@@ -26,17 +26,9 @@ export default function Events() {
     loadingRegistrations,
     isDeleteDialogOpen,
     selectedEventId,
-    rowsPerPage,
-    setSearchQuery,
-    setCurrentPage,
     setSelectedEvent,
-    setEditEvent,
-    setEvents,
     setIsDeleteDialogOpen,
-    setSelectedEventId,
     handleDelete,
-    handleEventDetails,
-    handleEditEvent,
   } = useEvents()
 
   return (

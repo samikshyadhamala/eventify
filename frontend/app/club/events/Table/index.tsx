@@ -13,15 +13,9 @@ export default function EventsTable() {
     rowsPerPage,
     totalEvents,
     loading,
-    eventRegistrations,
     searchQuery,
     setSearchQuery,
     setCurrentPage,
-    handleDelete,
-    handleEventDetails,
-    handleEditEvent,
-    setIsDeleteDialogOpen,
-    setSelectedEventId
   } = useEvents()
 
   const indexOfLastEvent = currentPage * rowsPerPage

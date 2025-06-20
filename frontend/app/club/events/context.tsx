@@ -100,7 +100,7 @@ export function EventsProvider({ children }: EventsProviderProps) {
   // Initial data fetch
   useEffect(() => {
     fetchEventsAndRegistrations()
-  }, [axiosInstance])
+  }, [])
 
   const value: EventsContextType = {
     events,
