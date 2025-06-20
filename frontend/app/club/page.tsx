@@ -63,7 +63,6 @@ function LoadingSkeleton() {
 }
 
 function UpcomingEventCard({ event, registrationCount }: { event: Event, registrationCount: number }) {
-  debugger
   return (
     <div className="flex items-center gap-4">
       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md">

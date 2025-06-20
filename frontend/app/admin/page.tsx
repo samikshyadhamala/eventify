@@ -9,7 +9,6 @@ import { toast } from 'react-toastify'
 
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Skeleton } from "@/components/ui/skeleton"
 import { Input } from "@/components/ui/input"
 import {
     Dialog,
@@ -272,7 +271,7 @@ export default function Branches() {
                                                     </Button>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
-                                                    <DropdownMenuItem><Link href={`/admin/users/branchAdmin`} className='text-black'>Manage Admins</Link></DropdownMenuItem>
+                                                    <DropdownMenuItem><Link href={`/admin/branchAdmin`} className='text-black'>Manage Admins</Link></DropdownMenuItem>
                                                     <DropdownMenuItem><Link href={`/admin/events`} className='text-black'>View Events</Link></DropdownMenuItem>
                                                     <DropdownMenuItem
                                                         className="text-red-600"

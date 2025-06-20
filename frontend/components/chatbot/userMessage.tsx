@@ -11,7 +11,7 @@ export default function BotMessage({ message }: { message: string }) {
             </div>
             <div className="flex-shrink-0">
                 <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.imageUrl || "/images/bot.png"} alt="User Avatar" />
+                    <AvatarImage src={user?.imageUrl} alt="User Avatar" />
                     <AvatarFallback>{user?.name?.charAt(0) || "A"}</AvatarFallback>
                 </Avatar>
             </div>

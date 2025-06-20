@@ -136,10 +136,15 @@ def ChatBot(user_id: Optional[str], user_uuid: Optional[str], message: str):
         response_text = updated_state["messages"][-1].content
 
         # Optional: Save both sent and received message to DB
-        chat = Chat.query.filter(
-            or_(Chat.user_id == user_id, Chat.user_uuid == user_uuid)
-        ).order_by(Chat.chat_id.desc()).first()
-
+        if user_id: 
+            chat = Chat.query.filter_by(
+                user_id=user_id
+            ).order_by(Chat.chat_id.desc()).first()
+        else:
+            chat = Chat.query.filter_by(
+                user_uuid=user_uuid
+            ).order_by(Chat.chat_id.desc()).first()
+            
         if not chat:
             chat = Chat(user_id=user_id, user_uuid=user_uuid)
             db.session.add(chat)

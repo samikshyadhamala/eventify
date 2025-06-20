@@ -48,7 +48,7 @@ export function ChatbotProvider({ children }: { children: React.ReactNode }) {
             }));
             
             setIsLoading(true); 
-            const response = await axiosInstance.post<ChatBotResponse>('/api/ml/chat', { message });
+            const response = await axiosInstance.post<ChatBotResponse>('/api/ml/chat', { message }, { timeout: 20000 });
             const messageItem: ChatHistoryItem = { 
                 content: response.data.response,
                 message_type: 'received'

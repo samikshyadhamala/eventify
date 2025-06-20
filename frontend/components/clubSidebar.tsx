@@ -121,8 +121,8 @@ export function ClubSidebar() {
           </SidebarMenuItem> */}
           <SidebarMenuItem>
             <SidebarMenuButton
-              onClick={() => {
-                logout();
+              onClick={async () => {
+                await logout();
                 router.push("/");
               }}
             >

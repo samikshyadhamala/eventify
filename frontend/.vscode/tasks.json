@@ -16,7 +16,7 @@
 		{
 			"label": "Run Backend",
 			"type": "shell",
-			"command": "python app.py",
+			"command": "./.venv/Scripts/activate && python app.py",
 			"options": {
 				"cwd": "${workspaceFolder}/../backend"
 			},

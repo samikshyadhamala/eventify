@@ -13,9 +13,9 @@ import NavSearchBar from './NavSearchBar';
 const Header = ({ placeholder = false }) => {
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [isUserLoading, setIsUserLoading] = useState(false);
-  const { user, setIsAuthenticated, setUser, axiosInstance } = useAuth();
+  const { user, setIsAuthenticated, setUser, axiosInstance, logout } = useAuth();
   const router = useRouter();
 
   // Fetch user info on mount
@@ -36,8 +36,8 @@ const Header = ({ placeholder = false }) => {
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };
@@ -57,9 +57,7 @@ const Header = ({ placeholder = false }) => {
 
   const handleLogout = async () => {
     try {
-      await axiosInstance.post('/api/auth/logout');
-      setIsAuthenticated(false);
-      setUser(null);
+      logout();
       router.push('/');
     } catch (err) {
       console.error('Logout error:', err);
@@ -113,7 +111,7 @@ const Header = ({ placeholder = false }) => {
                   >
                     <Avatar>
                       <AvatarImage src={user?.imageUrl || "/api/placeholder/40/40"} alt="Profile Picture" />
-                      <AvatarFallback>{user?.email?.charAt(0).toUpperCase() || 'U'}</AvatarFallback>
+                      <AvatarFallback>{user?.email?.charAt(0).toUpperCase() || 'A'}</AvatarFallback>
                     </Avatar>
                   </button>
                   {open && (

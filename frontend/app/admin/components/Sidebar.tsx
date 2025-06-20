@@ -123,9 +123,9 @@ export default function SuperAdminSidebar() {
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton
-              onClick={() => {
-                logout();
-                router.push("/");
+              onClick={async () => {
+                await logout();
+                router.push('/');
               }}
             >
               <LogOut />
