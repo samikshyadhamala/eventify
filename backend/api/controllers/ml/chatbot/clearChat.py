@@ -6,10 +6,15 @@ def ClearChat(user_id: Optional[str], user_uuid: Optional[str]):
     if not user_id and not user_uuid: 
         return {"error": "User ID or UUID is required."}, 400
     
-    chat = Chat.query.filter(
-        (Chat.user_id == user_id) | (Chat.user_uuid == user_uuid)
-    ).order_by(Chat.chat_id.desc()).first()
-
+    if user_id: 
+        chat = Chat.query.filter_by(
+            user_id=user_id
+        ).order_by(Chat.chat_id.desc()).first()
+    else: 
+        chat = Chat.query.filter_by(
+            user_uuid=user_uuid
+        ).order_by(Chat.chat_id.desc()).first()
+        
     if not chat:
         return {"error": "No chat history found for the user."}, 404
 
