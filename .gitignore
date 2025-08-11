@@ -1,0 +1,7 @@
+.env
+*.key
+*.pem
+secrets/
+credentials.json
+.vscode/
+.idea/
