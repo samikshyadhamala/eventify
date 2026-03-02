@@ -246,7 +246,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Team Eventify
 1. Sushant Shrestha
 2. Samyam Chapaign
-3. Unika Ghimire 
+3. Unika Ghimire
+4. Samikshya Dhamala
 
 ## 🆘 Support
 
